@@ -1,6 +1,6 @@
 NAME		= minirt
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror
+# CFLAGS		= -Wall -Wextra -Werror
 RM			= /bin/rm -f
 
 LIBFT_DIR	= libft
@@ -9,7 +9,6 @@ INCLUDE_DIR	= includes
 
 UNAME = $(shell uname -s)
 ifeq ($(UNAME), Linux)
-	SRCS_PLATFORM = render/render_linux.c
 	MLX_DIR		= mlx_Linux
 	MLX_FLAGS	= -Imlx_Linux -Lmlx_Linux -lmlx_Linux -lXext -lX11 -lm -lz
 	INCLUDES 	= -I$(INCLUDE_DIR) \
@@ -18,7 +17,6 @@ ifeq ($(UNAME), Linux)
 	LIBS		= -L$(LIBFT_DIR) -lft \
 				  -L/usr/lib
 else
-	SRCS_PLATFORM = render/render_mac.c
 	MLX_DIR		= mlx
 	MLX_FLAGS	= -L$(MLX_DIR) -lmlx \
 				  -framework OpenGL \
@@ -31,8 +29,11 @@ endif
 
 BUILD_DIR	= build
 SRC_DIR		= ./srcs
-SRCS		=	$(SRCS_PLATFORM) \
-				main.c
+SRCS		=	main.c \
+				setup.c \
+				render.c \
+				utils/debug.c \
+				exit.c
 
 OBJS = $(SRCS:%.c=$(BUILD_DIR)/%.o)
 
