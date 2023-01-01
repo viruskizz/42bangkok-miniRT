@@ -1,0 +1,6 @@
+# miniRT
+
+# Authors
+
+tsomsam Sharnvon
+
