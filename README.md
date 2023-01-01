@@ -2,5 +2,5 @@
 
 # Authors
 
-tsomsam Sharnvon
+tsomsa, Sharnvon
 

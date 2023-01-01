@@ -1,0 +1,8 @@
+*test*
+*.o
+.vscode
+*.a
+.DS_STORE
+so_long
+build
+libft/*.a
