@@ -12,7 +12,6 @@ int main(int argc, char **argv)
 		return (printf("Need file argument\n"), 0);
 	else
 		filename = argv[1];
-	printf("%s = %d\n", filename, ft_strlen(filename));
 	initial(&data, filename);
 
 	plain_obj(&data, 360, 360);
