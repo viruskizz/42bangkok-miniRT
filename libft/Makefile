@@ -49,7 +49,7 @@ BONUS_OBJS = $(BONUS:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I.
 
-all: $(NAME)
+all: bonus
 
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)

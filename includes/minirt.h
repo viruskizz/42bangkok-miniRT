@@ -38,6 +38,14 @@ typedef struct s_obj {
 	t_vtr	pos;
 }	t_obj;
 
+typedef struct s_img {
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		lh;
+	int		endian;
+}	t_img;
+
 typedef struct s_data
 {
 	void	*mlx;
@@ -46,6 +54,7 @@ typedef struct s_data
 	int		h;
 	int		frame;
 	t_list	*obj;
+	t_img	*img;
 }	t_data;
 
 int rt_close(t_data *data, int code);
@@ -55,6 +64,10 @@ int rt_setup(t_data *data, char *filename);
 
 // render
 void	render_objects(t_data *data);
+void	plain_obj(t_data *data , int w, int h);
+
+// utils
+void	pixel_put_img(t_img *img, int x, int y, int color);
 
 // Debug
 void	print_obj(t_obj *obj);

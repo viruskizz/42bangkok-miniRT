@@ -13,4 +13,5 @@ void	render_objects(t_data *data)
 			print_obj(tmp->content);
 		tmp = tmp->next;
 	}
+	mlx_put_image_to_window(data->mlx, data->win, data->img->img, 10, 10);
 }
