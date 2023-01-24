@@ -13,9 +13,6 @@ int main(int argc, char **argv)
 	else
 		filename = argv[1];
 	initial(&data, filename);
-
-	plain_obj(&data, 360, 360);
-
 	mlx_loop_hook(data.mlx, &render, &data);
 	mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
 	mlx_loop(data.mlx);

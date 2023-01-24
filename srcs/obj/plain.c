@@ -1,23 +1,24 @@
 #include "minirt.h"
 
-void	plain_obj(t_data *data , int w, int h)
+t_obj	*set_plain_img(t_data *data, t_obj *obj)
 {
-	t_img	*img;
-	img = malloc(sizeof(t_img));
-	img->img = mlx_new_image(data->mlx, w, h);
-	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->lh, &img->endian);
+	double	x;
+	double	y;
+	int		color;
 
-	data->img = img;
-	int x = 0;
-	int y = 0;
-	while (y < h)
+	obj->img.img = mlx_new_image(data->mlx, obj->size.w, obj->size.h);
+	obj->img.addr = mlx_get_data_addr(obj->img.img, &obj->img.bpp, &obj->img.lh, &obj->img.endian);
+	y = 0;
+	while (y < obj->size.h)
 	{
 		x = 0;
-		while(x < w)
+		while(x < obj->size.w)
 		{
-			pixel_put_img(img, x, y, 0x00FFFFFF);
+			color = rgb_to_int(obj->color.r, obj->color.g, obj->color.b);
+			pixel_put_img(&obj->img, x, y, color);
 			x++;
 		}
 		y++;
 	}
+	return (obj);
 }
