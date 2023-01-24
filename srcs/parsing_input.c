@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:27:04 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/24 23:02:10 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/01/25 02:10:12 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,33 @@
 #include "math.h"
 #include <string.h>
 
-void		exit_error(char *str); // * add to .h
-void		free_twopointer_char(char **ptr); // * add to .h
-char		*ft_strjoin_pro(char *str1, char *str2); // * add to .h
+void	exit_error(char *str); // * add to .h
+void	free_twopointer_char(char **ptr); // * add to .h
+char	*ft_strjoin_pro(char *str1, char *str2); // * add to .h
+int		character_count(char *str, char c);
+double	ato_double(char *str);
+t_color	ato_tcolor(char *str);
+
 void		printTwoArray(char **str); // * debuging
+
 static int	file_checking(char *file);
 static void	get_input(t_data *data, int fd);
 static int	identifier_checking(char **object, int index);
 static void	object_lexering(t_data *data, char **object, int identifier);
 
-t_data	*parsing_input(int argc, char **argv)
+void	ambient_initialise(t_data *data, char **object);
+
+t_data	parsing_input(int argc, char **argv)
 {
-	t_data	*data;
+	t_data	data;
 	int		fd;
 
 	if (argc != 2)
 		exit_error("minirt: wrong argurment");
+	// * file check;
 	fd = file_checking(argv[1]);
-	data = (t_data *)ft_calloc(sizeof(t_data), 1);
-	if (!data)
-		exit_error("minirt: data mallocing is failed in parsing_input");
 	// *.attribute check;
-	get_input(data, fd);
+	get_input(&data, fd);
 	return (data);
 }
 
@@ -61,7 +66,7 @@ static void	get_input(t_data *data, int fd)
 	char **file_line;
 
 	file = NULL;
-	// * read form the file
+	// * read from the file
 	while (1 > 0)
 	{
 		read_byte = read(fd, buff, READ_SIZE);
@@ -106,7 +111,7 @@ static void	get_input(t_data *data, int fd)
 void	object_lexering(t_data *data, char **object, int identifier)
 {
 	if (!ft_strncmp(object[identifier], "A", 2))
-		printf("%s\n", "go to fucntion A");	// * void	ambient_innit (t_data *data, char **object);
+		ambient_initialise(data, object);
 	else if (!ft_strncmp(object[identifier], "C", 2))
 		printf("%s\n", "go to fucntion C");
 	else if (!ft_strncmp(object[identifier], "L", 2))
@@ -120,6 +125,76 @@ void	object_lexering(t_data *data, char **object, int identifier)
 	else
 		printf("%s\n", "ship hay aew\n");
 	
+}
+
+void	ambient_initialise(t_data *data, char **object)
+{
+	printTwoArray(object);
+	int		index;
+	char	*trimed_obj;
+
+	index = 0;
+	while (object[index])
+	{
+		if (index > 2)
+			exit_error ("minirt: too many elements for ambient light...");
+		trimed_obj = ft_strtrim(object[index], "\t");
+		if (!trimed_obj)
+			exit_error ("minirt: triming the object is fail.");
+		if (character_count(trimed_obj, ',') == 2)
+			data->amb.color = ato_tcolor(trimed_obj);
+		else if (character_count(trimed_obj, '.') == 1)
+			data->amb.ratio = ato_double(trimed_obj);
+		index++;
+		free(trimed_obj);
+	}
+	// * check ambient element value //
+}
+
+t_color	ato_tcolor(char *str)
+{
+	int		color[3];
+	int		index;
+	char	**value;
+	t_color	result;
+
+	index = 0;
+	value = ft_split(str, ',');
+	if (!value)
+		exit_error("minirt: value spliting is fail in ato_tcolor.");
+	while (value[index])
+	{
+		if (index > 2)
+			exit_error("minirt: too many values for color's element.");
+		for (int i = 0; value[index][i]; i++)
+		{
+			if (!ft_isdigit(value[index][i]))
+				exit_error("minirt: invalid color's value..");
+		}
+		color[index] = ft_atoi(value[index]);
+		index++;
+	}
+	result.r = color[0];
+	result.g = color[1];
+	result.b = color[2];
+	free_twopointer_char(value);
+	return (result);
+}
+
+int	character_count(char *str, char c)
+{
+	int index;
+	int	count;
+
+	index = 0;
+	count = 0;
+	while (str[index])
+	{
+		if (str[index] == c)
+			count++;
+		index++;
+	}
+	return (count);
 }
 
 /* [identifier checking function..]
@@ -196,14 +271,63 @@ void	free_twopointer_char(char **ptr)
 	free(ptr);
 }
 
+double	ato_double(char *str)
+{
+	long double	result;
+	double	sign;
+	int		index;
+	int		precision;
+	
+	precision = 0;
+	sign = 1.0;
+	index = 0;
+	result = 0.0;
+	if (str[0] == '.' || str[ft_strlen(str) - 1] == '.')
+		exit_error("minirt: invalid value for element in ito_double.");
+	while ((str[index] >= 9 && str[index] <= 13) || str[index] == 32)
+		index++;
+	if (str[index] == '-')
+		sign = -1.0;
+	while (str[index])
+	{
+		if (!ft_isalnum(str[index]) && str[index] != '.')
+		{
+			printf("|%c|\n", str[index]);
+			exit_error("minirt: invalid value for element in ito_double..");
+		}
+		if (str[index] == '.')
+			precision = 10;
+		else if (precision == 0)
+			result = (result * 10.0) + (str[index] - '0');
+		else if (precision >= 1)
+		{
+			result = result + ((str[index] - '0') * 1.0 / precision);
+			precision *= 10;
+		}
+		if (result > DBL_MAX || result < -DBL_MAX)
+			exit_error("minirt: invalid value for element in ito_double...");
+		index++;
+	}
+	return (((double)(result * sign)));
+}
+
 void	printTwoArray(char **str)
 {
 	for (int i = 0; str[i]; i++)
-		printf("%s\n", str[i]);
+		printf("[%d]:|%s|\n", i, str[i]);
 }
 
 void	exit_error(char *str)
 {
 	printf("%s\n", str);
 	exit (EXIT_FAILURE);
+}
+
+void	print_data(t_data *data)
+{
+	//* ambient light
+	printf("\n[ambient light]\n");
+	printf("ratio: %f\n", data->amb.ratio);
+	printf("color: %d,%d,%d\n", data->amb.color.r, data->amb.color.g, data->amb.color.b);
+	// *camara
 }

@@ -5,6 +5,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <mlx.h>
+# include <float.h>
 # include "libft.h"
 # include "key.h"
 
@@ -93,14 +94,13 @@ typedef struct s_data
 {
 	void	*mlx;
 	void	*win;
-	t_amb	amb;
-	t_cam	cam;
-	t_lht	lht;
 	int		w;
 	int		h;
 	int		frame;
+	t_amb	amb;
+	t_cam	cam;
+	t_list	*lht;
 	t_list	*objs;
-	t_img	*img;
 }	t_data;
 
 int	rt_close(t_data *data, int code);
@@ -109,7 +109,7 @@ int	error_exit(t_data *data, int code);
 int rt_setup(t_data *data, char *filename);
 
 // * parsing_intput
-t_data	*parsing_input(int argc, char **argv);
+t_data	parsing_input(int argc, char **argv);
 
 // render
 void	render_objects(t_data *data);
@@ -131,5 +131,6 @@ t_vtr	set_vector(double x, double y, double z);
 
 // Debug
 void	print_obj(t_obj *obj);
+void	print_data(t_data *data);
 
 #endif

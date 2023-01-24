@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:31:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/24 23:04:04 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/01/25 01:22:52 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,22 @@
 
 static void	initial(t_data *data, char *filename);
 static int	render(t_data *data);
+double	ito_double(char *str);
 
 int main(int argc, char **argv)
 {
-	// t_data	*data;
-
-	// return (EXIT_SUCCESS);
-	t_img	img;
 	t_data	data;
-
 	char *filename;
+	
+	data = parsing_input(argc, argv);
+	print_data(&data);
 
-	// data = parsing_input(argc, argv);
-	if (argc == 1)
-		return (printf("Need file argument\n"), 0);
-	else
-		filename = argv[1];
-	initial(&data, filename);
-	mlx_loop_hook(data.mlx, &render, &data);
-	mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
-	mlx_loop(data.mlx);
+	// * krun nay part 
+	// filename = argv[1];
+	// initial(&data, filename);
+	// mlx_loop_hook(data.mlx, &render, &data);
+	// mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
+	// mlx_loop(data.mlx);
 	return (0);
 }
 
