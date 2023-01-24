@@ -5,8 +5,10 @@ static int	render(t_data *data);
 
 int main(int argc, char **argv)
 {
-	t_data data;
-	char	*filename;
+	t_img	img;
+	t_data	data;
+
+	char *filename;
 
 	if (argc == 1)
 		return (printf("Need file argument\n"), 0);
