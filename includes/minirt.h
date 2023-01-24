@@ -27,96 +27,66 @@
 # define WIDTH	1280
 # define HEIGHT	720
 
-/* reading size */
-# define	READ_SIZE 10
+# define READ_SIZE 10
 
-// typedef struct s_vtr
-// {
-// 	float	x;
-// 	float	y;
-// 	float	z;
-// }	t_vtr;
+typedef struct s_size
+{
+	double	w; // width
+	double	h; // height
+	double	d; // depth
+}	t_size;
 
-// typedef struct s_obj {
-// 	int		type;
-// 	char	*name;
-// 	t_vtr	pos;
-// }	t_obj;
+typedef struct s_color
+{
+	int	r;  // red
+	int	g;  // green
+	int	b;  // blue
+}	t_color;
 
-// typedef struct s_data
-// {
-// 	void	*mlx;
-// 	void	*win;
-// 	int		w;
-// 	int		h;
-// 	int		frame;
-// 	t_list	*obj;
-// }	t_data;
-
-typedef struct	s_img {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_img;
-
-// * parsing structure //
-
-typedef struct s_vector
+typedef struct s_vtr
 {
 	double	x;
 	double	y;
 	double	z;
-}	t_vec;
+}	t_vtr;
+
+typedef struct s_img {
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		lh;
+	int		endian;
+}	t_img;
 
 typedef struct s_ambient
 {
 	double	ratio;	//* range[0.0-1.0];
-	int32_t	colour; //* range[0-255];
+	t_color	color;	//* range[0-255];
 }	t_amb;
 
 typedef struct s_camara
 {
-	t_vec	coordinate;
-	t_vec	normalized;	// * range[-1-1];
-	int		fov; 		//* horizountal field view in degree range[0-180];
+	t_vtr	pos;
+	t_vtr	norm;	// * range[-1-1];
+	int		fov; 	//* horizountal field view in degree range[0-180];
 } 	t_cam;
 
 typedef struct s_light
 {
-	t_vec	coordinate;
+	t_vtr	pos;
 	double	birghtness; //* range[0.0-1.0];
-	int32_t	colour;
+	t_color	color;
 }	t_lht;
 
-typedef struct s_sphere
-{
-	t_vec	coordinate;
-	double	sp_diameter;
-	int32_t	colour;
-}	t_sp;
-
-typedef struct s_plane
-{
-	t_vec	coordinate;
-	t_vec	normalized; // * range[-1.1]
-	int32_t	colour;
-}	t_pl;
-
-typedef struct s_cylinder
-{
-	t_vec	coordinate;
-	t_vec	normalized;
-	double	diameter;
-	double	hight;
-	int32_t	colour;
-}	t_cy;
-
-typedef struct s_object
-{
-	int		identify; //* [sp, pl, cy];
-	void	*attribute;
+typedef struct s_obj {
+	int		idx;
+	int		type;
+	char	*name;
+	t_vtr	pos;
+	t_vtr	norm;
+	t_color	color;
+	t_size	size;
+	t_img	img;
 }	t_obj;
 
 typedef struct s_data
@@ -126,10 +96,14 @@ typedef struct s_data
 	t_amb	amb;
 	t_cam	cam;
 	t_lht	lht;
-	t_list	*obj;
+	int		w;
+	int		h;
+	int		frame;
+	t_list	*objs;
+	t_img	*img;
 }	t_data;
 
-int rt_close(t_data *data, int code);
+int	rt_close(t_data *data, int code);
 int	error_exit(t_data *data, int code);
 
 int rt_setup(t_data *data, char *filename);
@@ -139,6 +113,21 @@ t_data	*parsing_input(int argc, char **argv);
 
 // render
 void	render_objects(t_data *data);
+
+// obj
+void	set_objs(t_data *data);
+t_obj	*new_obj(t_data *data);
+void	free_obj(t_obj *obj);
+
+t_obj	*set_plain_img(t_data *data, t_obj *obj);
+
+// utils
+int		rgb_to_int(int r, int g, int b);
+void	pixel_put_img(t_img *img, int x, int y, int color);
+t_color	set_color(int r, int g, int b);
+t_size	set_size(double w, double h, double d);
+t_vtr	set_vector(double x, double y, double z);
+
 
 // Debug
 void	print_obj(t_obj *obj);
