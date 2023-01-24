@@ -3,9 +3,9 @@ CC			= gcc
 # CFLAGS		= -Wall -Wextra -Werror
 RM			= /bin/rm -f
 
-LIBFT_DIR	= libft
+LIBFT_DIR	= ./libft
 
-INCLUDE_DIR	= includes
+INCLUDE_DIR	= ./includes
 
 UNAME = $(shell uname -s)
 ifeq ($(UNAME), Linux)
@@ -28,13 +28,8 @@ else
 endif
 
 BUILD_DIR	= build
-SRC_DIR		= ./srcs
-SRCS		=	main.c \
-				setup.c \
-				render.c \
-				utils/debug.c \
-				exit.c
-
+SRC_DIR		= srcs
+SRCS = $(shell find $(SRC_DIR) -name '*.c')
 OBJS = $(SRCS:%.c=$(BUILD_DIR)/%.o)
 
 all: $(NAME)
@@ -45,7 +40,7 @@ restart: cbuild $(OBJS)
 $(NAME): $(OBJS) libs
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(MLX_FLAGS) -o $(NAME)
 
-$(OBJS): $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJS): $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	@$(CC) -g $(CFLAGS) $(INCLUDES) -c $< -o $@
 

@@ -5,14 +5,15 @@ static int	render(t_data *data);
 
 int main(int argc, char **argv)
 {
-	t_data data;
-	char	*filename;
+	t_img	img;
+	t_data	data;
+
+	char *filename;
 
 	if (argc == 1)
 		return (printf("Need file argument\n"), 0);
 	else
 		filename = argv[1];
-	printf("%s = %d\n", filename, ft_strlen(filename));
 	initial(&data, filename);
 	mlx_loop_hook(data.mlx, &render, &data);
 	mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
