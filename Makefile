@@ -33,7 +33,8 @@ SRCS		=	main.c \
 				setup.c \
 				render.c \
 				utils/debug.c \
-				exit.c
+				exit.c \
+				parsing_input.c
 
 OBJS = $(SRCS:%.c=$(BUILD_DIR)/%.o)
 
