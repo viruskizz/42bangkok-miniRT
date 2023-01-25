@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:31:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/26 01:55:22 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/01/26 02:11:27 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 	char *filename;
 	
 	data = parsing_input(argc, argv);
+	print_data(&data);
 	print_data(&data);
 
 	// * krun nay part 

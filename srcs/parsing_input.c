@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:27:04 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/26 01:53:13 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/01/26 02:10:49 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void	object_lexering(t_data *data, char **object, int identifier)
 
 void	cylinder_inititialize(t_data *data, char **object)
 {
-	// printTwoArray(object);
+	printTwoArray(object);
 	int		index;
 	t_obj	*cylinder;
 	char	*trimed_obj;
@@ -192,7 +192,7 @@ void	cylinder_inititialize(t_data *data, char **object)
 		else if (index == 3)
 			diameter = ato_double(trimed_obj);
 		else if (index == 4)
-			cylinder->size = size_initialise(ft_atoi(trimed_obj), diameter, diameter);
+			cylinder->size = size_initialise(ato_double(trimed_obj), diameter, diameter);
 		else if (index == 5)
 			cylinder->color = ato_tcolor(trimed_obj);
 		free(trimed_obj);
@@ -691,11 +691,11 @@ void	print_data(t_data *data)
 
 
 	//* ambient light
-	printf("\033[33m================== [ambient light] ==================\033[0;32m\n");
-	printf("\033[33m|\033[0;32m • ratio     : %f\n", data->amb.ratio);
+	printf("\033[33m================== [ambient light] ====================\033[0;32m\n");
+	printf("\033[33m|\033[0;32m • amb-ratio : %f\n", data->amb.ratio);
 	printf("\033[33m|\033[0;32m • color     : r[%d],g[%d],b[%d]\n", data->amb.color.r, data->amb.color.g, data->amb.color.b);
 	// *camara
-	printf("\033[33m======================= [camara] ====================\033[0;32m\n");
+	printf("\033[33m===================== [camara] ========================\033[0;32m\n");
 	printf("\033[33m|\033[0;32m • coordinate: x[%f],y[%f],z[%f]\n", data->cam.pos.x, data->cam.pos.y, data->cam.pos.z);
 	printf("\033[33m|\033[0;32m • normalize : x[%f],y[%f],z[%f]\n", data->cam.norm.x, data->cam.norm.y, data->cam.norm.z);
 	printf("\033[33m|\033[0;32m • fov degree: %d\n", data->cam.fov);
@@ -705,7 +705,7 @@ void	print_data(t_data *data)
 	while(head != NULL)
 	{
 		light = (t_lht *)head->content;
-		printf("\033[33m==================== [light %d] ======================\033[0;32m\n", index++);
+		printf("\033[33m====================== [light %d] ======================\033[0;32m\n", index++);
 		printf("\033[33m|\033[0;32m • coordinete: x[%f],y[%f],z[%f]\n", light->pos.x, light->pos.y, light->pos.z);
 		printf("\033[33m|\033[0;32m • brightness: %f\n", light->bright);
 		printf("\033[33m|\033[0;32m • color     : r[%d],g[%d],b[%d]\n", light->color.r, light->color.g, light->color.b);
@@ -719,7 +719,7 @@ void	print_data(t_data *data)
 		object = (t_obj *)head->content;
 		if (object->type == SPHERE)
 		{
-			printf("\033[33m================ [object %d][sphere] ==================\033[0;32m\n", index++);
+			printf("\033[33m================= [object %d][sphere] ==================\033[0;32m\n", index++);
 			printf("\033[33m|\033[0;32m • index     : %d\n", object->idx);
 			printf("\033[33m|\033[0;32m • type      : %d\n", object->type);
 			printf("\033[33m|\033[0;32m • name      : %s\n", object->name);
@@ -730,7 +730,7 @@ void	print_data(t_data *data)
 		}
 		else if (object->type == PLANE)
 		{
-			printf("\033[33m================ [object %d][plane] ==================\033[0;32m\n", index++);
+			printf("\033[33m================== [object %d][plane] ==================\033[0;32m\n", index++);
 			printf("\033[33m|\033[0;32m • index     : %d\n", object->idx);
 			printf("\033[33m|\033[0;32m • type      : %d\n", object->type);
 			printf("\033[33m|\033[0;32m • name      : %s\n", object->name);
@@ -752,7 +752,7 @@ void	print_data(t_data *data)
 		}
 		head = head->next;
 	}
-	printf("\033[33m=====================================================\n");
+	printf("\033[33m======================================================\n");
 	printf("•-------------------------•\n");
 	printf("|\033[32m • total lights  => %d ea \033[33m|\n", ft_lstsize(data->lht));
 	printf("|\033[32m • total objects => %d ea \033[33m|\n", ft_lstsize(data->objs));
