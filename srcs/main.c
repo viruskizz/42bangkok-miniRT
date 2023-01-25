@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:31:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/25 01:22:52 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/01/26 01:55:22 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 	// mlx_loop_hook(data.mlx, &render, &data);
 	// mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
 	// mlx_loop(data.mlx);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static void	initial(t_data *data, char *filename)

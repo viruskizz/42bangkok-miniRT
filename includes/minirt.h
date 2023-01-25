@@ -21,14 +21,16 @@
 # define ERROR_WIN	2
 # define FRAME_RATE	60
 
+# define PLANE	1
 # define PLAN	1
 # define SPHERE	2
+# define CYLIND	3
 # define C		3
 
 # define WIDTH	1280
 # define HEIGHT	720
 
-# define READ_SIZE 10
+# define READ_SIZE 1024
 
 typedef struct s_size
 {
@@ -75,7 +77,7 @@ typedef struct s_camara
 typedef struct s_light
 {
 	t_vtr	pos;
-	double	birghtness; //* range[0.0-1.0];
+	double	bright; //* range[0.0-1.0];
 	t_color	color;
 }	t_lht;
 
