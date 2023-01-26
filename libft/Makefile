@@ -54,6 +54,10 @@ all: bonus
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
+norminette:
+	norminette -R CheckForbiddenSourceHeader $(SRCS)
+	norminette -R CheckDefine libft.h
+
 clean:
 	rm -rf $(OBJS) $(BONUS_OBJS)
 
@@ -65,4 +69,4 @@ re: fclean $(NAME)
 bonus: $(OBJS) $(BONUS_OBJS)
 	ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 
-.PHONY:	all clean fclean re bonus
+.PHONY:	all norminette clean fclean re bonus

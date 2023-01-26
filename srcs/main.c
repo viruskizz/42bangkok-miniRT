@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:31:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/26 02:11:27 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/01/27 00:43:47 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	initial(t_data *data, char *filename);
 static int	render(t_data *data);
-double	ito_double(char *str);
 
 int main(int argc, char **argv)
 {
@@ -22,8 +21,7 @@ int main(int argc, char **argv)
 	char *filename;
 	
 	data = parsing_input(argc, argv);
-	print_data(&data);
-	print_data(&data);
+	print_tdata(&data);
 
 	// * krun nay part 
 	// filename = argv[1];

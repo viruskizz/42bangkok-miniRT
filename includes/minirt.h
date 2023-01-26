@@ -8,6 +8,7 @@
 # include <float.h>
 # include "libft.h"
 # include "key.h"
+# include "minirt_error.h"
 
 # ifdef __linux__
 #  define IS_LINUX 1
@@ -112,6 +113,12 @@ int rt_setup(t_data *data, char *filename);
 
 // * parsing_intput
 t_data	parsing_input(int argc, char **argv);
+void	ambient_initialise(t_data *data, char **object);
+void	camara_initialise(t_data *data, char **object);
+void	light_initialise(t_data* data, char **object);
+void	sephere_initialise(t_data *data, char **object);
+void	plane_initialise(t_data *data, char **object);
+void	cylinder_inititialize(t_data *data, char **object);
 
 // render
 void	render_objects(t_data *data);
@@ -129,10 +136,27 @@ void	pixel_put_img(t_img *img, int x, int y, int color);
 t_color	set_color(int r, int g, int b);
 t_size	set_size(double w, double h, double d);
 t_vtr	set_vector(double x, double y, double z);
+// * utils from sharnvon..
+void	exit_error(char *str);
+void	free_twopointer_char(char **ptr);
+char	*ft_strjoin_pro(char *str1, char *str2);
+int		character_count(char *str, char c);
+double	ato_double(char *str);
+t_color	ato_tcolor(char *str);
+t_vtr	ato_tvector(char *str);
+int		tvector_inrange(t_vtr vactor, double min, double max);
+t_size	size_initialise(double height, double width, double depth);
 
 
-// Debug
+// * Debug
 void	print_obj(t_obj *obj);
-void	print_data(t_data *data);
+void	print_tdata(t_data *data);
+void	print_twoarray_char(char **str);
+void	print_tvector(t_vtr vector);
+void	print_tobject(t_obj *object);
+void	printf_tcamara(t_cam camara);
+void	printf_tambient(t_amb ambient);
+void	printf_tsize(t_size size);
+void	print_tcolor(t_color color);
 
 #endif

@@ -55,6 +55,11 @@ re: fclean all
 cbuild:
 	-$(RM) -r $(BUILD_DIR)
 
+norminette:
+	make norminette -C $(LIBFT_DIR)
+	norminette -R CheckforbiddenSourceHeader $(SRCS)
+	norminette -R CheckDefine $(INCLUDE_DIR)/*.h
+
 clean:
 	make clean -C $(LIBFT_DIR)
 	make clean -C $(MLX_DIR)
@@ -65,4 +70,4 @@ fclean: clean
 	make fclean -C $(MLX_DIR)	
 	$(RM) $(NAME)
 
-.PHONY: all clean fclean re
+.PHONY: bonus cbuild libs restart norminette all clean fclean re
