@@ -8,7 +8,6 @@
 # include <float.h>
 # include <math.h> 
 # include "libft.h"
-# include "ft_printf.h"
 # include "key.h"
 # include "minirt_error.h"
 

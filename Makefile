@@ -4,7 +4,6 @@ CC			= gcc
 RM			= /bin/rm -f
 
 LIBFT_DIR	= ./libft
-PRINTF_DIR	= ./ft_printf
 
 INCLUDE_DIR	= ./includes
 
@@ -14,10 +13,8 @@ ifeq ($(UNAME), Linux)
 	MLX_FLAGS	= -Imlx_Linux -Lmlx_Linux -lmlx_Linux -lXext -lX11 -lm -lz
 	INCLUDES 	= -I$(INCLUDE_DIR) \
 				  -I$(LIBFT_DIR) \
-				  -I$(PRINTF_DIR) \
 				  -I/usr/include
 	LIBS		= -L$(LIBFT_DIR) -lft \
-				  -L$(PRINTF_DIR) -lftprintf \
 				  -L/usr/lib
 else
 	MLX_DIR		= mlx
@@ -49,7 +46,6 @@ $(OBJS): $(BUILD_DIR)/%.o: %.c
 	@$(CC) -g $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 libs:
-	@make -C $(PRINTF_DIR)
 	@make -C $(LIBFT_DIR)
 	@make -C $(MLX_DIR)
 
@@ -66,13 +62,11 @@ norminette:
 	norminette -R CheckDefine $(INCLUDE_DIR)/*.h
 
 clean:
-	make clean -C $(PRINTF_DIR)
 	make clean -C $(LIBFT_DIR)
 	make clean -C $(MLX_DIR)
 	$(RM) -r $(BUILD_DIR)
 
 fclean:
-	make fclean -C $(PRINTF_DIR)
 	make fclean -C $(LIBFT_DIR)
 	make fclean -C $(MLX_DIR)
 	$(RM) -r $(BUILD_DIR)

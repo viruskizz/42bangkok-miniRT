@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 	data = parsing_input(argc, argv);
 	print_tdata(&data);
 	initial(&data);
-	ft_printf("loophook\n");
+	printf("loophook\n");
 	mlx_loop_hook(data.mlx, &render, &data);
 	mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
 	mlx_loop(data.mlx);
@@ -46,7 +46,7 @@ static int	render(t_data *data)
 	// 	data->frame = 0;
 	// else
 	// 	data->frame += 1;
-	// ft_printf("rendering\n");
+	// printf("rendering\n");
 	render_objects(data);
 	return (0);
 }
