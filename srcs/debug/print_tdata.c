@@ -87,5 +87,5 @@ void	print_tdata(t_data *data)
 	printf("|%s • total lights  => %d ea %s|\n", GREEN, ft_lstsize(data->lht), YELLOW);
 	printf("|%s • total objects => %d ea %s|\n", GREEN, ft_lstsize(data->objs), YELLOW);
 	printf("•-------------------------•\n");
-	printf("\033[0m");
+	printf(RESET);
 }

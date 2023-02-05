@@ -1,0 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector_utils1.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: araiva <tsomsa@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/05 14:11:52 by araiva            #+#    #+#             */
+/*   Updated: 2023/02/05 14:11:53 by araiva           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minirt.h"
+
+/**
+ * @brief Set a vector attribute in 3 dimension
+ * @param x value in x axis
+ * @param y value in y axis
+ * @param z value in z axis
+ * @return t_vtr 
+ */
+t_vtr vtrset(double x, double y, double z)
+{
+	t_vtr	v;
+
+	v.x = x;
+	v.y = y;
+	v.z = z;
+	return (v);
+}
+
+/**
+ * Magnitude of vector
+*/
+double	vtrmag(t_vtr v)
+{
+	return (sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
+}
+
+/**
+ * normalize vector to vector in single unit
+ */
+t_vtr	vtrnorm(t_vtr v)
+{
+	double	mag;
+
+	mag = vtrmag(v);
+	return (vtrset(v.x / mag, v.y / mag, v.z / mag));
+}

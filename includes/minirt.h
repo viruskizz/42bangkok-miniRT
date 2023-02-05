@@ -6,7 +6,9 @@
 # include <fcntl.h>
 # include <mlx.h>
 # include <float.h>
+# include <math.h> 
 # include "libft.h"
+# include "ft_printf.h"
 # include "key.h"
 # include "minirt_error.h"
 
@@ -52,7 +54,15 @@ typedef struct s_vtr
 	double	x;
 	double	y;
 	double	z;
+	double	mag;
 }	t_vtr;
+
+typedef struct s_ray
+{
+	t_vtr	a;
+	t_vtr	b;
+	t_vtr	l;
+}	t_ray;
 
 typedef struct s_img {
 	void	*img;
@@ -71,8 +81,8 @@ typedef struct s_ambient
 typedef struct s_camara
 {
 	t_vtr	pos;
-	t_vtr	norm;	// * range[-1-1];
-	int		fov; 	//* horizountal field view in degree range[0-180];
+	t_vtr	norm;	//* range[-1-1];
+	int		fov;	//* horizountal field view in degree range[0-180];
 } 	t_cam;
 
 typedef struct s_light
@@ -135,7 +145,19 @@ int		rgb_to_int(int r, int g, int b);
 void	pixel_put_img(t_img *img, int x, int y, int color);
 t_color	set_color(int r, int g, int b);
 t_size	set_size(double w, double h, double d);
-t_vtr	set_vector(double x, double y, double z);
+
+t_vtr	vtrset(double x, double y, double z);
+double	vtrmag(t_vtr v);
+t_vtr	vtrnorm(t_vtr v);
+t_vtr	vtradd(t_vtr a, t_vtr b);
+t_vtr	vtrsub(t_vtr a, t_vtr b);
+t_vtr	vtrscale(t_vtr v, double s);
+double	vtrdot(t_vtr a, t_vtr b);
+t_vtr	vtrcross(t_vtr a, t_vtr b);
+
+t_ray	rayset(t_vtr a, t_vtr b);
+
+
 // * utils from sharnvon..
 void	exit_error(char *str);
 void	free_twopointer_char(char **ptr);

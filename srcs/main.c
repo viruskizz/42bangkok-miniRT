@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static void	initial(t_data *data, char *filename);
+static void	initial(t_data *data);
 static int	render(t_data *data);
 
 int main(int argc, char **argv)
@@ -22,23 +22,20 @@ int main(int argc, char **argv)
 	
 	data = parsing_input(argc, argv);
 	print_tdata(&data);
-
-	// * krun nay part 
-	// filename = argv[1];
-	// initial(&data, filename);
-	// mlx_loop_hook(data.mlx, &render, &data);
-	// mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
-	// mlx_loop(data.mlx);
+	initial(&data);
+	ft_printf("loophook\n");
+	mlx_loop_hook(data.mlx, &render, &data);
+	mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
+	mlx_loop(data.mlx);
 	return (EXIT_SUCCESS);
 }
 
-static void	initial(t_data *data, char *filename)
+static void	initial(t_data *data)
 {
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		error_exit(data, ERROR_MLX);
-	rt_setup(data, filename);
-	data->win = mlx_new_window(data->mlx, HEIGHT, WIDTH, "miniRT");
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "miniRT");
 	if (!data->win)
 		error_exit(data, ERROR_WIN);
 }
@@ -49,6 +46,7 @@ static int	render(t_data *data)
 	// 	data->frame = 0;
 	// else
 	// 	data->frame += 1;
+	// ft_printf("rendering\n");
 	render_objects(data);
 	return (0);
 }

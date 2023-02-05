@@ -17,7 +17,7 @@
 */
 void	exit_error(char *str)
 {
-	printf("%s\n", str);
+	ft_printf("%s\n", str);
 	exit (EXIT_FAILURE);
 }
 

@@ -11,9 +11,11 @@ void	render_objects(t_data *data)
 	tmp = obj;
 	while (tmp)
 	{
+		// if (tmp->content)
+		// 	put_obj_img_to_win(data, tmp->content);
+		// 	// print_obj(tmp->content);
 		if (tmp->content)
-			put_obj_img_to_win(data, tmp->content);
-			// print_obj(tmp->content);
+			print_tobject(tmp->content);
 		tmp = tmp->next;
 	}
 }

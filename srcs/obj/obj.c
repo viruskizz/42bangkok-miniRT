@@ -22,7 +22,7 @@ t_obj	*new_obj(t_data *data)
 	obj = ft_calloc(sizeof(t_obj), 1);
 	obj->type = PLAN;
 	obj->name = ft_strdup("PLAN");
-	obj->pos = set_vector(0, 0, 0);
+	obj->pos = vtrset(0, 0, 0);
 	obj->color = set_color(128, 128, 0);
 	obj->size = set_size(WIDTH, HEIGHT, 0);
 	return (obj);
