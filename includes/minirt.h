@@ -82,6 +82,12 @@ typedef struct s_camara
 	t_vtr	pos;
 	t_vtr	norm;	//* range[-1-1];
 	int		fov;	//* horizountal field view in degree range[0-180];
+	t_vtr	lookat;
+	t_vtr	up;
+	double	horz_size;
+	double	aspect;
+	t_vtr	proj_u;	// orm_vector in projection screen u
+	t_vtr	proj_v;	// norm_vector in projection screen v
 } 	t_cam;
 
 typedef struct s_light

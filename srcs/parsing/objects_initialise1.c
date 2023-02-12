@@ -77,6 +77,12 @@ void	camara_initialise(t_data *data, char **object)
 		index++;
 	}
 	camara_value_check(index, data);
+	data->cam.pos = vtrset(0, 0, -10.0);
+	data->cam.lookat = vtrset(0, 0, 0);
+	data->cam.up = vtrset(0, 1.00, 0);
+	data->cam.horz_size = 0.25;
+	data->cam.aspect = 16.0 / 9.0;
+
 }
 
 /*
