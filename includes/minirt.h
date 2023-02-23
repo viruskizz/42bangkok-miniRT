@@ -84,9 +84,11 @@ typedef struct s_camara
 	int		fov;	//* horizountal field view in degree range[0-180];
 	t_vtr	lookat;
 	t_vtr	up;
-	double	horz_size;
-	double	aspect;
-	t_vtr	proj_u;	// orm_vector in projection screen u
+	double	length;
+	double	horz;
+	double	ratio;
+	t_vtr	proj_c;	// norm_vector in projection center screen
+	t_vtr	proj_u;	// norm_vector in projection screen u
 	t_vtr	proj_v;	// norm_vector in projection screen v
 } 	t_cam;
 
@@ -115,6 +117,7 @@ typedef struct s_data
 	int		w;
 	int		h;
 	int		frame;
+	t_obj	scene;
 	t_amb	amb;
 	t_cam	cam;
 	t_list	*lht;
@@ -143,6 +146,8 @@ void	set_objs(t_data *data);
 t_obj	*new_obj(t_data *data);
 void	free_obj(t_obj *obj);
 
+int	sphere_inter(t_ray ray);
+
 t_obj	*set_plain_img(t_data *data, t_obj *obj);
 
 // utils
@@ -160,8 +165,10 @@ t_vtr	vtrscale(t_vtr v, double s);
 double	vtrdot(t_vtr a, t_vtr b);
 t_vtr	vtrcross(t_vtr a, t_vtr b);
 
-t_ray	rayset(t_vtr a, t_vtr b);
+void	camgeometry(t_cam *cam);
 
+t_ray	rayset(t_vtr a, t_vtr b);
+t_ray	raygen(t_cam cam, float proj_x, float proj_y);
 
 // * utils from sharnvon..
 void	exit_error(char *str);
