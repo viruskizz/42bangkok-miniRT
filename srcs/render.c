@@ -19,6 +19,6 @@ void	render_objects(t_data *data)
 
 void	put_obj_img_to_win(t_data *data, t_obj *obj)
 {
-	if (obj->img.img)
-		mlx_put_image_to_window(data->mlx, data->win, obj->img.img, obj->pos.x, obj->pos.y);
+	if (obj->img.ptr)
+		mlx_put_image_to_window(data->mlx, data->win, obj->img.ptr, obj->pos.x, obj->pos.y);
 }

@@ -6,8 +6,8 @@ t_obj	*set_plain_img(t_data *data, t_obj *obj)
 	double	y;
 	int		color;
 
-	obj->img.img = mlx_new_image(data->mlx, obj->size.w, obj->size.h);
-	obj->img.addr = mlx_get_data_addr(obj->img.img, &obj->img.bpp, &obj->img.lh, &obj->img.endian);
+	obj->img.ptr = mlx_new_image(data->mlx, (int)obj->size.w, (int)obj->size.h);
+	obj->img.addr = mlx_get_data_addr(obj->img.ptr, &obj->img.bpp, &obj->img.lh, &obj->img.endian);
 	y = 0;
 	while (y < obj->size.h)
 	{
