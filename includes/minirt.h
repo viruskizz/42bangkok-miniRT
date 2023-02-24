@@ -6,7 +6,7 @@
 # include <fcntl.h>
 # include <mlx.h>
 # include <float.h>
-# include <math.h> 
+# include <math.h>
 # include "libft.h"
 # include "key.h"
 # include "minirt_error.h"
@@ -64,7 +64,7 @@ typedef struct s_ray
 }	t_ray;
 
 typedef struct s_img {
-	void	*img;
+	void	*ptr;
 	char	*addr;
 	int		bpp;
 	int		lh;
@@ -146,7 +146,7 @@ void	set_objs(t_data *data);
 t_obj	*new_obj(t_data *data);
 void	free_obj(t_obj *obj);
 
-int	sphere_inter(t_ray ray);
+int	sphere_inter(t_ray ray, t_vtr *vinter);
 
 t_obj	*set_plain_img(t_data *data, t_obj *obj);
 
