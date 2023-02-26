@@ -71,7 +71,6 @@ void	sphere_inter(t_ray ray, t_ints *ints)
 			{
 				ints->p = vtradd(ray.a, vtrscale(vray, t2));
 			}
-			// printf("%f,%f,%f\n", ints->p);
 			ints->localn = vtrnorm(ints->p);
 		}
 		ints->valid = 1;

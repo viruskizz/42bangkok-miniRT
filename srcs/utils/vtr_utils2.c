@@ -36,7 +36,7 @@ t_vtr	vtrcross(t_vtr a, t_vtr b)
 {
 	t_vtr crs;
 
-	crs.x = (a.y * b.z - a.z * b.y);
+	crs.x = a.y * b.z - a.z * b.y;
 	crs.y = - (a.x * b.z - a.z * b.x);
 	crs.z = a.x * b.y - a.y * b.x;
 	return (crs);
