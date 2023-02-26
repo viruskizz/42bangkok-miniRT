@@ -9,8 +9,12 @@ void	cam_geometry(t_cam *cam)
 	t_vtr	v;
 
 	l = vtrnorm(vtrsub(cam->lookat, cam->pos));
-	u = vtrnorm(vtrcross(l, cam->up));
-	v = vtrnorm(vtrcross(u, l));
+	u = vtrnorm(vtrcross(cam->up, l));
+	v = vtrnorm(vtrcross(l, u));
+	printf("cam: %f, %f, %f\n", cam->up.x, cam->up.y, cam->up.z);
+	printf("l: %f, %f, %f\n", l.x, l.y, l.z);
+	printf("u: %f, %f, %f\n", u.x, u.y, u.z);
+	printf("v: %f, %f, %f\n", v.x, v.y, v.z);
 	cam->proj_c = vtradd(cam->pos, vtrscale(l, cam->length));
 	cam->proj_u = vtrscale(u, cam->horz);
 	cam->proj_v = vtrscale(v, (cam->horz / cam->ratio));
@@ -21,12 +25,19 @@ void	cam_geometry(t_cam *cam)
  */
 t_ray	cam_ray(t_cam cam, float proj_x, float proj_y)
 {
+	t_ray	ray;
 	t_vtr	world1;
-	t_vtr	screen_pos;
+	t_vtr	world_codinate;
 
 	world1 = vtradd(cam.proj_c, vtrscale(cam.proj_u, proj_x));
-	screen_pos = vtradd(world1, vtrscale(cam.proj_v, proj_y));
-	return rayset(cam.pos, screen_pos);
+	world_codinate = vtradd(world1, vtrscale(cam.proj_v, proj_y));
+	// printf("w1: %f,%f,%f\n", world1.x, world1.y, world1.z);
+	// printf("sp: %f,%f,%f\n", world_codinate.x, world_codinate.y, world_codinate.z);
+	// return rayset(cam.pos, world_codinate);
+	ray.a = cam.pos;
+	ray.b = world_codinate;
+	ray.l = vtrsub(world_codinate, cam.pos);
+	return (ray);
 }
 
 
