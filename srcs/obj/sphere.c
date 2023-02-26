@@ -1,40 +1,80 @@
 #include "minirt.h"
 
-int	sphere_inter(t_ray ray, t_vtr *ivtr)
+
+/*
+* [function initialise and checking sphere value]
+* => [success] : intialize value into t_obj
+* => [exit] : unsuccessful initialize value cause invalid value or character.
+*/
+void	sphere_initialise(t_data *data, char **object)
+{
+	int		index;
+	t_obj	*sphere;
+	char	*trimed_obj;
+	double	diameter;
+
+	index = 0;
+	sphere = object_initialise(SPHERE);
+	while(object[index])
+	{
+		if (index > 3)
+			exit_error(TOO_MANY_INPUT_SP);
+		trimed_obj = ft_strtrim(object[index], "\t");
+		if (!trimed_obj)
+			exit_error(FAIL_TRIM);
+		if (index == 0 && ft_strncmp(trimed_obj, "sp", 3))
+			exit_error(INVALID_IDENT_SP);
+		else if (index == 1)
+			sphere->pos = ato_tvector(trimed_obj);
+		else if (index == 2)
+		{
+			diameter = ato_double(trimed_obj);
+			sphere->size = size_initialise(diameter, diameter, diameter);
+		}
+		else if (index == 3)
+			sphere->color = ato_tcolor(trimed_obj);
+		free(trimed_obj);
+		index++;
+	}
+	if (index != 4)
+		exit_error(TOO_LESS_INPUT_SP);
+	ft_lstadd_back(&data->objs, ft_lstnew((void *)sphere));
+}
+
+void	sphere_inter(t_ray ray, t_ints *ints)
 {
 	t_vtr	vray; // compute the values of a,b,c
+	double	a;
+	double	b;
+	double	c;
 
 	vray = vtrnorm(ray.l);
-	double a = 1.0;
-	double b = 2.0 * vtrdot(ray.a, vray);
-	double c =  vtrdot(ray.a, ray.a) - 1.0;
-
-	double inter = b * b - 4.0 * c;
-	if (inter > 0.0)
+	a = 1.0;
+	b = 2.0 * vtrdot(ray.a, vray);
+	c =  vtrdot(ray.a, ray.a) - 1.0;
+	ints->value = b * b - 4.0 * c;
+	ints->valid = 0;
+	if (ints->value > 0.0)
 	{
-		double sqt = sqrtf(inter);
+		double sqt = sqrtf(ints->value);
 		double t1 = (-b + sqt) / 2.0;
 		double t2 = (-b - sqt) / 2.0;
 		if (t1 < 0.0 || t2 < 0.0)
-		{
-			return (0);
-		}
+			return ;
 		else
 		{
 			if (t1 < t2)
 			{
-				*ivtr = vtradd(ray.a, vtrscale(vray, t1));
+				ints->p = vtradd(ray.a, vtrscale(vray, t1));
 			}
 			else
 			{
-				*ivtr = vtradd(ray.a, vtrscale(vray, t2));
+				ints->p = vtradd(ray.a, vtrscale(vray, t2));
 			}
-
+			// printf("%f,%f,%f\n", ints->p);
+			ints->localn = vtrnorm(ints->p);
 		}
-		return (1);
-	}
-	else
-	{
-		return (0);
+		ints->valid = 1;
 	}
 }
+
