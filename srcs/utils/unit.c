@@ -19,3 +19,13 @@ t_size set_size(double w, double h, double d)
 	size.d = d;
 	return (size);
 }
+
+t_ray	rayset(t_vtr a, t_vtr b)
+{
+	t_ray	r;
+
+	r.a = a;
+	r.b = b;
+	r.l = vtrsub(b, a);
+	return (r);
+}
