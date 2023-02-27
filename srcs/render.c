@@ -32,7 +32,18 @@ int render_scene(t_data *data)
 			// normalize the x and y coordinates
 			// printf("fact: %f, %f\n", x_fact, y_fact);
 			double norm_x = (x * x_fact) - 1.0;
-			double norm_y = (y * y_fact) - 1.0;
+			double norm_y = 1.0 - (y * y_fact);
+			// double norm_y = (y * y_fact) - 1.0;
+			if (x == data->w / 2.0 + 100 && y == data->h / 2.0 + 100)
+			{
+				printf("x = %f, %f\n", x, norm_x);
+				printf("y = %f, %f\n", y, norm_y);
+			}
+			if (x == data->w / 2.0 - 100 && y == data->h / 2.0 - 100)
+			{
+				printf("x = %f, %f\n", x, norm_x);
+				printf("y = %f, %f\n", y, norm_y);
+			}
 			camray = cam_ray(data->cam, norm_x, norm_y);
 			t_list *obj;
 			t_list *tmp;
