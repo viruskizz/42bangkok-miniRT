@@ -1,13 +1,5 @@
 #include "minirt.h"
 
-void	put_obj_img_to_win(t_data *data, t_obj *obj);
-
-// void	put_obj_img_to_win(t_data *data, t_obj *obj)
-// {
-// 	if (obj->img.ptr)
-// 		mlx_put_image_to_window(data->mlx, data->win, obj->img.ptr, obj->pos.x, obj->pos.y);
-// }
-// t_color	color_inter(t_ray camray, t_vtr ivtr);
 t_color	color_inter(t_data *data, t_ray camray, t_ints *ints);
 
 int render_scene(t_data *data)
@@ -17,74 +9,39 @@ int render_scene(t_data *data)
 	t_vtr	local_normal;
 	t_vtr	local_color;
 	t_ints	ints;
-	double x_fact = 1.0 / ((double)data->w / 2.0);
-	double y_fact = 1.0 / ((double)data->h / 2.0);
-	if (data->scene.img.ptr)
-		mlx_destroy_image(data->mlx, data->scene.img.ptr);
-	double y;
-	double x;
+	t_color	color;
+	// if (data->scene.img.ptr)
+	// 	mlx_destroy_image(data->mlx, data->scene.img.ptr);
+	float y;
+	float x;
+	float cw = data->w / 2.0;
+	float ch = data->h / 2.0;
+	float cox;
+	float coy;
+	float ratio = data->w / (float) data->h;
+	t_vtr	coord;
+	t_obj	sphere;
 	y = 0;
 	while (y < data->h)
 	{
 		x = 0;
 		while (x < data->w)
 		{
-			// normalize the x and y coordinates
-			// printf("fact: %f, %f\n", x_fact, y_fact);
-			double norm_x = (x * x_fact) - 1.0;
-			double norm_y = (y * y_fact) - 1.0;
-			camray = cam_ray(data->cam, norm_x, norm_y);
-			t_list *obj;
-			t_list *tmp;
-
-			obj = data->objs;
-			tmp = obj;
-			int inter = 0;
-			while (tmp)
-			{
-				if (tmp->content)
-				{
-					t_obj *o = (t_obj *)tmp->content;
-					if (o->type == SPHERE)
-						sphere_inter(camray, &ints);
-					int color;
-					if (ints.valid)
-					{
-						// double d = vtrmag(vtrsub(ivtr, camray.a));
-						// if (d > maxd)
-						// 	maxd = d;
-						// if (d < mind)
-						// 	mind = d;
-						// int r = 255.0 - ((d - 9.0) / 0.94605 * 255.0);
-						// color = rgb_to_int(r, 0, 0);
-						color = color_to_int(color_inter(data, camray, &ints));
-						// if (x == 720 && y == 390)
-						// {
-						// 	printf("center: %d, %d\n", data->w / 2, data->h / 2);
-						// 	printf("x,y: %f, %f\n", x, y);
-						// 	printf("norm: %f, %f\n", norm_x, norm_y);
-						// 	printf("localn: %f, %f, %f\n", ints.localn.x, ints.localn.y, ints.localn.z);
-						// 	printf("ints: %f, %f, %f\n", ints.p.x, ints.p.y, ints.p.z);
-						// 	printf("intensity: %f\n", ints.illum.intens);
-						// 	printf("u: %f, %f\n", data->cam.proj_u.x, data->cam.proj_u.y);
-						// 	printf("v: %f, %f\n", data->cam.proj_v.x, data->cam.proj_v.y);
-						// 	mlx_put_image_to_window(data->mlx, data->win, data->scene.img.ptr, 0, 0);
-						// 	return 0;
-						// }
-					}
-					else
-					{
-						color = rgb_to_int(0, 0, 0);
-					}
-					pixel_put_img(&data->scene.img, x, y, color);
-				}
-				tmp = tmp->next;
-			}
+			// coord = vtrset(x / data->w, y / data->h, 0);
+			cox = (x / cw) - 1.0;
+			coy = 1.0 - (y / ch);
+			cox *= ratio;
+			coord = vtrset(cox, coy, 0.0);
+			camray.a = vtrset(0, 0, 2);
+			camray.b = vtrset(coord.x, coord.y, -1);
+			sphere.pos = vtrset(0, 0, 0);
+			// color = set_color(ints.p.x * 255.0, ints.p.y * 255.0, 0);
+			sphere_ints(sphere, camray, &ints);
+			pixel_put_img(&data->scene.img, x, y, color_to_int(ints.illum));
 			x++;
 		}
 		y++;
 	}
-	// printf("min/max = %f/%f\n", mind, maxd);
 	mlx_put_image_to_window(data->mlx, data->win, data->scene.img.ptr, 0, 0);
 	return (0);
 }

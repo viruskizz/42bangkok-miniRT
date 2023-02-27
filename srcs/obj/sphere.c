@@ -71,9 +71,46 @@ void	sphere_inter(t_ray ray, t_ints *ints)
 			{
 				ints->p = vtradd(ray.a, vtrscale(vray, t2));
 			}
+			// printf("%f,%f,%f\n", ints->p);
 			ints->localn = vtrnorm(ints->p);
 		}
 		ints->valid = 1;
 	}
 }
 
+void	sphere_ints(t_obj obj, t_ray ray, t_ints *ints)
+{
+	t_vtr	vlight;
+	float	light;
+	t_vtr	vray; // compute the values of a,b,c
+	float	a;	// ? ray origin
+	float	b;	// ? ray direction
+	float	c;	// ? ray direction
+	float	r;	// ? radius
+	float	t;	// ? hit distance
+
+	vlight = vtrset(-1, -1, -1);
+	vray = vtrset(ray.b.x, ray.b.y, ray.b.z);
+	r = 0.5;
+	a = vtrdot(vray, vray);
+	b = 2.0 * vtrdot(ray.a, vray);
+	c = vtrdot(ray.a, ray.a) - r * r;
+	float discriminant = b * b - 4.0 * a * c;
+	if (discriminant > 0.0)
+	{
+		float t0 = (-b - sqrtf(discriminant)) / (2.0 * a);
+		float t1 = (-b + sqrtf(discriminant)) / (2.0 * a);
+		vlight = vtrnorm(vlight);
+		ints->p = vtradd(ray.a, vtrscale(vray, t0));
+		ints->localn = vtrnorm(ints->p);
+		ints->valid = 1;
+		ints->illum.intens = vtrdot(ints->localn, vtrscale(vlight, -1));
+		ints->illum = set_color(255 * ints->illum.intens, 0, 0);
+	}
+	else
+	{
+		ints->valid = 0;
+		ints->illum = set_color(0, 0, 0);
+	}
+
+}
