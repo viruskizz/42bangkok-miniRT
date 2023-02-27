@@ -24,17 +24,16 @@ int render_scene(t_data *data)
 	double y;
 	double x;
 	y = 0;
-	while (x < data->w)
+	while (y < data->h)
 	{
-		y = 0;
-		while (y < data->h)
+		x = 0;
+		while (x < data->w)
 		{
 			// normalize the x and y coordinates
 			// printf("fact: %f, %f\n", x_fact, y_fact);
 			double norm_x = (x * x_fact) - 1.0;
 			double norm_y = (y * y_fact) - 1.0;
 			camray = cam_ray(data->cam, norm_x, norm_y);
-			// camray = cam_ray(data->cam, norm_x, -1 * norm_y);
 			t_list *obj;
 			t_list *tmp;
 
@@ -59,19 +58,18 @@ int render_scene(t_data *data)
 						// int r = 255.0 - ((d - 9.0) / 0.94605 * 255.0);
 						// color = rgb_to_int(r, 0, 0);
 						color = color_to_int(color_inter(data, camray, &ints));
-						// if (x == 690 && y == 390)
+						// if (x == 720 && y == 390)
 						// {
-							// printf("center: %d, %d\n", data->w / 2, data->h / 2);
-							// printf("x,y: %f, %f\n", x, y);
-							// printf("norm: %f, %f\n", norm_x, norm_y);
-							// printf("localn: %f, %f, %f\n", ints.localn.x, ints.localn.y, ints.localn.z);
-							// printf("localn: %f, %f, %f\n", ints.localn.x, ints.localn.y, ints.localn.z);
-							// printf("ray: %f, %f, %f\n", camray.a.x, camray.a.y, camray.a.z);
-							// printf("ints: %f, %f, %f\n", ints.p.x, ints.p.y, ints.p.z);
-							// printf("intensity: %f\n", ints.illum.intens);
-							// printf("u: %f, %f\n", data->cam.proj_u.x, data->cam.proj_u.y);
-							// printf("v: %f, %f\n", data->cam.proj_v.x, data->cam.proj_v.y);
-							// return 0;
+						// 	printf("center: %d, %d\n", data->w / 2, data->h / 2);
+						// 	printf("x,y: %f, %f\n", x, y);
+						// 	printf("norm: %f, %f\n", norm_x, norm_y);
+						// 	printf("localn: %f, %f, %f\n", ints.localn.x, ints.localn.y, ints.localn.z);
+						// 	printf("ints: %f, %f, %f\n", ints.p.x, ints.p.y, ints.p.z);
+						// 	printf("intensity: %f\n", ints.illum.intens);
+						// 	printf("u: %f, %f\n", data->cam.proj_u.x, data->cam.proj_u.y);
+						// 	printf("v: %f, %f\n", data->cam.proj_v.x, data->cam.proj_v.y);
+						// 	mlx_put_image_to_window(data->mlx, data->win, data->scene.img.ptr, 0, 0);
+						// 	return 0;
 						// }
 					}
 					else
@@ -82,9 +80,9 @@ int render_scene(t_data *data)
 				}
 				tmp = tmp->next;
 			}
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 	// printf("min/max = %f/%f\n", mind, maxd);
 	mlx_put_image_to_window(data->mlx, data->win, data->scene.img.ptr, 0, 0);
