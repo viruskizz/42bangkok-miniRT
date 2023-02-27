@@ -87,19 +87,6 @@ void	lht_illuminated(t_lht lht, t_ints *ints)
 	double	angle;
 	double	dot;
 
-	// lvtr = vtrnorm(vtrsub(lht.pos, ints->p));
-	// dot = vtrdot(ints->localn, lvtr);
-	// ints->illum = lht.color;
-
-	// if (dot > 0)
-	// {
-	// 	ints->illum.intens = dot;
-	// }
-	// else
-	// {
-	// 	ints->illum.intens = 0;
-	// }
-
 	lvtr = vtrnorm(vtrsub(lht.pos, ints->p));
 	svtr = ints->p;
 	angle = acos(vtrdot(ints->localn, lvtr));
@@ -116,6 +103,4 @@ void	lht_illuminated(t_lht lht, t_ints *ints)
 		ints->illum = lht.color;
 		ints->illum.intens = lht.bright * (1.0 - (angle / 1.5708));
 	}
-	// printf("angle: %f\n", angle);
-	// printf("light: %f, %f, %f\n", lvtr.x, lvtr.y, lvtr.z);
 }
