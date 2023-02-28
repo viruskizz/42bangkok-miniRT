@@ -9,8 +9,8 @@ void	cam_geometry(t_cam *cam)
 	t_vtr	v;
 
 	l = vtrnorm(vtrsub(cam->lookat, cam->pos));
-	u = vtrnorm(vtrcross(cam->up, l));
-	v = vtrnorm(vtrcross(l, u));
+	u = vtrnorm(vtrcross(l, cam->up));
+	v = vtrnorm(vtrcross(u, l));
 	printf("cam: %f, %f, %f\n", cam->up.x, cam->up.y, cam->up.z);
 	printf("l: %f, %f, %f\n", l.x, l.y, l.z);
 	printf("u: %f, %f, %f\n", u.x, u.y, u.z);
@@ -68,7 +68,7 @@ void	cam_initialise(t_data *data, char **object)
 		index++;
 	}
 	cam_value_check(index, data);
-	data->cam.pos = vtrset(0, 0, -10.0);
+	data->cam.pos = vtrset(0, 0, 10.0);
 	data->cam.lookat = vtrset(0, 0, 0);
 	data->cam.up = vtrset(0, 1.00, 0);
 	data->cam.length = 1.0;

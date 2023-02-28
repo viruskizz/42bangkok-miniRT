@@ -44,21 +44,21 @@ void	sphere_initialise(t_data *data, char **object)
 void	sphere_inter(t_ray ray, t_ints *ints)
 {
 	t_vtr	vray; // compute the values of a,b,c
-	double	a;
-	double	b;
-	double	c;
+	float	a;
+	float	b;
+	float	c;
 
 	vray = vtrnorm(ray.l);
 	a = 1.0;
 	b = 2.0 * vtrdot(ray.a, vray);
-	c =  vtrdot(ray.a, ray.a) - 1.0;
+	c = vtrdot(ray.a, ray.a) - 1.0;
 	ints->value = b * b - 4.0 * c;
 	ints->valid = 0;
 	if (ints->value > 0.0)
 	{
-		double sqt = sqrtf(ints->value);
-		double t1 = (-b + sqt) / 2.0;
-		double t2 = (-b - sqt) / 2.0;
+		float sqt = sqrtf(ints->value);
+		float t1 = (-b + sqt) / 2.0;
+		float t2 = (-b - sqt) / 2.0;
 		if (t1 < 0.0 || t2 < 0.0)
 			return ;
 		else
