@@ -21,8 +21,9 @@
 # define CYLIND	3
 # define C		3
 
-# define WIDTH	1280
-# define HEIGHT	720
+# define WIDTH		1280
+# define HEIGHT		720
+# define HALF_PI	1.5708
 
 # define READ_SIZE 1024
 

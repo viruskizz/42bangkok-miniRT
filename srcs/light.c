@@ -83,24 +83,19 @@ void	lht_initialise(t_data* data, char **object)
 void	lht_illuminated(t_lht lht, t_ints *ints)
 {
 	t_vtr	lvtr;
-	t_vtr	svtr;
-	double	angle;
-	double	dot;
+	float	angle;
 
 	lvtr = vtrnorm(vtrsub(lht.pos, ints->p));
-	svtr = ints->p;
 	angle = acos(vtrdot(ints->localn, lvtr));
-
-	if (angle > 1.5708)
+	ints->illum = lht.color;
+	ints->illum.intens = 0.0;
+	if (angle > HALF_PI)
 	{
 		ints->valid = 0;
-		ints->illum = lht.color;
-		ints->illum.intens = 0.0;
 	}
 	else
 	{
 		ints->valid = 1;
-		ints->illum = lht.color;
-		ints->illum.intens = lht.bright * (1.0 - (angle / 1.5708));
+		ints->illum.intens = lht.bright * (1.0 - (angle / HALF_PI));
 	}
 }
