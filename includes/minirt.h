@@ -2,6 +2,7 @@
 #define MINIRT_H
 
 # include <stdio.h>
+# include <stdlib.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <mlx.h>
@@ -11,6 +12,7 @@
 # include "key.h"
 # include "error.h"
 # include "data.h"
+# include "utils.h"
 
 int	rt_close(t_data *data, int code);
 int	error_exit(t_data *data, int code);
@@ -45,26 +47,6 @@ void	scene_initialise(t_data *data);
 void	sphere_initialise(t_data *data, char **object);
 void	sphere_inter(t_ray ray, t_ints *ints);
 t_obj	*set_plain_img(t_data *data, t_obj *obj);
-
-
-// * unit
-t_ray	rayset(t_vtr a, t_vtr b);
-
-// * utils
-int		color_to_int(t_color color);
-int		rgb_to_int(int r, int g, int b);
-void	pixel_put_img(t_img *img, int x, int y, int color);
-t_color	set_color(int r, int g, int b);
-t_size	set_size(double w, double h, double d);
-
-t_vtr	vtrset(double x, double y, double z);
-double	vtrmag(t_vtr v);
-t_vtr	vtrnorm(t_vtr v);
-t_vtr	vtradd(t_vtr a, t_vtr b);
-t_vtr	vtrsub(t_vtr a, t_vtr b);
-t_vtr	vtrscale(t_vtr v, double s);
-double	vtrdot(t_vtr a, t_vtr b);
-t_vtr	vtrcross(t_vtr a, t_vtr b);
 
 // * utils from sharnvon..
 void	exit_error(char *str);

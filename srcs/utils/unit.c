@@ -20,7 +20,7 @@ t_size set_size(double w, double h, double d)
 	return (size);
 }
 
-t_ray	rayset(t_vtr a, t_vtr b)
+t_ray	set_ray(t_vtr a, t_vtr b)
 {
 	t_ray	r;
 
