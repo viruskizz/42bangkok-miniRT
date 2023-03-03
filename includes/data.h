@@ -20,6 +20,8 @@
 # define SPHERE	2
 # define CYLIND	3
 # define C		3
+# define TRANS_FWD -1
+# define TRANS_BCK 1
 
 # define WIDTH		1280
 # define HEIGHT		720
@@ -44,10 +46,10 @@ typedef struct s_color
 
 typedef struct s_vtr
 {
-	double	x;
-	double	y;
-	double	z;
-	double	mag;
+	float	x;
+	float	y;
+	float	z;
+	float	mag;
 }	t_vtr;
 
 typedef struct s_ray

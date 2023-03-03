@@ -1,13 +1,5 @@
 #include "minirt.h"
 
-void	put_obj_img_to_win(t_data *data, t_obj *obj);
-
-// void	put_obj_img_to_win(t_data *data, t_obj *obj)
-// {
-// 	if (obj->img.ptr)
-// 		mlx_put_image_to_window(data->mlx, data->win, obj->img.ptr, obj->pos.x, obj->pos.y);
-// }
-// t_color	color_inter(t_ray camray, t_vtr ivtr);
 t_color	color_inter(t_data *data, t_ray camray, t_ints *ints);
 
 int render_scene(t_data *data)
