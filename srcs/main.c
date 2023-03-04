@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	char *filename;
 
 	data = parsing_input(argc, argv);
-	print_tdata(&data);
+	// print_tdata(&data);
 	initial(&data);
 	// mlx_loop_hook(data.mlx, &render, &data);
 	// mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
@@ -32,33 +32,34 @@ int main(int argc, char **argv)
 
 static void	initial(t_data *data)
 {
-	data->mlx = mlx_init();
-	if (!data->mlx)
-		error_exit(data, ERROR_MLX);
-	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "miniRT");
-	if (!data->win)
-		error_exit(data, ERROR_WIN);
-	scene_initialise(data);
+	// data->mlx = mlx_init();
+	// if (!data->mlx)
+	// 	error_exit(data, ERROR_MLX);
+	// data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "miniRT");
+	// if (!data->win)
+	// 	error_exit(data, ERROR_WIN);
+	// scene_initialise(data);
 	// render_scene(data);
 	// float m[3][3] = {
 	// 	{1.0, 2.0, 3.0},
 	// 	{4.0, 5.0, 6.0},
 	// 	{7.0, 8.0, 9.0},
 	// };
-	float **m3 = mtx_identity(3);
-	m3[0][0] = 9;
-	m3[0][1] = 8;
-	m3[0][2] = 7;
-	m3[1][0] = 1;
-	m3[1][1] = 4;
-	m3[1][2] = 6;
-	m3[2][0] = 2;
-	m3[2][1] = 8;
-	m3[2][2] = 3;
-	mtx_print(m3, 3);
-	float **m3i = mtx_inverse(m3, 3);
-	mtx_print(m3i, 3);
+	// float **m3 = mtx_identity(3);
+	// m3[0][0] = 9;
+	// m3[0][1] = 8;
+	// m3[0][2] = 7;
+	// m3[1][0] = 1;
+	// m3[1][1] = 4;
+	// m3[1][2] = 6;
+	// m3[2][0] = 2;
+	// m3[2][1] = 8;
+	// m3[2][2] = 3;
+	// mtx_print(m3, 3);
+	// float **m3i = mtx_inverse(m3, 3);
+	// mtx_print(m3i, 3);
 	float **m4 = mtx_identity(4);
+	mtx_print(m4, 4);
 	m4[0][0] = 1;
 	m4[0][1] = 9;
 	m4[0][2] = 3;
@@ -77,21 +78,5 @@ static void	initial(t_data *data)
 	m4[3][3] = 9;
 	mtx_print(m4, 4);
 	float **m4i = mtx_inverse(m4, 3);
-	mtx_print(m4i, 3);
-	// float **mm = mtx_sub(m, 4, 0, 0);
-	// printf("sub matrix\n");
-	// mtx_print(mm, 3);
-	// float **m3 = mtx_identity(3);
-	// m3[0][0] = 9;
-	// m3[0][1] = 2;
-	// m3[0][2] = 3;
-	// m3[1][0] = 6;
-	// m3[1][1] = 5;
-	// m3[1][2] = 4;
-	// m3[2][0] = 8;
-	// m3[2][1] = 9;
-	// m3[2][2] = 10;
-	// float det = mtx_det(m3, 3);
-	// mtx_print(m3, 3);
-	// printf("det = %f\n", det);
+	mtx_print(m4i, 4);
 }

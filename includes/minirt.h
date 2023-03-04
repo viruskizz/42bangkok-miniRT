@@ -5,7 +5,8 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <mlx.h>
+// # include <mlx.h>
+# include "mlx.h"
 # include <float.h>
 # include <math.h>
 # include "libft.h"
