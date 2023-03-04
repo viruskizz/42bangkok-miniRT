@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_utils2.c                                    :+:      :+:    :+:   */
+/*   vector_utils1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: araiva <tsomsa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,32 +12,43 @@
 
 #include "minirt.h"
 
-t_vtr	vtradd(t_vtr a, t_vtr b)
+/**
+ * @brief Set a vector attribute in 3 dimension
+ * @param x value in x axis
+ * @param y value in y axis
+ * @param z value in z axis
+ * @return t_vtr 
+ */
+t_vtr vtrset(float x, float y, float z)
 {
-	return (vtrset(a.x + b.x, a.y + b.y, a.z + b.z));
+	t_vtr	v;
+
+	v.x = x;
+	v.y = y;
+	v.z = z;
+	return (v);
 }
 
-t_vtr	vtrsub(t_vtr a, t_vtr b)
+/**
+ * Magnitude of vector
+*/
+float	vtrmag(t_vtr v)
 {
-	return (vtrset(a.x - b.x, a.y - b.y, a.z - b.z));
+	return (sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
 }
 
-t_vtr	vtrscale(t_vtr v, double s)
+/**
+ * normalize vector to vector in single unit
+ */
+t_vtr	vtrnorm(t_vtr v)
 {
-	return vtrset(v.x * s, v.y * s, v.z * s);
+	float	mag;
+
+	mag = vtrmag(v);
+	return (vtrset(v.x / mag, v.y / mag, v.z / mag));
 }
 
-double	vtrdot(t_vtr a, t_vtr b)
+void	vtrprint(t_vtr v)
 {
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
-
-t_vtr	vtrcross(t_vtr a, t_vtr b)
-{
-	t_vtr crs;
-
-	crs.x = a.y * b.z - a.z * b.y;
-	crs.y = - (a.x * b.z - a.z * b.x);
-	crs.z = a.x * b.y - a.y * b.x;
-	return (crs);
+	printf("{ %f,%f,%f }\n", v.x, v.y, v.z);
 }

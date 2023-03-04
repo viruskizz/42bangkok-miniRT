@@ -57,6 +57,8 @@ void	print_tdata(t_data *data)
 			printf("%s|%s • normalize : x[%.2f],y[%.2f],z[%.2f] [unuse]\n", YELLOW, BLACK, object->norm.x, object->norm.y, object->norm.z);
 			printf("%s|%s • size      : h[%.2f],w[%.2f],d[%.2f]\n", YELLOW, GREEN, object->size.h, object->size.w, object->size.d);
 			printf("%s|%s • color     : r[%d],g[%d],b[%d]\n", YELLOW, GREEN, object->color.r, object->color.g, object->color.b);
+			printf("%s|%s • trans     : %s\n", YELLOW, GREEN, RESET);
+			mtx_print(object->mtrans, 4);
 		}
 		else if (object->type == PLANE)
 		{

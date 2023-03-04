@@ -14,6 +14,7 @@
 # include "error.h"
 # include "data.h"
 # include "utils.h"
+# include "trans.h"
 
 int	rt_close(t_data *data, int code);
 int	error_exit(t_data *data, int code);
@@ -46,7 +47,7 @@ t_obj	*new_obj(t_data *data);
 void	free_obj(t_obj *obj);
 void	scene_initialise(t_data *data);
 void	sphere_initialise(t_data *data, char **object);
-void	sphere_inter(t_ray ray, t_ints *ints);
+void	sphere_inter(t_obj *obj, t_ray ray, t_ints *ints);
 t_obj	*set_plain_img(t_data *data, t_obj *obj);
 
 // * utils from sharnvon..

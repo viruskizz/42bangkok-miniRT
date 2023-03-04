@@ -12,15 +12,15 @@ t_color	set_color(int r, int g, int b);
 t_size	set_size(double w, double h, double d);
 
 // * vector
-t_vtr	vtrset(double x, double y, double z);
-double	vtrmag(t_vtr v);
+t_vtr	vtrset(float x, float y, float z);
+float	vtrmag(t_vtr v);
 t_vtr	vtrnorm(t_vtr v);
 t_vtr	vtradd(t_vtr a, t_vtr b);
 t_vtr	vtrsub(t_vtr a, t_vtr b);
-t_vtr	vtrscale(t_vtr v, double s);
-double	vtrdot(t_vtr a, t_vtr b);
+t_vtr	vtrscale(t_vtr v, float s);
+float	vtrdot(t_vtr a, t_vtr b);
 t_vtr	vtrcross(t_vtr a, t_vtr b);
-
+void	vtrprint(t_vtr v);
 // * matrix
 float	**mtx_identity(int size);
 float	**mtx_multi(float **m1, float **m2, int size);
