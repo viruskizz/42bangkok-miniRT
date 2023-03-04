@@ -6,7 +6,7 @@ float	**mtx_identity(int size)
 	int		i;
 	int		j;
 
-	m = ft_calloc(size, sizeof(float));
+	m = ft_calloc(size, sizeof(float *));
 	i = 0;
 	while (i < size)
 	{
@@ -15,14 +15,44 @@ float	**mtx_identity(int size)
 		while (j < size)
 		{
 			if (i == j)
-				m[i][j] = 1.0;
+				m[i][j] = 1;
 			else
-				m[i][j] = 0.0;
+				m[i][j] = 0;
 			j++;
 		}
 		i++;
 	}
 	return (m);
+}
+
+float	**mtx_sub(float **m, int size, int row, int col)
+{
+	float	**mm;
+	int		i;
+	int		j;
+	int		x;
+	int		y;
+
+	mm = ft_calloc(size - 1, sizeof(float *));
+	i = -1;
+	y = 0;
+	while (++i < size)
+	{
+		if (i == row)
+			continue;
+		mm[y] = ft_calloc(size - 1, sizeof(float));
+		j = -1;
+		x = 0;
+		while(++j < size)
+		{
+			if (j == col)
+				continue;;
+			mm[y][x] = m[i][j];
+			x++;
+		}
+		y++;
+	}
+	return (mm);
 }
 
 float	**mtx_multi(float **m1, float **m2, int size)
@@ -33,12 +63,12 @@ float	**mtx_multi(float **m1, float **m2, int size)
 	int		j;
 	int		k;
 
-	mm = malloc(sizeof(float) * size);
+	mm = ft_calloc(size, sizeof(float *));
 	i = -1;
 	while (++i < size)
 	{
 		j = -1;
-		mm[i] = malloc(sizeof(float) * size);
+		mm[i] = ft_calloc(size, sizeof(float));
 		while (++j < size)
 		{
 			sum = 0;
@@ -61,7 +91,7 @@ float	**mtx_inverse(float **m, int size)
 
 	i = -1;
 	det = mtx_det(m, size);
-	mm = ft_calloc(size, sizeof(float));
+	mm = ft_calloc(size, sizeof(float *));
 	while (++i < size)
 	{
 		j = -1;
@@ -96,35 +126,6 @@ float	mtx_det(float **m, int size)
 	return (sum);
 }
 
-float	**mtx_sub(float **m, int size, int row, int col)
-{
-	float	**mm;
-	int		i;
-	int		j;
-	int		x;
-	int		y;
-
-	mm = ft_calloc(size - 1, sizeof(float));
-	i = -1;
-	y = 0;
-	while (++i < size)
-	{
-		if (i == row)
-			continue;
-		mm[y] = ft_calloc(size - 1, sizeof(float));
-		j = -1;
-		x = 0;
-		while(++j < size)
-		{
-			if (j == col)
-				continue;;
-			mm[y][x] = m[i][j];
-			x++;
-		}
-		y++;
-	}
-	return (mm);
-}
 
 void	mtx_print(float **m, int size)
 {

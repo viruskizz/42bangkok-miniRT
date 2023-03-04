@@ -1,5 +1,5 @@
 NAME		= minirt
-CC			= gcc
+CC			= gcc -g
 # CFLAGS		= -Wall -Wextra -Werror
 RM			= /bin/rm -f
 
