@@ -11,10 +11,10 @@ void	cam_geometry(t_cam *cam)
 	l = vtrnorm(vtrsub(cam->lookat, cam->pos));
 	u = vtrnorm(vtrcross(l, cam->up));
 	v = vtrnorm(vtrcross(u, l));
-	printf("cam: %f, %f, %f\n", cam->up.x, cam->up.y, cam->up.z);
-	printf("l: %f, %f, %f\n", l.x, l.y, l.z);
-	printf("u: %f, %f, %f\n", u.x, u.y, u.z);
-	printf("v: %f, %f, %f\n", v.x, v.y, v.z);
+	// printf("cam: %f, %f, %f\n", cam->up.x, cam->up.y, cam->up.z);
+	// printf("l: %f, %f, %f\n", l.x, l.y, l.z);
+	// printf("u: %f, %f, %f\n", u.x, u.y, u.z);
+	// printf("v: %f, %f, %f\n", v.x, v.y, v.z);
 	cam->proj_c = vtradd(cam->pos, vtrscale(l, cam->length));
 	cam->proj_u = vtrscale(u, cam->horz);
 	cam->proj_v = vtrscale(v, (cam->horz / cam->ratio));

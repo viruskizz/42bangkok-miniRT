@@ -6,10 +6,10 @@ int render_scene(t_data *data)
 {
 	t_ray	camray;
 	t_ints	ints;
-	if (data->scene.img.ptr)
-		mlx_destroy_image(data->mlx, data->scene.img.ptr);
-	float y;
-	float x;
+	// if (data->scene.img.ptr)
+	// 	mlx_destroy_image(data->mlx, data->scene.img.ptr);
+	int y;
+	int x;
 	y = 0;
 	while (y < data->scene.size.h)
 	{
@@ -22,13 +22,13 @@ int render_scene(t_data *data)
 			// float coy = 1.0 - (y / data->scene.pos.y);
 			if (x == data->w / 2.0 + 100 && y == data->h / 2.0 + 100)
 			{
-				printf("x = %f / %f, %f\n", x, data->w / 2.0, cox);
-				printf("y = %f / %f, %f\n", y, data->h / 2.0, coy);
+				printf("x = %d / %f, %f\n", x, data->w / 2.0, cox);
+				printf("y = %d / %f, %f\n", y, data->h / 2.0, coy);
 			}
 			if (x == data->w / 2.0 - 100 && y == data->h / 2.0 - 100)
 			{
-				printf("x = %f / %f, %f\n", x, data->w / 2.0, cox);
-				printf("y = %f / %f, %f\n", y, data->h / 2.0, coy);
+				printf("x = %d / %f, %f\n", x, data->w / 2.0, cox);
+				printf("y = %d / %f, %f\n", y, data->h / 2.0, coy);
 			}
 			camray = cam_ray(data->cam, cox, coy);
 			t_list *obj;
@@ -43,17 +43,21 @@ int render_scene(t_data *data)
 				{
 					t_obj *o = (t_obj *)tmp->content;
 					if (o->type == SPHERE)
-						sphere_inter(camray, &ints);
+						sphere_inter(o, camray, &ints);
 					int color;
 					if (ints.valid)
 					{
+						// t_color c = color_inter(data, camray, &ints);
+						// printf("(%d,%d) c: %d,%d,%d\n", x, y, c.r, c.g, c.b);
 						color = color_to_int(color_inter(data, camray, &ints));
 					}
 					else
 					{
 						color = rgb_to_int(0, 0, 0);
+						// color = rgb_to_int(0, 255, 0);
 					}
-					pixel_put_img(&data->scene.img, x, y, color);
+					// printf("%d,%d = %d\n", x, y, 0xFF00);
+					pixel_put_img(&data->scene.img, x, y, color);					
 				}
 				tmp = tmp->next;
 			}
@@ -61,7 +65,7 @@ int render_scene(t_data *data)
 		}
 		y++;
 	}
-	// printf("min/max = %f/%f\n", mind, maxd);
+	printf("x\n");
 	mlx_put_image_to_window(data->mlx, data->win, data->scene.img.ptr, 0, 0);
 	return (0);
 }
@@ -99,12 +103,8 @@ t_color	color_inter(t_data *data, t_ray camray, t_ints *ints)
 	}
 	// double d = vtrmag(vtrsub(ints.p, camray.a));
 	double d = vtrmag(vtrsub(camray.a, ints->p));
-	// color.r = 255.0 - ((d - 9.0) / 0.94605 * 255.0);
-	// printf("intens: %f\n", ints->illum.intens);
-	color.r = 255.0 * ints->illum.intens;
-	color.g = 0;
-	color.b = 0;
-	// printf("camray_a: %f, %f, %f\n", camray.a.x, camray.a.y, camray.a.z);
-	// printf("camray_b: %f, %f, %f\n", camray.b.x, camray.b.y, camray.b.z);
+	color.r = ints->localc.r * ints->illum.intens;
+	color.g = ints->localc.g * ints->illum.intens;
+	color.b = ints->localc.b * ints->illum.intens;
 	return (color);
 }

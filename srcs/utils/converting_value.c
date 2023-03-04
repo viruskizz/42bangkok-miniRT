@@ -91,6 +91,7 @@ t_color	ato_tcolor(char *str)
 	result.r = color[0];
 	result.g = color[1];
 	result.b = color[2];
+	result.intens = 1.0;
 	free_twopointer_char(value);
 	return (result);
 }

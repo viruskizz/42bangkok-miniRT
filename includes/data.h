@@ -31,9 +31,9 @@
 
 typedef struct s_size
 {
-	double	w; // width
-	double	h; // height
-	double	d; // depth
+	float	w; // width
+	float	h; // height
+	float	d; // depth
 }	t_size;
 
 typedef struct s_color
@@ -41,7 +41,7 @@ typedef struct s_color
 	int	r;  // red
 	int	g;  // green
 	int	b;  // blue
-	double	intens;	// intensity [0.0 - 1.0]
+	float	intens;	// intensity [0.0 - 1.0]
 }	t_color;
 
 typedef struct s_vtr
@@ -101,6 +101,8 @@ typedef struct s_obj
 	int		type;
 	char	*name;
 	t_vtr	pos;
+	float	**mtrans;
+	float	**itrans;
 	t_vtr	norm;
 	t_color	color;
 	t_size	size;
@@ -113,6 +115,7 @@ typedef struct s_ints
 	int		valid;
 	t_vtr	p;
 	t_vtr	localn;	// local normal in normalize vector
+	t_color	localc; // local color
 	t_color	illum;
 }	t_ints;
 
