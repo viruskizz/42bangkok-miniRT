@@ -3,12 +3,10 @@
 
 void	scene_initialise(t_data *data)
 {
-	// data->w = WIDTH;
-	// data->h = HEIGHT;
-	data->w = 640;
-	data->h = 360;
+	data->w = WIDTH;
+	data->h = HEIGHT;
 	data->scene.color.r = 0;
-	data->scene.color.g = 255;
+	data->scene.color.g = 0;
 	data->scene.color.b = 0;
 	data->scene.pos.x = data->w / 2.0;
 	data->scene.pos.y = data->h / 2.0;

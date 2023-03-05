@@ -37,6 +37,7 @@ int render_scene(t_data *data)
 			obj = data->objs;
 			tmp = obj;
 			int inter = 0;
+			int color = rgb_to_int(0, 0, 0);
 			while (tmp)
 			{
 				if (tmp->content)
@@ -44,7 +45,6 @@ int render_scene(t_data *data)
 					t_obj *o = (t_obj *)tmp->content;
 					if (o->type == SPHERE)
 						sphere_inter(o, camray, &ints);
-					int color;
 					if (ints.valid)
 					{
 						// t_color c = color_inter(data, camray, &ints);
@@ -53,11 +53,11 @@ int render_scene(t_data *data)
 					}
 					else
 					{
-						color = rgb_to_int(0, 0, 0);
+						// color = rgb_to_int(0, 0, 0);
 						// color = rgb_to_int(0, 255, 0);
 					}
 					// printf("%d,%d = %d\n", x, y, 0xFF00);
-					pixel_put_img(&data->scene.img, x, y, color);					
+					pixel_put_img(&data->scene.img, x, y, color);
 				}
 				tmp = tmp->next;
 			}
@@ -65,27 +65,8 @@ int render_scene(t_data *data)
 		}
 		y++;
 	}
-	printf("x\n");
 	mlx_put_image_to_window(data->mlx, data->win, data->scene.img.ptr, 0, 0);
 	return (0);
-}
-
-void	render_objects(t_data *data)
-{
-	t_list *obj;
-	t_list *tmp;
-
-	obj = data->objs;
-	tmp = obj;
-	while (tmp)
-	{
-		if (tmp->content)
-		{
-
-		}
-		// put_obj_img_to_win(data, tmp->content);
-		tmp = tmp->next;
-	}
 }
 
 t_color	color_inter(t_data *data, t_ray camray, t_ints *ints)
@@ -99,9 +80,9 @@ t_color	color_inter(t_data *data, t_ray camray, t_ints *ints)
 	{
 		light = (t_lht *) lht->content;
 		lht_illuminated(*light, ints);
+
 		lht = lht->next;
 	}
-	// double d = vtrmag(vtrsub(ints.p, camray.a));
 	double d = vtrmag(vtrsub(camray.a, ints->p));
 	color.r = ints->localc.r * ints->illum.intens;
 	color.g = ints->localc.g * ints->illum.intens;

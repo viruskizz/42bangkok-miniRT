@@ -104,6 +104,8 @@ static void	get_input(t_data *data, int fd)
 		if (!file_line)
 			exit_error("minirt: spliting line is failed.");
 		// print_twoarray_char(object);
+		if (*object[0] == '#' && index++)
+			continue;
 		identifier = identifier_checking(object, -1);
 		if (identifier < 0)
 			exit_error ("minirt: invalid identifier...");
