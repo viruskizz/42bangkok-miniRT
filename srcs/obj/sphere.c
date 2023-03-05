@@ -37,7 +37,6 @@ void	sphere_initialise(t_data *data, char **object)
 
 		index++;
 	}
-	vtrprint(sphere->pos);
 	sphere->mtrans = trans_homo(
 		sphere->pos,
 		vtrset(0.0, 0.0, 0.0),

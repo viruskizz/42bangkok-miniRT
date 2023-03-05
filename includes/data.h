@@ -23,8 +23,8 @@
 # define TRANS_FWD -1
 # define TRANS_BCK 1
 
-# define WIDTH		1280
-# define HEIGHT		720
+# define WIDTH		720
+# define HEIGHT		480
 # define HALF_PI	1.5708
 
 # define READ_SIZE 1024

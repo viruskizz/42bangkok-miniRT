@@ -24,6 +24,7 @@ int main(int argc, char **argv)
 	data = parsing_input(argc, argv);
 	// print_tdata(&data);
 	initial(&data);
+	render_scene(&data);
 	// mlx_loop_hook(data.mlx, &render, &data);
 	mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
 	mlx_loop(data.mlx);
@@ -35,10 +36,8 @@ static void	initial(t_data *data)
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		error_exit(data, ERROR_MLX);
-	// data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "miniRT");
-	data->win = mlx_new_window(data->mlx, 640, 360, "miniRT");
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "miniRT");
 	if (!data->win)
 		error_exit(data, ERROR_WIN);
 	scene_initialise(data);
-	render_scene(data);
 }
