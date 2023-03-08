@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 00:45:09 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/27 01:00:07 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/09 03:33:40 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	exit_error(char *str)
 void	free_twopointer_char(char **ptr)
 {
 	int	index;
-	
+
 	index = 0;
 	while (ptr[index])
 		free(ptr[index++]);
@@ -72,7 +72,7 @@ char	*ft_strjoin_pro(char *str1, char *str2)
 */
 int	character_count(char *str, char c)
 {
-	int index;
+	int	index;
 	int	count;
 
 	index = 0;
@@ -91,7 +91,7 @@ int	character_count(char *str, char c)
 * => [1] : all vactor value is in range of min and max.
 * => [0] : some vactor isn't in the range of min and max.
 */
-int	tvector_inrange(t_vtr vactor, double min, double max)
+int	tvector_inrange(t_vtr vactor, float min, float max)
 {
 	if (vactor.x < min || vactor.x > max)
 		return (0);

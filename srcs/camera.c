@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/09 02:01:24 by sharnvon          #+#    #+#             */
+/*   Updated: 2023/03/09 02:13:54 by sharnvon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-static void	cam_value_check(int	inputs, t_data *data);
+static void	cam_value_check(int inputs, t_data *data);
+static void	cam_special_init(t_data *data);
 
 void	cam_geometry(t_cam *cam)
 {
@@ -33,9 +46,8 @@ t_ray	cam_ray(t_cam cam, float proj_x, float proj_y)
 	world_codinate = vtradd(world1, vtrscale(cam.proj_v, proj_y));
 	// printf("w1: %f,%f,%f\n", world1.x, world1.y, world1.z);
 	// printf("sp: %f,%f,%f\n", world_codinate.x, world_codinate.y, world_codinate.z);
-	return set_ray(cam.pos, world_codinate);
+	return (set_ray(cam.pos, world_codinate));
 }
-
 
 /*
 * [function initialise and checking camara value]
@@ -67,12 +79,7 @@ void	cam_initialise(t_data *data, char **object)
 		index++;
 	}
 	cam_value_check(index, data);
-	data->cam.pos = vtrset(0, 0, 10.0);
-	data->cam.lookat = vtrset(0, 0, 0);
-	data->cam.up = vtrset(0, 1.00, 0);
-	data->cam.length = 1.0;
-	data->cam.horz = 0.25;
-	data->cam.ratio = 16.0 / 9.0;
+	cam_special_init(data);
 	cam_geometry(&data->cam);
 }
 
@@ -81,7 +88,7 @@ void	cam_initialise(t_data *data, char **object)
 * => [success] : all value is valid.
 * => [exit] : unsuccessful initialize value cause invalid value or character.
 */
-static void	cam_value_check(int	inputs, t_data *data)
+static void	cam_value_check(int inputs, t_data *data)
 {
 	if (inputs != 4)
 		exit_error(TOO_LESS_INPUT_C);
@@ -89,4 +96,18 @@ static void	cam_value_check(int	inputs, t_data *data)
 		exit_error(INVALID_NORM_C);
 	if (data->cam.fov < 0 || data->cam.fov > 180)
 		exit_error(INVALID_FOV_C);
+}
+
+/*
+* [helper function of camara_initialise initial value that not exist in file]
+* => [success] : all special value was initialised.
+*/
+static void	cam_special_init(t_data *data)
+{
+	data->cam.pos = vtrset(0, 0, 10.0);
+	data->cam.lookat = vtrset(0, 0, 0);
+	data->cam.up = vtrset(0, 1.00, 0);
+	data->cam.length = 1.0;
+	data->cam.horz = 0.25;
+	data->cam.ratio = 16.0 / 9.0;
 }

@@ -20,6 +20,7 @@
 # define SPHERE	2
 # define CYLIND	3
 # define C		3
+# define CONE	4
 # define TRANS_FWD -1
 # define TRANS_BCK 1
 
@@ -54,6 +55,13 @@ typedef struct s_vtr
 	float	mag;
 }	t_vtr;
 
+typedef struct s_point
+{
+	float	a;
+	float	b;
+	float	c;
+}	t_pnt;
+
 typedef struct s_ray
 {
 	t_vtr	a;
@@ -71,7 +79,7 @@ typedef struct s_img {
 
 typedef struct s_ambient
 {
-	double	ratio;	//* range[0.0-1.0];
+	float	ratio;	//* range[0.0-1.0];
 	t_color	color;	//* range[0-255];
 }	t_amb;
 
@@ -82,9 +90,9 @@ typedef struct s_camara
 	int		fov;	//* horizountal field view in degree range[0-180];
 	t_vtr	lookat;
 	t_vtr	up;
-	double	length;
-	double	horz;
-	double	ratio;
+	float	length;
+	float	horz;
+	float	ratio;
 	t_vtr	proj_c;	// norm_vector in projection center screen
 	t_vtr	proj_u;	// norm_vector in projection screen u
 	t_vtr	proj_v;	// norm_vector in projection screen v
@@ -93,7 +101,7 @@ typedef struct s_camara
 typedef struct s_lht
 {
 	t_vtr	pos;
-	double	bright; //* range[0.0-1.0];
+	float	bright; //* range[0.0-1.0];
 	t_color	color;	// normal color
 }	t_lht;
 
@@ -113,7 +121,7 @@ typedef struct s_obj
 
 typedef struct s_ints
 {
-	double	value;
+	float	value;
 	int		valid;
 	t_vtr	p;
 	t_vtr	localn;	// local normal in normalize vector

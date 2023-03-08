@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_utils1.c                                    :+:      :+:    :+:   */
+/*   vector2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araiva <tsomsa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:11:52 by araiva            #+#    #+#             */
-/*   Updated: 2023/02/05 14:11:53 by araiva           ###   ########.fr       */
+/*   Updated: 2023/03/08 22:53:51 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param z value in z axis
  * @return t_vtr 
  */
-t_vtr vtrset(float x, float y, float z)
+t_vtr	vtrset(float x, float y, float z)
 {
 	t_vtr	v;
 

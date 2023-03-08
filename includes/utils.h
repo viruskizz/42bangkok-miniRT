@@ -9,7 +9,7 @@ int		rgb_to_int(int r, int g, int b);
 // * pixel
 void	pixel_put_img(t_img *img, int x, int y, int color);
 t_color	set_color(int r, int g, int b);
-t_size	set_size(double w, double h, double d);
+t_size	set_size(float w, float h, float d);
 
 // * vector
 t_vtr	vtrset(float x, float y, float z);
@@ -26,7 +26,7 @@ float	**mtx_identity(int size);
 float	**mtx_trans(float **m, int size);
 float	**mtx_sub(float **m, int size, int row, int col);
 float	**mtx_multi(float **m1, float **m2, int size);
-float	**mtx_inverse(float **m, int size);
+float	**mtx_inverse(float **m, int size, int i, int j);
 float	mtx_det(float **m, int size);
 void	mtx_print(float **m, int size);
 void	mtx_free(float **m, int size);

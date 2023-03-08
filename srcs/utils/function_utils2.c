@@ -6,20 +6,20 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 00:49:47 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/27 01:10:25 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/09 03:33:57 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minirt.h"
+#include "minirt.h"
 
 /*
 * [utility function initialise value of t_size and return]
 * => [success] : return the t_size wiht value height, width, depth.
 * => [exit] : unsuccessful innitialise value cause invalid value or charactor.
 */
-t_size	size_initialise(double height, double width, double depth)
+t_size	size_initialise(float height, float width, float depth)
 {
-	t_size size;
+	t_size	size;
 
 	if (height < 0.0)
 		exit_error("minirt: ERROR::invalid height value.\n" \

@@ -55,11 +55,11 @@ void	exit_error(char *str);
 void	free_twopointer_char(char **ptr);
 char	*ft_strjoin_pro(char *str1, char *str2);
 int		character_count(char *str, char c);
-double	ato_double(char *str);
+float	ato_float(char *str);
 t_color	ato_tcolor(char *str);
 t_vtr	ato_tvector(char *str);
-int		tvector_inrange(t_vtr vactor, double min, double max);
-t_size	size_initialise(double height, double width, double depth);
+int		tvector_inrange(t_vtr vactor, float min, float max);
+t_size	size_initialise(float height, float width, float depth);
 
 
 // * Debug
