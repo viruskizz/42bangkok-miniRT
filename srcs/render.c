@@ -2,7 +2,7 @@
 
 static t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
 static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints);
-static void		objs_ints(t_data *data, t_ray camray, t_ints *ints);
+static void		camray_ints(t_data *data, t_ray camray, t_ints *ints);
 
 int render_scene(t_data *data)
 {
@@ -38,7 +38,7 @@ static t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 	camray = cam_ray(data->cam, cox, coy);
 	colorf = color_to_colorf(data->amb.color);
 	ints.valid = 0;
-	objs_ints(data, camray, &ints);
+	camray_ints(data, camray, &ints);
 	if (ints.valid)
 		colorf = lht_ints(data, camray, &ints);
 	return (colorf);
@@ -53,7 +53,10 @@ static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 	t_lht	*light;
 
 	lht = data->lht;
-	colorf = color_to_colorf(rgb_to_color(0, 0, 0));
+	// colorf = color_to_colorf(rgb_to_color(0, 0, 0));
+	colorf.r = 0;
+	colorf.g = 0;
+	colorf.b = 0;
 	while (lht)
 	{
 		light = (t_lht *) lht->content;
@@ -76,7 +79,7 @@ static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 	return (colorf);
 }
 
-static void	objs_ints(t_data *data, t_ray camray, t_ints *ints)
+static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_ints	oints;
 	t_list	*obj;

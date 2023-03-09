@@ -72,9 +72,6 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 {
 	t_vtr	vray; // compute the values of a,b,c
 	t_ray	bvray; // compute the values of a,b,c
-	float	a;
-	float	b;
-	float	c;
 
 	bvray = trans_ray(ray, obj->itrans);
 	vray = vtrnorm(bvray.l);
@@ -95,7 +92,8 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 				t_vtr pos0 = vtrset(0, 0, 0);
 				obj->pos = trans_vtr(pos0, obj->mtrans);
 				ints->localn = trans_vtr(obj->norm, obj->mtrans);
-				ints->localn = vtrnorm(vtrsub(ints->localn, obj->pos));
+				ints->localn = vtrnorm(vtrsub(obj->pos, ints->localn));
+				// ints->localn = vtrnorm(vtrsub(ints->localn, obj->pos));
 				ints->localc = obj->color;
 			}
 		}
