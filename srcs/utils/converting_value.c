@@ -6,13 +6,14 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:27 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/09 03:33:20 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/09 12:05:48 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void	color_convert_value(char **value, int *color);
+static void		color_convert_value(char **value, int *color);
+static double	float_convert(int index, char *str);
 
 /*
 * [utility function changing string to float]
@@ -24,12 +25,9 @@ float	ato_float(char *str)
 	double		result;
 	float		sign;
 	int			index;
-	int			precision;
 
-	precision = 0;
 	sign = 1.0;
 	index = 0;
-	result = 0.0;
 	if (str[0] == '.' || str[ft_strlen(str) - 1] == '.')
 		exit_error("minirt: invalid value for element in ito_float.");
 	while ((str[index] >= 9 && str[index] <= 13) || str[index] == 32)
@@ -39,6 +37,22 @@ float	ato_float(char *str)
 		sign = -1.0;
 		index++;
 	}
+	result = float_convert(index, str);
+	return (((float)(result * sign)));
+}
+
+/*
+* [helper function of ato_float convert str to float]
+* => [double] : valid chracter and value, coverted to float then return.
+* => [exit] : invalid chracter or value is overflow, printed error and exit.
+*/
+static double	float_convert(int index, char *str)
+{
+	int		precision;
+	double	result;
+
+	precision = 0;
+	result = 0.0;
 	while (str[index])
 	{
 		if (!ft_isdigit(str[index]) && str[index] != '.')
@@ -56,7 +70,7 @@ float	ato_float(char *str)
 			exit_error("minirt: invalid value for element in ito_float...");
 		index++;
 	}
-	return (((float)(result * sign)));
+	return (result);
 }
 
 /*
