@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trans.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsomsa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 18:18:54 by tsomsa            #+#    #+#             */
-/*   Updated: 2023/03/04 18:18:57 by tsomsa           ###   ########.fr       */
+/*   Updated: 2023/03/10 00:42:13 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ t_vtr	trans_vtr(t_vtr v, float **mtxtrans)
 t_ray	trans_ray(t_ray ray, float **mtxtrans)
 {
 	return (set_ray(
-		trans_vtr(ray.a, mtxtrans),
-		trans_vtr(ray.b, mtxtrans)
-	));
+			trans_vtr(ray.a, mtxtrans),
+			trans_vtr(ray.b, mtxtrans)));
 }
 
 static float	*mtx_crs(float **m44, float *m41)
@@ -51,20 +50,19 @@ static float	*mtx_crs(float **m44, float *m41)
 		j = -1;
 		m[i] = 0;
 		while (++j < 4)
-			m[i] += m44[i][j] * m41[j]; 
+			m[i] += m44[i][j] * m41[j];
 	}
 	return (m);
 }
 
 static float	*vtrtmtx(t_vtr v)
 {
-	float *m;
+	float	*m;
 
 	m = ft_calloc(4, sizeof(float));
 	m[0] = v.x;
 	m[1] = v.y;
 	m[2] = v.z;
 	m[3] = 1.0;
-
 	return (m);
 }

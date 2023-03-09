@@ -1,6 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   light.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/10 00:27:38 by sharnvon          #+#    #+#             */
+/*   Updated: 2023/03/10 00:28:11 by sharnvon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minirt.h"
-void	lht_inst_objs(t_ray lray, t_ints *linst, t_ints *ints, t_list *objs);
+
+void		lht_inst_objs(
+				t_ray lray, t_ints *linst, t_ints *ints, t_list *objs);
+static void	light_assigned(int index, char *trimed_obj, t_lht *light);
 
 /*
 * [function initialize and checking ambient light value]
@@ -23,7 +37,7 @@ void	ambient_initialise(t_data *data, char **object)
 		if (index == 0 && ft_strncmp(trimed_obj, "A", 2))
 			exit_error (INVALID_IDENT_A);
 		else if (index == 1)
-			data->amb.ratio = ato_double(trimed_obj);
+			data->amb.ratio = ato_float(trimed_obj);
 		else if (index == 2)
 			data->amb.color = ato_tcolor(trimed_obj);
 		free(trimed_obj);
@@ -40,7 +54,7 @@ void	ambient_initialise(t_data *data, char **object)
 * => [success] : intialize value into t_lht.
 * => [exit] : unsuccessful initialize value cause invalid value or character.
 */
-void	lht_initialise(t_data* data, char **object)
+void	lht_initialise(t_data *data, char **object)
 {
 	int		index;
 	char	*trimed_obj;
@@ -57,23 +71,34 @@ void	lht_initialise(t_data* data, char **object)
 		trimed_obj = ft_strtrim(object[index], "/t");
 		if (!trimed_obj)
 			exit_error(FAIL_TRIM);
-		if (index == 0 && ft_strncmp(trimed_obj, "L", 2))
-			exit_error(INVALID_IDENT_L);
-		else if (index == 1)
-			light->pos = ato_tvector(trimed_obj);
-		else if (index == 2)
-			light->bright = ato_double(trimed_obj);
-		else if (index == 3)
-			light->color = ato_tcolor(trimed_obj);
+		light_assigned(index, trimed_obj, light);
 		free(trimed_obj);
 		index++;
 	}
-	light->colorf = color_to_colorf(light->color);
 	if (index < 3)
 		exit_error(TOO_LESS_INPUT_L);
 	if (light->bright < 0.0 || light->bright > 1.0)
 		exit_error(INVALID_BRIGHT_L);
+	light->colorf = color_to_colorf(light->color);
 	ft_lstadd_back(&data->lht, ft_lstnew((void *)light));
+}
+
+/*
+* [helper function of lht_initialise]
+* [checking string of light input, converting and assigned into light(t_lht)]
+* => [return] : valid input, covert and store into light.
+* => [exit] : invalid input, print error and exit program.
+*/
+static void	light_assigned(int index, char *trimed_obj, t_lht *light)
+{
+	if (index == 0 && ft_strncmp(trimed_obj, "L", 2))
+		exit_error(INVALID_IDENT_L);
+	else if (index == 1)
+		light->pos = ato_tvector(trimed_obj);
+	else if (index == 2)
+		light->bright = ato_float(trimed_obj);
+	else if (index == 3)
+		light->color = ato_tcolor(trimed_obj);
 }
 
 /*

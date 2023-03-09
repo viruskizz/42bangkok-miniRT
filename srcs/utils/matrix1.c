@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrix1.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/10 00:11:59 by sharnvon          #+#    #+#             */
+/*   Updated: 2023/03/10 00:12:00 by sharnvon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 float	**mtx_identity(int size)
@@ -57,16 +69,15 @@ float	**mtx_sub(float **m, int size, int row, int col)
 	while (++i < size)
 	{
 		if (i == row)
-			continue;
+			continue ;
 		mm[y] = ft_calloc(size - 1, sizeof(float));
 		j = -1;
 		x = 0;
-		while(++j < size)
+		while (++j < size)
 		{
 			if (j == col)
-				continue;;
-			mm[y][x] = m[i][j];
-			x++;
+				continue ;
+			mm[y][x++] = m[i][j];
 		}
 		y++;
 	}
@@ -99,14 +110,15 @@ float	**mtx_multi(float **m1, float **m2, int size)
 	return (mm);
 }
 
-float	**mtx_inverse(float **m, int size)
+/*
+* 2 last parameter i,j can be any numbers just solution of norminette
+*/
+float	**mtx_inverse(float **m, int size, int i, int j)
 {
 	float	**mm;
 	float	**subm;
 	float	det;
 	float	**mmt;
-	int	i;
-	int	j;
 
 	i = -1;
 	det = mtx_det(m, size);

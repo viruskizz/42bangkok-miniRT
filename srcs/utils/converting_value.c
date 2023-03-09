@@ -6,30 +6,30 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:27 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/27 01:10:46 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/09 23:42:23 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+static void		color_convert(char **value, int *color);
+static double	float_convert(int index, char *str);
+
 /*
-* [utility function changing string to double]
+* [utility function changing string to float]
 * => [return] : successful converting and return value.
 * => [exit] : unsucces converting with invalid character, overflow value
 */
-double	ato_double(char *str)
+float	ato_float(char *str)
 {
-	long double	result;
-	double		sign;
+	double		result;
+	float		sign;
 	int			index;
-	int			precision;
-	
-	precision = 0;
+
 	sign = 1.0;
 	index = 0;
-	result = 0.0;
 	if (str[0] == '.' || str[ft_strlen(str) - 1] == '.')
-		exit_error("minirt: invalid value for element in ito_double.");
+		exit_error("minirt: invalid value for element in ito_float.");
 	while ((str[index] >= 9 && str[index] <= 13) || str[index] == 32)
 		index++;
 	if (str[index] == '-')
@@ -37,10 +37,26 @@ double	ato_double(char *str)
 		sign = -1.0;
 		index++;
 	}
+	result = float_convert(index, str);
+	return (((float)(result * sign)));
+}
+
+/*
+* [helper function of ato_float convert str to float]
+* => [double] : valid chracter and value, coverted to float then return.
+* => [exit] : invalid chracter or value is overflow, printed error and exit.
+*/
+static double	float_convert(int index, char *str)
+{
+	int		precision;
+	double	result;
+
+	precision = 0;
+	result = 0.0;
 	while (str[index])
 	{
 		if (!ft_isdigit(str[index]) && str[index] != '.')
-			exit_error("minirt: invalid character for value in ito_double..");
+			exit_error("minirt: invalid character for value in ito_float..");
 		if (str[index] == '.')
 			precision = 10;
 		else if (precision == 0)
@@ -50,50 +66,66 @@ double	ato_double(char *str)
 			result = result + ((str[index] - '0') * 1.0 / precision);
 			precision *= 10;
 		}
-		if (result > DBL_MAX || result < -DBL_MAX)
-			exit_error("minirt: invalid value for element in ito_double...");
+		if (result > FLT_MAX || result < -FLT_MAX)
+			exit_error("minirt: invalid value for element in ito_float...");
 		index++;
 	}
-	return (((double)(result * sign)));
+	return (result);
 }
 
 /*
 * [utility function changing string into t_colour value]
 * => [return] : success converting into t_color and return that value.
 * => [exit] : unsuccessful converting with invalid value or to many value.
-TODO add checking colour value at the end of function..
 */
 t_color	ato_tcolor(char *str)
 {
 	int		color[3];
-	int		index;
 	char	**value;
 	t_color	result;
 
-	index = 0;
 	value = ft_split(str, ',');
 	if (!value)
 		exit_error("minirt: value spliting is fail in ato_tcolor.");
-	while (value[index])
-	{
-		if (index > 2)
-			exit_error("minirt: too many values for color's element.");
-		for (int i = 0; value[index][i]; i++)
-		{
-			if (!ft_isdigit(value[index][i]))
-				exit_error("minirt: invalid color's value..");
-		}
-		color[index] = ft_atoi(value[index]);
-		index++;
-	}
-	if (index != 3)
-		exit_error("minirt: too less values for color's element.");
+	color_convert(value, color);
 	result.r = color[0];
 	result.g = color[1];
 	result.b = color[2];
 	result.intens = 1.0;
 	free_twopointer_char(value);
 	return (result);
+}
+
+/*
+* [helper function of ato_tcolor check and covert string to intiger.]
+* => [success] : covert string value into int and store in color.
+* => [unsuccess] : the string value is invalid, print error and exit program.
+*/
+static void	color_convert(char **value, int *color)
+{
+	int	index;
+	int	chracter;
+
+	index = 0;
+	while (value[index])
+	{
+		if (index > 2)
+			exit_error("minirt: too many values for color's element.");
+		chracter = 0;
+		while (value[index][chracter])
+		{
+			if (!ft_isdigit(value[index][chracter]))
+				exit_error("minirt: invalid color's value..");
+			chracter++;
+		}
+		color[index] = ft_atoi(value[index]);
+		if (color[index] < 0 || color[index] > 255)
+			exit_error("minirt: invalid value of color.\n"
+				"• (hint) the value of color must be between 0 - 255.");
+		index++;
+	}
+	if (index != 3)
+		exit_error("minirt: too less values for color's element.");
 }
 
 /*
@@ -104,7 +136,7 @@ t_color	ato_tcolor(char *str)
 t_vtr	ato_tvector(char *str)
 {
 	t_vtr	result;
-	double	vector[3];
+	float	vector[3];
 	int		index;
 	char	**value;
 
@@ -112,11 +144,11 @@ t_vtr	ato_tvector(char *str)
 	value = ft_split(str, ',');
 	if (!value)
 		exit_error("minirt: value spliting is fail in ato_tvector.");
-	while(value[index])
+	while (value[index])
 	{
 		if (index > 2)
-			exit_error("minirt: too many information unput for vactor value.");
-		vector[index] = ato_double(value[index]);
+			exit_error("minirt: too many information input for vactor value.");
+		vector[index] = ato_float(value[index]);
 		index++;
 	}
 	if (index != 3)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obj.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/10 00:02:54 by sharnvon          #+#    #+#             */
+/*   Updated: 2023/03/10 03:33:46 by sharnvon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 /*
@@ -37,7 +49,7 @@ void	set_objs(t_data *data)
 
 t_obj	*new_obj(t_data *data)
 {
-	t_obj *obj;
+	t_obj	*obj;
 
 	obj = ft_calloc(sizeof(t_obj), 1);
 	obj->type = PLANE;
@@ -55,6 +67,10 @@ void	obj_ints(t_obj *obj, t_ray ray, t_ints *ints)
 		sphere_ints(obj, ray, ints);
 	else if (obj->type == PLANE)
 		plane_ints(obj, ray, ints);
+	else if (obj->type == CYLIND)
+		printf("CYLINDER\n");
+	else if (obj->type == CONE)
+		printf("CONE\n");
 }
 
 void	free_obj(t_obj *obj)

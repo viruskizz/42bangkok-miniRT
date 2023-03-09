@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:31:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/27 00:43:47 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/10 01:12:41 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static void	initial(t_data *data);
 static int	render(t_data *data);
-t_obj	*set_plain_img(t_data *data, t_obj *obj);
+t_obj		*set_plain_img(t_data *data, t_obj *obj);
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data	data;
-	char *filename;
+	char	*filename;
 
 	data = parsing_input(argc, argv);
 	// print_tdata(&data);

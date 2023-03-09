@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/10 00:57:35 by sharnvon          #+#    #+#             */
+/*   Updated: 2023/03/10 01:04:01 by sharnvon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 static t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
@@ -5,7 +17,7 @@ static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints);
 static void		camray_ints(t_data *data, t_ray camray, t_ints *ints);
 static void		set_obj_ints(t_ints *ints, t_ints oints);
 
-int render_scene(t_data *data)
+int	render_scene(t_data *data)
 {
 	int			y;
 	int			x;
@@ -18,10 +30,9 @@ int render_scene(t_data *data)
 		while (x < data->scene.size.w)
 		{
 			colorf = scene_pixel_img(
-				data,
-				(x / data->scene.pos.x) - 1.0,
-				(y / data->scene.pos.y) - 1.0
-			);
+					data,
+					(x / data->scene.pos.x) - 1.0,
+					(y / data->scene.pos.y) - 1.0);
 			pixel_put_img(&data->scene.img, x, y, colorf_to_int(colorf));
 			x++;
 		}
@@ -33,8 +44,8 @@ int render_scene(t_data *data)
 
 static t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 {
-	t_ray	camray;
-	t_ints	ints;
+	t_ray		camray;
+	t_ints		ints;
 	t_colorf	colorf;
 
 	camray = cam_ray(data->cam, cox, coy);
@@ -46,12 +57,13 @@ static t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 	return (colorf);
 }
 
+/*
 static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 {
-	t_colorf colorf;
-	t_colorf colorfl;
-	t_list	*lht;
-	t_lht	*light;
+	t_colorf	colorf;
+	t_colorf	colorfl;
+	t_list		*lht;
+	t_lht		*light;
 
 	lht = data->lht;
 	colorf = color_to_colorf(rgb_to_color(0, 0, 0));
@@ -76,21 +88,52 @@ static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 	}
 	return (colorf);
 }
+*/
+
+static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
+{
+	t_colorf	colorf;
+	t_colorf	colorfl;
+	t_list		*light;
+
+	light = data->lht;
+	colorf = color_to_colorf(rgb_to_color(0, 0, 0));
+	while (light)
+	{
+		lht_illuminated(*((t_lht *)(light->content)), ints, data->objs);
+		if (ints->valid)
+		{
+			colorf.r += ints->illum.r * ints->illum.alpha;
+			colorf.g += ints->illum.g * ints->illum.alpha;
+			colorf.b += ints->illum.b * ints->illum.alpha;
+		}
+		light = light->next;
+	}
+	if (ints->valid)
+	{
+		colorfl = color_to_colorf(ints->localc);
+		colorf.r = colorfl.r * colorf.r;
+		colorf.g = colorfl.g * colorf.g;
+		colorf.b = colorfl.b * colorf.b;
+	}
+	return (colorf);
+}
 
 static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_ints	oints;
-	t_list	*obj;
+	t_list	*objs;
+	t_obj	*obj;
 
-	obj = data->objs;
+	objs = data->objs;
 	ints->dist = MAXFLOAT;
 	oints.valid = 0;
-	while (obj)
+	while (objs)
 	{
-		if (obj->content)
+		if (objs->content)
 		{
-			t_obj *o = (t_obj *)obj->content;
-			obj_ints(o, camray, &oints);
+			obj = (t_obj *)objs->content;
+			obj_ints(obj, camray, &oints);
 			if (oints.valid)
 			{
 				oints.dist = vtrmag(vtrsub(oints.p, camray.a));
@@ -98,7 +141,7 @@ static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 				set_obj_ints(ints, oints);
 			}
 		}
-		obj = obj->next;
+		objs = objs->next;
 	}
 }
 

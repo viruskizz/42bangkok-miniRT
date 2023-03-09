@@ -1,10 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrix2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/10 00:06:21 by sharnvon          #+#    #+#             */
+/*   Updated: 2023/03/10 00:08:32 by sharnvon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 float	mtx_det(float **m, int size)
 {
-	int i;
-	int	sign;
-	float sum;
+	int		i;
+	int		sign;
+	float	sum;
+	float	**subm;
+
 	if (size == 2)
 		return (m[0][0] * m[1][1] - m[0][1] * m[1][0]);
 	i = -1;
@@ -12,7 +26,7 @@ float	mtx_det(float **m, int size)
 	sum = 0.0;
 	while (++i < size)
 	{
-		float **subm = mtx_sub(m, size, 0, i);
+		subm = mtx_sub(m, size, 0, i);
 		sum += m[0][i] * sign * mtx_det(subm, size - 1);
 		mtx_free(subm, size - 1);
 		sign = -sign;
