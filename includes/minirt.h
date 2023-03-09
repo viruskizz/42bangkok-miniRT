@@ -39,16 +39,18 @@ t_ray	cam_ray(t_cam cam, float proj_x, float proj_y);
 
 // * light
 void	lht_initialise(t_data* data, char **object);
-void	lht_illuminated(t_lht lht, t_ints *ints);
+void	lht_illuminated(t_lht lht, t_ints *ints, t_list *objs);
 
 // * obj
 void	set_objs(t_data *data);
 t_obj	*new_obj(t_data *data);
+void	obj_ints(t_obj *obj, t_ray ray, t_ints *ints);
 void	free_obj(t_obj *obj);
 void	scene_initialise(t_data *data);
 void	sphere_initialise(t_data *data, char **object);
-void	sphere_inter(t_obj *obj, t_ray ray, t_ints *ints);
-t_obj	*set_plain_img(t_data *data, t_obj *obj);
+void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints);
+t_obj	*set_plane_img(t_data *data, t_obj *obj);
+void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints);
 
 // * utils from sharnvon..
 void	exit_error(char *str);

@@ -12,5 +12,5 @@ void	scene_initialise(t_data *data)
 	data->scene.pos.y = data->h / 2.0;
 	data->scene.size.w = data->w;
 	data->scene.size.h = data->h;
-	set_plain_img(data, &data->scene);
+	set_plane_img(data, &data->scene);
 }

@@ -1,15 +1,24 @@
 #ifndef UTILS_H
 # define UTILS_H
 
-// * unit
-t_ray	set_ray(t_vtr a, t_vtr b);
-int		color_to_int(t_color color);
-int		rgb_to_int(int r, int g, int b);
+# include <float.h>
 
-// * pixel
-void	pixel_put_img(t_img *img, int x, int y, int color);
+// * unit
 t_color	set_color(int r, int g, int b);
 t_size	set_size(double w, double h, double d);
+t_ray	set_ray(t_vtr a, t_vtr b);
+int		close0(const float f1, const float f2);
+
+// * pixel
+int		rgb_to_int(int r, int g, int b);
+int		color_to_int(t_color color);
+int		colorf_to_int(t_colorf colorf);
+void	pixel_put_img(t_img *img, int x, int y, int color);
+
+// * color
+t_color		rgb_to_color(int r, int g, int b);
+t_colorf	color_to_colorf(t_color color);
+t_color		colorf_to_color(t_colorf cf);
 
 // * vector
 t_vtr	vtrset(float x, float y, float z);

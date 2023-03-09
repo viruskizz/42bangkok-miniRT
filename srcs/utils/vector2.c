@@ -17,7 +17,7 @@
  * @param x value in x axis
  * @param y value in y axis
  * @param z value in z axis
- * @return t_vtr 
+ * @return t_vtr
  */
 t_vtr vtrset(float x, float y, float z)
 {
@@ -34,7 +34,7 @@ t_vtr vtrset(float x, float y, float z)
 */
 float	vtrmag(t_vtr v)
 {
-	return (sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
+	return (sqrtf(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
 }
 
 /**

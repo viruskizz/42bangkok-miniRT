@@ -1,5 +1,6 @@
 
 #include "minirt.h"
+void	lht_inst_objs(t_ray lray, t_ints *linst, t_ints *ints, t_list *objs);
 
 /*
 * [function initialize and checking ambient light value]
@@ -67,6 +68,7 @@ void	lht_initialise(t_data* data, char **object)
 		free(trimed_obj);
 		index++;
 	}
+	light->colorf = color_to_colorf(light->color);
 	if (index < 3)
 		exit_error(TOO_LESS_INPUT_L);
 	if (light->bright < 0.0 || light->bright > 1.0)
@@ -80,22 +82,44 @@ void	lht_initialise(t_data* data, char **object)
  ? lvtr = light vector in normalize
  ? svtr = starting vector
 */
-void	lht_illuminated(t_lht lht, t_ints *ints)
+void	lht_illuminated(t_lht lht, t_ints *ints, t_list *objs)
 {
 	t_vtr	lvtr;
+	t_ray	lray;
+	t_ints	lints;
 	float	angle;
 
 	lvtr = vtrnorm(vtrsub(lht.pos, ints->p));
-	angle = acos(vtrdot(ints->localn, lvtr));
-	ints->illum = lht.color;
-	ints->illum.intens = 0.0;
-	if (angle > HALF_PI)
+	lray = set_ray(ints->p, vtradd(ints->p, lvtr));
+	lht_inst_objs(lray, &lints, ints, objs);
+	ints->illum = lht.colorf;
+	ints->valid = 0;
+	ints->illum.alpha = 0.0;
+	if (!lints.valid)
 	{
-		ints->valid = 0;
+		angle = acos(vtrdot(ints->localn, lvtr));
+		if (angle <= HALF_PI)
+		{
+			ints->valid = 1;
+			ints->illum.alpha = lht.bright * (1.0 - (angle / HALF_PI));
+		}
 	}
-	else
+}
+
+void	lht_inst_objs(t_ray lray, t_ints *lints, t_ints *ints, t_list *objs)
+{
+	t_list	*obj;
+	t_obj	*o;
+
+	obj = objs;
+	lints->valid = 0;
+	while (obj)
 	{
-		ints->valid = 1;
-		ints->illum.intens = lht.bright * (1.0 - (angle / HALF_PI));
+		o = (t_obj *) obj->content;
+		if (o != ints->obj)
+			obj_ints(o, lray, lints);
+		if (lints->valid)
+			return ;
+		obj = obj->next;
 	}
 }

@@ -67,7 +67,6 @@ void	cam_initialise(t_data *data, char **object)
 		index++;
 	}
 	cam_value_check(index, data);
-	data->cam.pos = vtrset(0, 0, 10.0);
 	data->cam.lookat = vtrset(0, 0, 0);
 	data->cam.up = vtrset(0, 1.00, 0);
 	data->cam.length = 1.0;
