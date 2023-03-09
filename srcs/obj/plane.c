@@ -79,6 +79,7 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 	bvray = trans_ray(ray, obj->itrans);
 	vray = vtrnorm(bvray.l);
 	ints->value = 0;
+	ints->valid = 0;
 	if (!close0(vray.y, 0.0f))
 	{
 		ints->value = bvray.a.y / -vray.y;

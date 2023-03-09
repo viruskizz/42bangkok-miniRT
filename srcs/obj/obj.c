@@ -48,6 +48,14 @@ t_obj	*new_obj(t_data *data)
 	return (obj);
 }
 
+void	obj_ints(t_obj *obj, t_ray ray, t_ints *ints)
+{
+	if (obj->type == SPHERE)
+		sphere_ints(obj, ray, ints);
+	else if (obj->type == PLANE)
+		plane_ints(obj, ray, ints);
+}
+
 void	free_obj(t_obj *obj)
 {
 	free(obj->name);

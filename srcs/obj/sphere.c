@@ -49,7 +49,7 @@ void	sphere_initialise(t_data *data, char **object)
 	ft_lstadd_back(&data->objs, ft_lstnew((void *)sphere));
 }
 
-void	sphere_inter(t_obj *obj, t_ray ray, t_ints *ints)
+void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints)
 {
 	t_vtr	vray; // compute the values of a,b,c
 	t_ray	bvray; // compute the values of a,b,c
@@ -63,6 +63,7 @@ void	sphere_inter(t_obj *obj, t_ray ray, t_ints *ints)
 	b = 2.0 * vtrdot(bvray.a, vray);
 	c = vtrdot(bvray.a, bvray.a) - 1.0;
 	ints->value = b * b - 4.0 * c;
+	ints->valid = 0;
 	if (ints->value > 0.0)
 	{
 		float sqt = sqrtf(ints->value);
@@ -91,39 +92,3 @@ void	sphere_inter(t_obj *obj, t_ray ray, t_ints *ints)
 		ints->valid = 1;
 	}
 }
-
-// void	sphere_inter(t_obj *obj, t_ray ray, t_ints *ints)
-// {
-// 	t_vtr	vray; // compute the values of a,b,c
-// 	float	a;
-// 	float	b;
-// 	float	c;
-
-// 	vray = vtrnorm(ray.l);
-// 	a = 1.0;
-// 	b = 2.0 * vtrdot(ray.a, vray);
-// 	c = vtrdot(ray.a, ray.a) - 1.0;
-// 	ints->value = b * b - 4.0 * c;
-// 	ints->valid = 0;
-// 	if (ints->value > 0.0)
-// 	{
-// 		float sqt = sqrtf(ints->value);
-// 		float t1 = (-b + sqt) / 2.0;
-// 		float t2 = (-b - sqt) / 2.0;
-// 		if (t1 < 0.0 || t2 < 0.0)
-// 			return ;
-// 		else
-// 		{
-// 			if (t1 < t2)
-// 			{
-// 				ints->p = vtradd(ray.a, vtrscale(vray, t1));
-// 			}
-// 			else
-// 			{
-// 				ints->p = vtradd(ray.a, vtrscale(vray, t2));
-// 			}
-// 			ints->localn = vtrnorm(ints->p);
-// 		}
-// 		ints->valid = 1;
-// 	}
-// }

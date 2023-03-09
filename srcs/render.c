@@ -47,6 +47,7 @@ t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_colorf colorf;
+	t_colorf colorfl;
 	t_color color;
 	t_list	*lht;
 	t_lht	*light;
@@ -56,16 +57,22 @@ t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 	while (lht)
 	{
 		light = (t_lht *) lht->content;
-		lht_illuminated(*light, ints);
-		colorf = colorf_add(colorf, color_complied_alpha(ints->illum));
+		lht_illuminated(*light, ints, data->objs);
+		if (ints->valid)
+		{
+			colorf.r += ints->illum.r * ints->illum.alpha;
+			colorf.g += ints->illum.g * ints->illum.alpha;
+			colorf.b += ints->illum.b * ints->illum.alpha;
+		}
 		lht = lht->next;
 	}
-	double d = vtrmag(vtrsub(camray.a, ints->p));
-	// ints->illum
-	color.r = ints->localc.r * ints->illum.alpha;
-	color.g = ints->localc.g * ints->illum.alpha;
-	color.b = ints->localc.b * ints->illum.alpha;
-	colorf = color_to_colorf(color);
+	if (ints->valid)
+	{
+		colorfl = color_to_colorf(ints->localc);
+		colorf.r = colorfl.r * colorf.r;
+		colorf.g = colorfl.g * colorf.g;
+		colorf.b = colorfl.b * colorf.b;
+	}
 	return (colorf);
 }
 
@@ -83,7 +90,7 @@ void	objs_ints(t_data *data, t_ray camray, t_ints *ints)
 		{
 			t_obj *o = (t_obj *)obj->content;
 			if (o->type == SPHERE)
-				sphere_inter(o, camray, &oints);
+				sphere_ints(o, camray, &oints);
 			else if (o->type == PLANE)
 				plane_ints(o, camray, &oints);
 			if (oints.valid)
