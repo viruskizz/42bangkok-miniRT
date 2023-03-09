@@ -107,8 +107,6 @@ void	lht_illuminated(t_lht lht, t_ints *ints, t_list *objs)
 		{
 			ints->valid = 1;
 			ints->illum.alpha = lht.bright * (1.0 - (angle / HALF_PI));
-			// if (ints->obj->type == SPHERE)
-			// 	printf("colorf: %f,%f,%f, %f\n", ints->illum.r, ints->illum.g, ints->illum.b, ints->illum.alpha);
 		}
 	}
 }
@@ -120,13 +118,13 @@ void	lht_inst_objs(t_ray lray, t_ints *lints, t_ints *ints, t_list *objs)
 
 	obj = objs;
 	lints->valid = 0;
-	// while (obj)
-	// {
-	// 	o = (t_obj *) obj->content;
-	// 	if (o != ints->obj)
-	// 		obj_ints(o, lray, lints);
-	// 	if (lints->valid)
-	// 		return ;
-	// 	obj = obj->next;
-	// }
+	while (obj)
+	{
+		o = (t_obj *) obj->content;
+		if (o != ints->obj)
+			obj_ints(o, lray, lints);
+		if (lints->valid)
+			return ;
+		obj = obj->next;
+	}
 }

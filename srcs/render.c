@@ -1,8 +1,8 @@
 #include "minirt.h"
 
-t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
-t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints);
-void		objs_ints(t_data *data, t_ray camray, t_ints *ints);
+static t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
+static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints);
+static void		objs_ints(t_data *data, t_ray camray, t_ints *ints);
 
 int render_scene(t_data *data)
 {
@@ -29,7 +29,7 @@ int render_scene(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->win, data->scene.img.ptr, 0, 0);
 	return (0);
 }
-t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
+static t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 {
 	t_ray	camray;
 	t_ints	ints;
@@ -44,7 +44,7 @@ t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 	return (colorf);
 }
 
-t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
+static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_colorf colorf;
 	t_colorf colorfl;
@@ -76,7 +76,7 @@ t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 	return (colorf);
 }
 
-void	objs_ints(t_data *data, t_ray camray, t_ints *ints)
+static void	objs_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_ints	oints;
 	t_list	*obj;
