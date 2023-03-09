@@ -87,8 +87,8 @@ void	lht_illuminated(t_lht lht, t_ints *ints)
 
 	lvtr = vtrnorm(vtrsub(lht.pos, ints->p));
 	angle = acos(vtrdot(ints->localn, lvtr));
-	ints->illum = lht.color;
-	ints->illum.intens = 0.0;
+	ints->illum = color_to_colorf(lht.color);
+	ints->illum.alpha = 0.0;
 	if (angle > HALF_PI)
 	{
 		ints->valid = 0;
@@ -96,6 +96,6 @@ void	lht_illuminated(t_lht lht, t_ints *ints)
 	else
 	{
 		ints->valid = 1;
-		ints->illum.intens = lht.bright * (1.0 - (angle / HALF_PI));
+		ints->illum.alpha = lht.bright * (1.0 - (angle / HALF_PI));
 	}
 }

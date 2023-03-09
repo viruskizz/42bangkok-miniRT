@@ -62,8 +62,6 @@ void	sphere_inter(t_obj *obj, t_ray ray, t_ints *ints)
 	b = 2.0 * vtrdot(bvray.a, vray);
 	c = vtrdot(bvray.a, bvray.a) - 1.0;
 	ints->value = b * b - 4.0 * c;
-	ints->valid = 0;
-
 	if (ints->value > 0.0)
 	{
 		float sqt = sqrtf(ints->value);
@@ -87,7 +85,7 @@ void	sphere_inter(t_obj *obj, t_ray ray, t_ints *ints)
 			obj->pos = trans_vtr(pos0, obj->mtrans);
 			ints->localn = vtrnorm(vtrsub(ints->p, obj->pos));
 			ints->localc = obj->color;
-			ints->illum.intens = 1.0;
+			ints->illum.alpha = 1.0;
 		}
 		ints->valid = 1;
 	}

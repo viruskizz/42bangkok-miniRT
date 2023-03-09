@@ -29,3 +29,11 @@ t_ray	set_ray(t_vtr a, t_vtr b)
 	r.l = vtrsub(b, a);
 	return (r);
 }
+
+int		close0(const float f1, const float f2)
+{
+	if (fabsf(f1 - f2) < FLT_EPSILON)
+		return (1);
+	else
+		return (0);
+}

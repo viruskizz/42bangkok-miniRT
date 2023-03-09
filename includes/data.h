@@ -27,7 +27,9 @@
 # define HEIGHT		480
 # define HALF_PI	1.5708
 
-# define READ_SIZE 1024
+# define READ_SIZE	1024
+# define COLOR_MAX	255.0
+# define COLORF_MAX	1.0
 
 typedef struct s_size
 {
@@ -43,6 +45,15 @@ typedef struct s_color
 	int	b;  // blue
 	float	intens;	// intensity [0.0 - 1.0]
 }	t_color;
+
+// color between 0.0-1.0
+typedef struct s_colorf
+{
+	float	r;  // red
+	float	g;  // green
+	float	b;  // blue
+	float	alpha;
+}	t_colorf;
 
 typedef struct s_vtr
 {
@@ -90,9 +101,10 @@ typedef struct s_camara
 
 typedef struct s_lht
 {
-	t_vtr	pos;
-	double	bright; //* range[0.0-1.0];
-	t_color	color;	// normal color
+	t_vtr		pos;
+	double		bright; //* range[0.0-1.0];
+	t_color		color;	// normal color
+	t_colorf	colorf;
 }	t_lht;
 
 typedef struct s_obj
@@ -113,10 +125,12 @@ typedef struct s_ints
 {
 	double	value;
 	int		valid;
+	float	dist;
+	t_obj	*obj;
 	t_vtr	p;
 	t_vtr	localn;	// local normal in normalize vector
 	t_color	localc; // local color
-	t_color	illum;
+	t_colorf	illum;
 }	t_ints;
 
 typedef struct s_data
