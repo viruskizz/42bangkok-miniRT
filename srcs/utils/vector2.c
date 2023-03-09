@@ -34,8 +34,7 @@ t_vtr vtrset(float x, float y, float z)
 */
 float	vtrmag(t_vtr v)
 {
-	// return (sqrtf(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
-	return (sqrtf(v.x * v.x + v.y * v.y + v.z * v.z));
+	return (sqrtf(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
 }
 
 /**

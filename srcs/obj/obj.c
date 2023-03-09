@@ -50,6 +50,7 @@ t_obj	*new_obj(t_data *data)
 
 void	obj_ints(t_obj *obj, t_ray ray, t_ints *ints)
 {
+	ints->obj = obj;
 	if (obj->type == SPHERE)
 		sphere_ints(obj, ray, ints);
 	else if (obj->type == PLANE)

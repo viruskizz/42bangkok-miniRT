@@ -3,6 +3,7 @@
 static t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
 static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints);
 static void		camray_ints(t_data *data, t_ray camray, t_ints *ints);
+static void		set_obj_ints(t_ints *ints, t_ints oints);
 
 int render_scene(t_data *data)
 {
@@ -29,6 +30,7 @@ int render_scene(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->win, data->scene.img.ptr, 0, 0);
 	return (0);
 }
+
 static t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 {
 	t_ray	camray;
@@ -48,15 +50,11 @@ static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_colorf colorf;
 	t_colorf colorfl;
-	t_color color;
 	t_list	*lht;
 	t_lht	*light;
 
 	lht = data->lht;
-	// colorf = color_to_colorf(rgb_to_color(0, 0, 0));
-	colorf.r = 0;
-	colorf.g = 0;
-	colorf.b = 0;
+	colorf = color_to_colorf(rgb_to_color(0, 0, 0));
 	while (lht)
 	{
 		light = (t_lht *) lht->content;
@@ -92,24 +90,26 @@ static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 		if (obj->content)
 		{
 			t_obj *o = (t_obj *)obj->content;
-			if (o->type == SPHERE)
-				sphere_ints(o, camray, &oints);
-			else if (o->type == PLANE)
-				plane_ints(o, camray, &oints);
+			obj_ints(o, camray, &oints);
 			if (oints.valid)
 			{
 				oints.dist = vtrmag(vtrsub(oints.p, camray.a));
 				ints->valid = 1;
-				if (oints.dist < ints->dist)
-				{
-					ints->dist = oints.dist;
-					ints->obj = o;
-					ints->p = oints.p;
-					ints->localn = oints.localn;
-					ints->localc = oints.localc;
-				}
+				set_obj_ints(ints, oints);
 			}
 		}
 		obj = obj->next;
+	}
+}
+
+static void	set_obj_ints(t_ints *ints, t_ints oints)
+{
+	if (oints.dist < ints->dist)
+	{
+		ints->dist = oints.dist;
+		ints->obj = oints.obj;
+		ints->p = oints.p;
+		ints->localn = oints.localn;
+		ints->localc = oints.localc;
 	}
 }

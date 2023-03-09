@@ -98,12 +98,7 @@ void	lht_illuminated(t_lht lht, t_ints *ints, t_list *objs)
 	if (!lints.valid)
 	{
 		angle = acos(vtrdot(ints->localn, lvtr));
-
-		if (angle > HALF_PI)
-		{
-			ints->valid = 0;
-		}
-		else
+		if (angle <= HALF_PI)
 		{
 			ints->valid = 1;
 			ints->illum.alpha = lht.bright * (1.0 - (angle / HALF_PI));

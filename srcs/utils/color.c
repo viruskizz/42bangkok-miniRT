@@ -36,23 +36,3 @@ t_colorf color_to_colorf(t_color color)
 	cf.b = color.b / COLOR_MAX;
 	return (cf);
 }
-
-t_colorf colorf_add(t_colorf cf1, t_colorf cf2)
-{
-	t_colorf cfr;
-
-	cfr.r = cf1.r + cf2.r;
-	cfr.g = cf1.g + cf2.g;
-	cfr.b = cf1.b + cf2.b;
-	return (cfr);
-}
-
-t_colorf	color_complied_alpha(t_colorf cf)
-{
-	t_colorf cfr;
-
-	cfr.r = cfr.r * cfr.alpha;
-	cfr.g = cfr.g * cfr.alpha;
-	cfr.b = cfr.b * cfr.alpha;
-	return (cfr);
-}

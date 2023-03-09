@@ -18,10 +18,7 @@ void	pixel_put_img(t_img *img, int x, int y, int color);
 // * color
 t_color		rgb_to_color(int r, int g, int b);
 t_colorf	color_to_colorf(t_color color);
-t_colorf	colorf_add(t_colorf cf1, t_colorf cf2);
 t_color		colorf_to_color(t_colorf cf);
-t_colorf	color_complied_alpha(t_colorf c);
-
 
 // * vector
 t_vtr	vtrset(float x, float y, float z);

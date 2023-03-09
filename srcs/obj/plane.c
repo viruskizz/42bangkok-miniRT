@@ -34,7 +34,7 @@ void	plane_initialise(t_data *data, char **object)
 	plane->mtrans = trans_homo(
 		plane->pos,
 		vtrset(0.0, 0.0, 0.0),
-		vtrset(20.0, 20.0, 20.0)
+		vtrset(5.0, 5.0, 5.0)
 	);
 	plane->itrans = mtx_inverse(plane->mtrans, 4);
 	plane->colorf = color_to_colorf(plane->color);
