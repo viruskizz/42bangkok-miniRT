@@ -1,8 +1,8 @@
 #include "minirt.h"
 
-t_colorf	color_ints(t_data *data, t_ray camray, t_ints *ints);
-void		objs_ints(t_data *data, t_ray camray, t_ints *ints);
 t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
+t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints);
+void		objs_ints(t_data *data, t_ray camray, t_ints *ints);
 
 int render_scene(t_data *data)
 {
@@ -40,11 +40,11 @@ t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 	ints.valid = 0;
 	objs_ints(data, camray, &ints);
 	if (ints.valid)
-		colorf = color_ints(data, camray, &ints);
+		colorf = lht_ints(data, camray, &ints);
 	return (colorf);
 }
 
-t_colorf	color_ints(t_data *data, t_ray camray, t_ints *ints)
+t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_colorf colorf;
 	t_color color;
@@ -85,7 +85,7 @@ void	objs_ints(t_data *data, t_ray camray, t_ints *ints)
 			if (o->type == SPHERE)
 				sphere_inter(o, camray, &oints);
 			else if (o->type == PLANE)
-				plain_inter(o, camray, &oints);
+				plane_ints(o, camray, &oints);
 			if (oints.valid)
 			{
 				oints.dist = vtrmag(vtrsub(oints.p, camray.a));

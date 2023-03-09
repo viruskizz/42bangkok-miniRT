@@ -27,7 +27,7 @@ void	set_objs(t_data *data)
 
 	obj = new_obj(data);
 	// if (type == 'p')
-	obj = set_plain_img(data, obj);
+	obj = set_plane_img(data, obj);
 	lst = ft_lstnew(obj);
 	if (data->objs)
 		data->objs = lst;
@@ -40,7 +40,7 @@ t_obj	*new_obj(t_data *data)
 	t_obj *obj;
 
 	obj = ft_calloc(sizeof(t_obj), 1);
-	obj->type = PLAN;
+	obj->type = PLANE;
 	obj->name = ft_strdup("PLAN");
 	obj->pos = vtrset(0, 0, 0);
 	obj->color = set_color(128, 128, 0);

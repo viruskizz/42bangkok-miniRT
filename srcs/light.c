@@ -67,6 +67,7 @@ void	lht_initialise(t_data* data, char **object)
 		free(trimed_obj);
 		index++;
 	}
+	light->colorf = color_to_colorf(light->color);
 	if (index < 3)
 		exit_error(TOO_LESS_INPUT_L);
 	if (light->bright < 0.0 || light->bright > 1.0)
@@ -87,7 +88,7 @@ void	lht_illuminated(t_lht lht, t_ints *ints)
 
 	lvtr = vtrnorm(vtrsub(lht.pos, ints->p));
 	angle = acos(vtrdot(ints->localn, lvtr));
-	ints->illum = color_to_colorf(lht.color);
+	ints->illum = lht.colorf;
 	ints->illum.alpha = 0.0;
 	if (angle > HALF_PI)
 	{

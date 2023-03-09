@@ -16,7 +16,6 @@
 # define FRAME_RATE	60
 
 # define PLANE	1
-# define PLAN	1
 # define SPHERE	2
 # define CYLIND	3
 # define C		3
@@ -109,16 +108,17 @@ typedef struct s_lht
 
 typedef struct s_obj
 {
-	int		idx;
-	int		type;
-	char	*name;
-	t_vtr	pos;
-	float	**mtrans;
-	float	**itrans;
-	t_vtr	norm;
-	t_color	color;
-	t_size	size;
-	t_img	img;
+	int			idx;
+	int			type;
+	char		*name;
+	t_vtr		pos;
+	float		**mtrans;
+	float		**itrans;
+	t_vtr		norm;
+	t_color		color;
+	t_colorf	colorf;
+	t_size		size;
+	t_img		img;
 }	t_obj;
 
 typedef struct s_ints

@@ -43,6 +43,7 @@ void	sphere_initialise(t_data *data, char **object)
 		vtrset(diameter, diameter, diameter)
 	);
 	sphere->itrans = mtx_inverse(sphere->mtrans, 4);
+	sphere->colorf = color_to_colorf(sphere->color);
 	if (index != 4)
 		exit_error(TOO_LESS_INPUT_SP);
 	ft_lstadd_back(&data->objs, ft_lstnew((void *)sphere));

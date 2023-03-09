@@ -48,8 +48,8 @@ void	free_obj(t_obj *obj);
 void	scene_initialise(t_data *data);
 void	sphere_initialise(t_data *data, char **object);
 void	sphere_inter(t_obj *obj, t_ray ray, t_ints *ints);
-t_obj	*set_plain_img(t_data *data, t_obj *obj);
-void	plain_inter(t_obj *obj, t_ray ray, t_ints *ints);
+t_obj	*set_plane_img(t_data *data, t_obj *obj);
+void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints);
 
 // * utils from sharnvon..
 void	exit_error(char *str);
