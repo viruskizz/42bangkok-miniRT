@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrix1.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/10 00:11:59 by sharnvon          #+#    #+#             */
+/*   Updated: 2023/03/10 13:46:56 by sharnvon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 float	**mtx_identity(int size)
@@ -57,16 +69,15 @@ float	**mtx_sub(float **m, int size, int row, int col)
 	while (++i < size)
 	{
 		if (i == row)
-			continue;
+			continue ;
 		mm[y] = ft_calloc(size - 1, sizeof(float));
 		j = -1;
 		x = 0;
-		while(++j < size)
+		while (++j < size)
 		{
 			if (j == col)
-				continue;;
-			mm[y][x] = m[i][j];
-			x++;
+				continue ;
+			mm[y][x++] = m[i][j];
 		}
 		y++;
 	}
@@ -99,26 +110,29 @@ float	**mtx_multi(float **m1, float **m2, int size)
 	return (mm);
 }
 
+/*
+* variable c is 2 dimention array counter, c[0] = column, c[1] = row.
+*/
 float	**mtx_inverse(float **m, int size)
 {
 	float	**mm;
 	float	**subm;
-	float	det;
 	float	**mmt;
-	int	i;
-	int	j;
+	float	det;
+	int		c[2];
 
-	i = -1;
+	c[COL] = -1;
 	det = mtx_det(m, size);
 	mm = ft_calloc(size, sizeof(float *));
-	while (++i < size)
+	while (++c[COL] < size)
 	{
-		j = -1;
-		mm[i] = ft_calloc(size, sizeof(float));
-		while (++j < size)
+		c[ROW] = -1;
+		mm[c[COL]] = ft_calloc(size, sizeof(float));
+		while (++c[1] < size)
 		{
-			subm = mtx_sub(m, size, i, j);
-			mm[i][j] = powf(-1, i + j) * mtx_det(subm, size - 1) / det;
+			subm = mtx_sub(m, size, c[COL], c[ROW]);
+			mm[c[COL]][c[ROW]] = powf(-1, c[COL] + c[ROW])
+				* mtx_det(subm, size - 1) / det;
 			mtx_free(subm, size - 1);
 		}
 	}

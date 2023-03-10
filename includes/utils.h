@@ -5,7 +5,7 @@
 
 // * unit
 t_color	set_color(int r, int g, int b);
-t_size	set_size(double w, double h, double d);
+t_size	set_size(float w, float h, float d);
 t_ray	set_ray(t_vtr a, t_vtr b);
 int		close0(const float f1, const float f2);
 

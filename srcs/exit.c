@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/10 00:04:19 by sharnvon          #+#    #+#             */
+/*   Updated: 2023/03/10 00:04:20 by sharnvon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-int error_exit(t_data *data, int code)
+int	error_exit(t_data *data, int code)
 {
 	if (code == ERROR_MLX)
 	{
@@ -16,7 +28,7 @@ int error_exit(t_data *data, int code)
 	return (1);
 }
 
-int rt_close(t_data *data, int code)
+int	rt_close(t_data *data, int code)
 {
 	printf("Exit program\n");
 	if (IS_LINUX)

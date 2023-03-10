@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/10 00:13:22 by sharnvon          #+#    #+#             */
+/*   Updated: 2023/03/10 00:13:22 by sharnvon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 t_color	rgb_to_color(int r, int g, int b)
@@ -27,9 +39,9 @@ t_color	colorf_to_color(t_colorf cf)
 	return (c);
 }
 
-t_colorf color_to_colorf(t_color color)
+t_colorf	color_to_colorf(t_color color)
 {
-	t_colorf cf;
+	t_colorf	cf;
 
 	cf.r = color.r / COLOR_MAX;
 	cf.g = color.g / COLOR_MAX;
