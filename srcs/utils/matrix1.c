@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:11:59 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/10 13:17:33 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:46:56 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,27 +111,27 @@ float	**mtx_multi(float **m1, float **m2, int size)
 }
 
 /*
-* count for counting, count[0] = column, count[1] = row
+* variable c is 2 dimention array counter, c[0] = column, c[1] = row.
 */
 float	**mtx_inverse(float **m, int size)
 {
 	float	**mm;
 	float	**subm;
-	float	det;
 	float	**mmt;
-	int		count[2];
+	float	det;
+	int		c[2];
 
-	count[0] = -1;
+	c[COL] = -1;
 	det = mtx_det(m, size);
 	mm = ft_calloc(size, sizeof(float *));
-	while (++count[0] < size)
+	while (++c[COL] < size)
 	{
-		count[1] = -1;
-		mm[count[0]] = ft_calloc(size, sizeof(float));
-		while (++count[1] < size)
+		c[ROW] = -1;
+		mm[c[COL]] = ft_calloc(size, sizeof(float));
+		while (++c[1] < size)
 		{
-			subm = mtx_sub(m, size, count[0], count[1]);
-			mm[count[0]][count[1]] = powf(-1, count[0] + count[1])
+			subm = mtx_sub(m, size, c[COL], c[ROW]);
+			mm[c[COL]][c[ROW]] = powf(-1, c[COL] + c[ROW])
 				* mtx_det(subm, size - 1) / det;
 			mtx_free(subm, size - 1);
 		}

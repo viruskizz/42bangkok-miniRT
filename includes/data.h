@@ -30,6 +30,9 @@
 # define COLOR_MAX	255.0
 # define COLORF_MAX	1.0
 
+# define COL	0
+# define ROW	1
+
 typedef struct s_size
 {
 	float	w; // width
