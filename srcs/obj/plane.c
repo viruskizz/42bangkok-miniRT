@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 01:06:25 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/10 03:39:00 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:15:53 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	plane_assigned(int index, t_obj *plane, char *trimed_obj)
 				plane->pos,
 				vtrset(0.0, 0.0, 0.0),
 				vtrset(5.0, 5.0, 5.0));
-		plane->itrans = mtx_inverse(plane->mtrans, 4, -1, 0);
+		plane->itrans = mtx_inverse(plane->mtrans, 4);
 		plane->colorf = color_to_colorf(plane->color);
 	}
 }
@@ -103,7 +103,7 @@ void	plane_initialise(t_data *data, char **object)
 		vtrset(0.0, 0.0, 0.0),
 		vtrset(5.0, 5.0, 5.0)
 	);
-	plane->itrans = mtx_inverse(plane->mtrans, 4, -1, 0);
+	plane->itrans = mtx_inverse(plane->mtrans, 4);
 	plane->colorf = color_to_colorf(plane->color);
 	if (index != 4)
 		exit_error(TOO_LESS_INPUT_PL);

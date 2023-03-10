@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:43:42 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/10 03:36:01 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:16:03 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	sphere_initialise(t_data *data, char **object)
 		free(trimed_obj);
 		index++;
 	}
-	sphere->itrans = mtx_inverse(sphere->mtrans, 4, -1, 0);
+	sphere->itrans = mtx_inverse(sphere->mtrans, 4);
 	if (index != 4)
 		exit_error(TOO_LESS_INPUT_SP);
 	ft_lstadd_back(&data->objs, ft_lstnew((void *)sphere));

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:11:59 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/10 12:55:22 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:17:33 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,26 +111,28 @@ float	**mtx_multi(float **m1, float **m2, int size)
 }
 
 /*
-*parameter col(coulum),row can be any numbers just solution of norminette.
+* count for counting, count[0] = column, count[1] = row
 */
-float	**mtx_inverse(float **m, int size, int col, int row)
+float	**mtx_inverse(float **m, int size)
 {
 	float	**mm;
 	float	**subm;
 	float	det;
 	float	**mmt;
+	int		count[2];
 
-	col = -1;
+	count[0] = -1;
 	det = mtx_det(m, size);
 	mm = ft_calloc(size, sizeof(float *));
-	while (++col < size)
+	while (++count[0] < size)
 	{
-		row = -1;
-		mm[col] = ft_calloc(size, sizeof(float));
-		while (++row < size)
+		count[1] = -1;
+		mm[count[0]] = ft_calloc(size, sizeof(float));
+		while (++count[1] < size)
 		{
-			subm = mtx_sub(m, size, col, row);
-			mm[col][row] = powf(-1, col + row) * mtx_det(subm, size - 1) / det;
+			subm = mtx_sub(m, size, count[0], count[1]);
+			mm[count[0]][count[1]] = powf(-1, count[0] + count[1])
+				* mtx_det(subm, size - 1) / det;
 			mtx_free(subm, size - 1);
 		}
 	}
