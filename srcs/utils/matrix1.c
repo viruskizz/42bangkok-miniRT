@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:11:59 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/10 00:12:00 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/10 12:55:22 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,26 +111,26 @@ float	**mtx_multi(float **m1, float **m2, int size)
 }
 
 /*
-* 2 last parameter i,j can be any numbers just solution of norminette
+*parameter col(coulum),row can be any numbers just solution of norminette.
 */
-float	**mtx_inverse(float **m, int size, int i, int j)
+float	**mtx_inverse(float **m, int size, int col, int row)
 {
 	float	**mm;
 	float	**subm;
 	float	det;
 	float	**mmt;
 
-	i = -1;
+	col = -1;
 	det = mtx_det(m, size);
 	mm = ft_calloc(size, sizeof(float *));
-	while (++i < size)
+	while (++col < size)
 	{
-		j = -1;
-		mm[i] = ft_calloc(size, sizeof(float));
-		while (++j < size)
+		row = -1;
+		mm[col] = ft_calloc(size, sizeof(float));
+		while (++row < size)
 		{
-			subm = mtx_sub(m, size, i, j);
-			mm[i][j] = powf(-1, i + j) * mtx_det(subm, size - 1) / det;
+			subm = mtx_sub(m, size, col, row);
+			mm[col][row] = powf(-1, col + row) * mtx_det(subm, size - 1) / det;
 			mtx_free(subm, size - 1);
 		}
 	}
