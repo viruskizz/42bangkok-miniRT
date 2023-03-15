@@ -6,11 +6,14 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:57:35 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/10 01:04:01 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/14 03:01:10 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+int hello;
+float	position;
 
 static t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
 static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints);
@@ -24,6 +27,10 @@ int	render_scene(t_data *data)
 	t_colorf	colorf;
 
 	y = 0;
+
+	hello = 0;
+	t_obj *object = (t_obj *)data->objs->content;
+	position = object->pos.x;
 	while (y < data->scene.size.h)
 	{
 		x = 0;

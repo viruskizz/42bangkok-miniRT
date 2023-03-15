@@ -23,8 +23,10 @@
 # define TRANS_BCK 1
 
 # define WIDTH		720
+# define WIDTH_EX	870
 # define HEIGHT		480
 # define HALF_PI	1.5708
+# define PI			3.14159265359
 
 # define READ_SIZE	1024
 # define COLOR_MAX	255.0
@@ -32,6 +34,13 @@
 
 # define COL	0
 # define ROW	1
+
+// * define for object_cordition_str mode.
+# define INDEX	0
+# define TYPE	1
+# define NONE		0
+# define INCREASE	1
+# define DECREASE	2
 
 typedef struct s_size
 {
@@ -150,6 +159,11 @@ typedef struct s_data
 	int		w;
 	int		h;
 	int		frame;
+	int		ctrl_key;
+	int		lshift_key;
+	int		rshift_key;
+	int		selectp;
+	int		selectv[4];
 	t_obj	scene;
 	t_amb	amb;
 	t_cam	cam;

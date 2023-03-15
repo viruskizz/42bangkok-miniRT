@@ -18,15 +18,17 @@
 
 int	rt_close(t_data *data, int code);
 int	error_exit(t_data *data, int code);
-
 int rt_setup(t_data *data, char *filename);
+
+// * interface
+void    window_interface(t_data *data, int mode);
 
 // * parsing_intput
 t_data	parsing_input(int argc, char **argv);
 void	ambient_initialise(t_data *data, char **object);
 t_obj	*object_initialise(int type);
-void	plane_initialise(t_data *data, char **object);
-void	cylinder_inititialize(t_data *data, char **object);
+void	plane_initialise(t_data *data, char **object, int idx);
+void	cylinder_inititialize(t_data *data, char **object, int idx);
 
 // * render
 void	render_objects(t_data *data);
@@ -47,7 +49,7 @@ t_obj	*new_obj(t_data *data);
 void	obj_ints(t_obj *obj, t_ray ray, t_ints *ints);
 void	free_obj(t_obj *obj);
 void	scene_initialise(t_data *data);
-void	sphere_initialise(t_data *data, char **object);
+void	sphere_initialise(t_data *data, char **object, int idx);
 void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints);
 t_obj	*set_plane_img(t_data *data, t_obj *obj);
 void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints);
@@ -70,9 +72,9 @@ void	print_tdata(t_data *data);
 void	print_twoarray_char(char **str);
 void	print_tvector(t_vtr vector);
 void	print_tobject(t_obj *object);
-void	printf_tcamara(t_cam camara);
-void	printf_tambient(t_amb ambient);
-void	printf_tsize(t_size size);
+void	print_tcamara(t_cam camara);
+void	print_tambient(t_amb ambient);
+void	print_tsize(t_size size);
 void	print_tcolor(t_color color);
 
 #endif

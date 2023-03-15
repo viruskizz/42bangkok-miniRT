@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:27:04 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/27 01:08:22 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/12 23:47:42 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ static void	get_input(t_data *data, int fd)
 */
 void	object_lexering(t_data *data, char **object, int identifier)
 {
+	static int	index = 0;
+
 	if (!ft_strncmp(object[identifier], "A", 2))
 		ambient_initialise(data, object);
 	else if (!ft_strncmp(object[identifier], "C", 2))
@@ -131,11 +133,11 @@ void	object_lexering(t_data *data, char **object, int identifier)
 	else if (!ft_strncmp(object[identifier], "L", 2))
 		lht_initialise(data, object);//printf("%s\n", "go to fucntion L");
 	else if (!ft_strncmp(object[identifier], "sp", 3))
-		sphere_initialise(data, object);//printf("%s\n", "go to fucntion sp");
+		sphere_initialise(data, object, index++);//printf("%s\n", "go to fucntion sp");
 	else if (!ft_strncmp(object[identifier], "pl", 3))
-		plane_initialise(data, object);//printf("%s\n", "go to fucntion ol");
+		plane_initialise(data, object, index++);//printf("%s\n", "go to fucntion ol");
 	else if (!ft_strncmp(object[identifier], "cy", 3))
-		cylinder_inititialize(data, object);//printf("%s\n", "go to fucntion cy");
+		cylinder_inititialize(data, object, index++);//printf("%s\n", "go to fucntion cy");
 	else
 		printf("%s\n", "ship hay aew\n"); // ! dont forget to delete...
 }

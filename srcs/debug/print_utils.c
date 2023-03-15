@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 15:31:36 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/26 19:25:35 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/12 00:33:56 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	print_tcolor(t_color color)
 /*
 * [debuging function printing t_size value]
 */
-void	printf_tsize(t_size size)
+void	print_tsize(t_size size)
 {
-	printf("========== [print_tcolor] ==========\n");
+	printf("========== [print_tsize] ==========\n");
 	printf("• w: |%.2f|\n• h: |%.2f|\n• d: |%.2f|\n", size.w, size.h, size.d);
 	printf("====================================\n");
 }
@@ -56,7 +56,7 @@ void	printf_tsize(t_size size)
 /*
 * [debuging function printing t_amb value]
 */
-void	printf_tambient(t_amb ambient)
+void	print_tambient(t_amb ambient)
 {
 	printf("========== [print_tambient ==========\n");
 	printf("• ratio : |%.2f|\n• color.r: |%d|\n• color.g: |%d|\n• color.b: |%d|\n", ambient.ratio, ambient.color.r, ambient.color.g,ambient.color.b);
@@ -66,7 +66,7 @@ void	printf_tambient(t_amb ambient)
 /*
 * [debuging function printing t_cam value]
 */
-void	printf_tcamara(t_cam camara)
+void	print_tcamara(t_cam camara)
 {
 	printf("========== [print_tcamara ==========\n");
 	printf("• pos.x : |%.2f|\n• pos.y : |%.2f|\n• pos.z : |%.2f|\n• norm.x: |%.2f|\n• norm.y: |%.2f|\n• norm.z: |%.2f|\n• fov   : |%.d|\n"

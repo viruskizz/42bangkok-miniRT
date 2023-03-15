@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:16:31 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/09 23:40:13 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/12 23:46:57 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	cylinder_assignd(int index, char *trimed_obj, t_obj *cylinder);
 * => [success] : intialize value into t_obj
 * => [exit] : unsuccessful initialize value cause invalid value or character.
 */
-void	cylinder_inititialize(t_data *data, char **object)
+void	cylinder_inititialize(t_data *data, char **object, int idx)
 {
 	int		index;
 	t_obj	*cylinder;
@@ -42,6 +42,7 @@ void	cylinder_inititialize(t_data *data, char **object)
 		exit_error(TOO_LESS_INPUT_CY);
 	if (!tvector_inrange(cylinder->norm, -1.0, 1.0))
 		exit_error(INVALID_NORM_CY);
+	cylinder->idx = idx;
 	ft_lstadd_back(&data->objs, ft_lstnew((void *)cylinder));
 }
 
