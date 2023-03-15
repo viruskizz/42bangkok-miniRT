@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:31:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/15 22:27:59 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/16 05:15:53 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	render(t_data *data);
 t_obj		*set_plain_img(t_data *data, t_obj *obj);
 int			keyhandler_press(int keycode, t_data *data);
 int			keyhandler_release(int keycode, t_data *data);
+void		draw_square(t_data *data, int width, int height, int start);
 
 int	main(int argc, char **argv)
 {
@@ -32,8 +33,8 @@ int	main(int argc, char **argv)
 		data.selectv[i] = 0;
 	// print_tdata(&data);
 	initial(&data);
+	render_scene(&data);
 	window_interface(&data, NONE);
-	// render_scene(&data);
 	// mlx_loop_hook(data.mlx, &render, &data);
 	mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
 	mlx_hook(data.win, 2, 1L << 0, &keyhandler_press, &data);

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 19:36:37 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 02:43:33 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/16 02:51:31 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,6 @@ void	selection_to_window(t_data *data)
 	{
 		colour = rgb_to_int(224, 224, 224);
 		string = selecting_object_string(data);
-		// // * selectv = position to add []
-		// count = 0;
-		// pointer2 = ft_itoa(data->selectv[count++]);
-		// if (data->selectp == 0)
-		// {
-		// 	pointer1 = ft_strjoin("[SELECTIN]:[", pointer2);
-		// 	pointer3 = ft_strjoin(pointer1, "]");
-		// 	free(pointer1);
-		// 	pointer1 = pointer3;
-		// }
-		// else
-		// 	pointer1 = ft_strjoin("[SELECTIN]:", pointer2);
-		// free(pointer2);
-		// while (count < 4)
-		// {
-		// 	pointer3 = ft_itoa(data->selectv[count++]);
-		// 	if (data->selectp == count - 1)
-		// 	{
-		// 		pointer2 = ft_strjoin(pointer1, "[");
-		// 		free(pointer1);
-		// 		pointer1 = ft_strjoin_pro(pointer2, pointer3);
-		// 		pointer2 = ft_strjoin(pointer1, "]");
-		// 		free(pointer1);
-		// 	}
-		// 	else
-		// 		pointer2 =ft_strjoin_pro(pointer1, pointer3);
-		// 	pointer1 = pointer2;
-		// }
-		// pointer2 = ft_strjoin(pointer1, "[ ]");
-		// free(pointer1);
-		// pointer1 = pointer2;
 	}
 	mlx_string_put(data->mlx, data->win, x, y, colour, string);
 	free(string);

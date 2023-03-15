@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:54:53 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/15 22:28:27 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/16 05:18:50 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,10 +287,10 @@ int	keyhandler_press(int keycode, t_data *data)
 		}
 		if (object_id > 0)
 			object_update(data, object->idx);
+		render_scene(data);
 		window_interface(data, NONE);
 	}
 	// cam_geometry(&data->cam);
-	// render_scene(data);
 	printf("ctrl_key: %d | keycode: %d\n", data->ctrl_key, keycode); 
 	return (keycode);
 }
