@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:31:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/15 02:57:08 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/15 22:27:59 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 	// print_tdata(&data);
 	initial(&data);
 	window_interface(&data, NONE);
-	render_scene(&data);
+	// render_scene(&data);
 	// mlx_loop_hook(data.mlx, &render, &data);
 	mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
 	mlx_hook(data.win, 2, 1L << 0, &keyhandler_press, &data);

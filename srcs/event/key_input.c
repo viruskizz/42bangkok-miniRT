@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:54:53 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/15 18:30:34 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/15 22:28:27 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,44 +289,8 @@ int	keyhandler_press(int keycode, t_data *data)
 			object_update(data, object->idx);
 		window_interface(data, NONE);
 	}
-	cam_geometry(&data->cam);
-	render_scene(data);
+	// cam_geometry(&data->cam);
+	// render_scene(data);
 	printf("ctrl_key: %d | keycode: %d\n", data->ctrl_key, keycode); 
-	return (1);
+	return (keycode);
 }
-
-/*
-* camera prptotype.
-*/
-// else if (data->hold_key && keycode == KEY_RIGHT)
-	// 	data->cam.pos.x -= value;
-	// else if (data->hold_key && keycode == KEY_LEFT)
-	// 	data->cam.pos.x += value;
-	// else if (data->hold_key && keycode == KEY_UP)
-	// 	data->cam.pos.y += value;
-	// else if (data->hold_key && keycode == KEY_DOWN)
-	// 	data->cam.pos.y -= value;
-	// else if (data->hold_key && keycode == 24)
-	// 	data->cam.pos.z += value;
-	// else if (data->hold_key && keycode == 27)
-	// 	data->cam.pos.z -= value;
-	// else if (!data->hold_key && keycode == KEY_UP)
-	// {
-	// 	data->cam.lookat.y -= 1;
-	// 	cam_geometry(&data->cam);
-	// }
-	// else if (!data->hold_key && keycode == KEY_DOWN)
-	// {
-	// 	data->cam.lookat.y += value + 1;
-	// 	cam_geometry(&data->cam);
-	// }
-	// else if (!data->hold_key && keycode == KEY_RIGHT)
-	// {
-	// 	data->cam.lookat.x -= value + 1;
-	// 	cam_geometry(&data->cam);
-	// }
-	// else if (!data->hold_key && keycode == KEY_LEFT)
-	// {
-	// 	data->cam.lookat.x += value + 1;
-	// 	cam_geometry(&data->cam);
-	// }

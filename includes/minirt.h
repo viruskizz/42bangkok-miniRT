@@ -58,6 +58,7 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints);
 void	exit_error(char *str);
 void	free_twopointer_char(char **ptr);
 char	*ft_strjoin_pro(char *str1, char *str2);
+char	*ft_floattoa(float number);
 int		character_count(char *str, char c);
 float	ato_float(char *str);
 t_color	ato_tcolor(char *str);

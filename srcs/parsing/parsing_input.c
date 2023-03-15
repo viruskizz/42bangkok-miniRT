@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:27:04 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/12 23:47:42 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/16 00:14:49 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ static void	get_input(t_data *data, int fd)
 */
 void	object_lexering(t_data *data, char **object, int identifier)
 {
-	static int	index = 0;
+	static int	index = 1;
 
 	if (!ft_strncmp(object[identifier], "A", 2))
 		ambient_initialise(data, object);
