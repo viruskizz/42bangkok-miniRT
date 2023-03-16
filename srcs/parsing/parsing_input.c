@@ -6,13 +6,13 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:27:04 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 00:14:49 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/16 21:01:56 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "math.h"
-#include <string.h>
+// #include <string.h>
 
 /*
 TODO utility functions that must add into header files
@@ -126,20 +126,25 @@ void	object_lexering(t_data *data, char **object, int identifier)
 {
 	static int	index = 1;
 
-	if (!ft_strncmp(object[identifier], "A", 2))
-		ambient_initialise(data, object);
-	else if (!ft_strncmp(object[identifier], "C", 2))
-		cam_initialise(data, object);// printf("%s\n", "go to fucntion C");
-	else if (!ft_strncmp(object[identifier], "L", 2))
-		lht_initialise(data, object);//printf("%s\n", "go to fucntion L");
-	else if (!ft_strncmp(object[identifier], "sp", 3))
-		sphere_initialise(data, object, index++);//printf("%s\n", "go to fucntion sp");
-	else if (!ft_strncmp(object[identifier], "pl", 3))
-		plane_initialise(data, object, index++);//printf("%s\n", "go to fucntion ol");
-	else if (!ft_strncmp(object[identifier], "cy", 3))
-		cylinder_inititialize(data, object, index++);//printf("%s\n", "go to fucntion cy");
+	if (index < 10000)
+	{
+		if (!ft_strncmp(object[identifier], "A", 2))
+			ambient_initialise(data, object);
+		else if (!ft_strncmp(object[identifier], "C", 2))
+			cam_initialise(data, object);// printf("%s\n", "go to fucntion C");
+		else if (!ft_strncmp(object[identifier], "L", 2))
+			lht_initialise(data, object);//printf("%s\n", "go to fucntion L");
+		else if (!ft_strncmp(object[identifier], "sp", 3))
+			sphere_initialise(data, object, index++);//printf("%s\n", "go to fucntion sp");
+		else if (!ft_strncmp(object[identifier], "pl", 3))
+			plane_initialise(data, object, index++);//printf("%s\n", "go to fucntion ol");
+		else if (!ft_strncmp(object[identifier], "cy", 3))
+			cylinder_inititialize(data, object, index++);//printf("%s\n", "go to fucntion cy");
+		else
+			printf("%s\n", "ship hay aew\n"); // ! dont forget to delete...
+	}
 	else
-		printf("%s\n", "ship hay aew\n"); // ! dont forget to delete...
+		exit_error("minirt: too many objects..");
 }
 
 static int	identifier_checking(char **object, int index)

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:06:41 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 05:21:42 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:30:22 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	put_template_to_window(t_data *data, int objects, int *colour)
 	if (data->selectp == -1)
 		selected_box_statute_to_window(data, &img);
 	mlx_put_image_to_window(data->mlx, data->win, img.ptr, WIDTH, 0);
-	draw_square(data, WIDTH_EX, 3, 0);
+	// draw_square(data, WIDTH_EX, 3, 0);
 	draw_square(data, WIDTH_EX, 3, HEIGHT - 3);
-	draw_square(data, 3, HEIGHT, 0);
+	draw_square(data, 2, HEIGHT, 0);
 	// real_world_interface(data);
 	// * [real world] tag.
 }

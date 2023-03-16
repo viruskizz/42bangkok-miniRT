@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 02:28:50 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 03:07:34 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:47:34 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ static char	*object_cordition_str(t_obj *object, char *string, int mode)
 			return (ft_strjoin("|[ ]CYINDER", string));
 		else if (object->type == CONE)
 			return (ft_strjoin("|[ ]CONE", string));
+		else if (object->type == LIGHT)
+			return (ft_strjoin("|[ ]LIGHT", string)); // * added fot light
 	}
 	return (NULL);
 }

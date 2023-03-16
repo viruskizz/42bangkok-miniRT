@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:31:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 05:15:53 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/16 06:23:29 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ int	main(int argc, char **argv)
 	char	*filename;
 
 	data = parsing_input(argc, argv);
-	data.ctrl_key = 0;
-	data.rshift_key = 0;
-	data.lshift_key = 0;
-	data.selectp = -1;
-	for (int i = 0; i < 4; i++)
-		data.selectv[i] = 0;
 	// print_tdata(&data);
 	initial(&data);
 	render_scene(&data);
@@ -45,6 +39,8 @@ int	main(int argc, char **argv)
 
 static void	initial(t_data *data)
 {
+	int	count;
+
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		error_exit(data, ERROR_MLX);
@@ -52,4 +48,11 @@ static void	initial(t_data *data)
 	if (!data->win)
 		error_exit(data, ERROR_WIN);
 	scene_initialise(data);
+	data->ctrl_key = 0;
+	data->rshift_key = 0;
+	data->lshift_key = 0;
+	data->selectp = -1;
+	count = 0;
+	while (count < 4)
+		data->selectv[count++] = 0;
 }
