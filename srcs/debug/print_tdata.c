@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 15:30:37 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/01/26 15:30:50 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/17 03:34:22 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ void	print_tdata(t_data *data)
 	printf("%s|%s • normalize : x[%.2f],y[%.2f],z[%.2f]\n", YELLOW, GREEN, data->cam.norm.x, data->cam.norm.y, data->cam.norm.z);
 	printf("%s|%s • fov degree: %d\n", YELLOW, GREEN, data->cam.fov);
 	// * light
-	head = data->lht;
-	index = 1;
-	while(head != NULL)
-	{
-		light = (t_lht *)head->content;
-		printf("%s====================== [light %d] ======================\n", YELLOW, index++);
-		printf("%s|%s • coordinete: x[%.2f],y[%.2f],z[%.2f]\n", YELLOW, GREEN, light->pos.x, light->pos.y, light->pos.z);
-		printf("%s|%s • brightness: %.2f\n", YELLOW, GREEN, light->bright);
-		printf("%s|%s • color     : r[%d],g[%d],b[%d]\n", YELLOW, GREEN, light->color.r, light->color.g, light->color.b);
-		head = head->next;
-	}
+	// head = data->lht;
+	// index = 1;
+	// while(head != NULL)
+	// {
+	// 	light = (t_lht *)head->content;
+	// 	printf("%s====================== [light %d] ======================\n", YELLOW, index++);
+	// 	printf("%s|%s • coordinete: x[%.2f],y[%.2f],z[%.2f]\n", YELLOW, GREEN, light->pos.x, light->pos.y, light->pos.z);
+	// 	printf("%s|%s • brightness: %.2f\n", YELLOW, GREEN, light->bright);
+	// 	printf("%s|%s • color     : r[%d],g[%d],b[%d]\n", YELLOW, GREEN, light->color.r, light->color.g, light->color.b);
+	// 	head = head->next;
+	// }
 	// * object
 	head = data->objs;
 	index = 1;
@@ -86,7 +86,7 @@ void	print_tdata(t_data *data)
 	}
 	printf("%s======================================================\n", YELLOW);
 	printf("•-------------------------•\n");
-	printf("|%s • total lights  => %d ea %s|\n", GREEN, ft_lstsize(data->lht), YELLOW);
+	// printf("|%s • total lights  => %d ea %s|\n", GREEN, ft_lstsize(data->lht), YELLOW);
 	printf("|%s • total objects => %d ea %s|\n", GREEN, ft_lstsize(data->objs), YELLOW);
 	printf("•-------------------------•\n");
 	printf(RESET);

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:27:04 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 21:01:56 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/17 03:33:46 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_data	parsing_input(int argc, char **argv)
 	// * file check;
 	fd = file_checking(argv[1]);
 	// *.attribute check;
-	data.lht = NULL;
+	// data.lht = NULL;
 	data.objs = NULL;
 	get_input(&data, fd);
 	return (data);
@@ -133,7 +133,7 @@ void	object_lexering(t_data *data, char **object, int identifier)
 		else if (!ft_strncmp(object[identifier], "C", 2))
 			cam_initialise(data, object);// printf("%s\n", "go to fucntion C");
 		else if (!ft_strncmp(object[identifier], "L", 2))
-			lht_initialise(data, object);//printf("%s\n", "go to fucntion L");
+			lht_initialise(data, object, index++);//printf("%s\n", "go to fucntion L");
 		else if (!ft_strncmp(object[identifier], "sp", 3))
 			sphere_initialise(data, object, index++);//printf("%s\n", "go to fucntion sp");
 		else if (!ft_strncmp(object[identifier], "pl", 3))

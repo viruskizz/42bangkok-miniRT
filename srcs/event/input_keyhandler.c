@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:54:53 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 22:56:41 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/17 05:39:29 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 // * [MODE:REAL-WORLD]
 // * [MODE:SELECTION.]
 
-void	sphere_key_transformation(t_data *data, int keycode, t_obj *object);
-void	plane_key_transformation(t_data *data, int keycode ,t_obj *object);
-void	camera_key_transformation(t_data *data, int keycode);
-
+int			sphere_key_transformation(t_data *data, int keycode, t_obj *object);
+int			plane_key_transformation(t_data *data, int keycode ,t_obj *object);
+int			light_key_transformation(t_data *data, int keycode, t_obj *object);
+int			camera_key_transformation(t_data *data, int keycode);
+void		revalue_camera_keyhandler(t_data *data);
 static void	selection_keyhandler(t_data *data, int keycode);
-static void	revalue_camera_keyhandler(t_data *data);
 static void	element_transformation_keyhandler(t_data *data, int keycode);
+static int	objects_key_transformation(t_data *data, int object_id, int keycode);
 
 /*
 * [function handler key input]
@@ -110,51 +111,53 @@ static void	selection_keyhandler(t_data *data, int keycode)
 	}
 }
 
-static void	revalue_camera_keyhandler(t_data *data)
-{
-	mlx_clear_window(data->mlx, data->win);
-	data->cam.lookat.x = 0;
-	data->cam.lookat.y = 0;
-	data->cam.lookat.z = 0;
-	cam_geometry(&data->cam);
-	render_scene(data);
-}
-
 static void	element_transformation_keyhandler(t_data *data, int keycode)
 {
-	t_list	*objects;
-	t_obj	*object;
 	int 	count;
 	int		object_id;
+	int		update;
 
 	count = 0;
+	update = 0;
 	object_id = 0;
-	mlx_clear_window(data->mlx, data->win);
-	objects = data->objs;
 	while (count < 4)
 		object_id = (object_id * 10) + data->selectv[count++];
 	if (object_id == 0)
-		camera_key_transformation(data, keycode);
+		update = camera_key_transformation(data, keycode);
 	else
+		update = objects_key_transformation(data, object_id, keycode);
+	if (update)
 	{
-		while (objects)
-		{
-			object = (t_obj *)objects->content;
-			if (object->idx == object_id)
-				break ;
-			objects = objects->next;
-		}
-		if (objects && object->type == SPHERE)
-			sphere_key_transformation(data, keycode, object);
-		else if (objects && object->type == PLANE)
-			plane_key_transformation(data, keycode, object);	// plane_key_transformation(data, keycode, object)
-		else if (objects && object->type == CYLIND)
-			printf("do cylinder tranform.\n");	// cylinder_key_transformation(data, keycode, object)
-		else if (objects && object->type == CONE)
-			printf("do cone tranform.\n");		// cone_key_tranformation(data, keycode, object)
-		// else if (objects && object->type == LIGHT)
-			// light_key_transformation(data, keycode, object)
+		mlx_clear_window(data->mlx, data->win);
+		cam_geometry(&data->cam);
+		render_scene(data);
 	}
-	cam_geometry(&data->cam);
-	render_scene(data);
+}
+
+static int	objects_key_transformation(t_data *data, int object_id, int keycode)
+{
+	t_obj	*object;
+	t_list	*objects;
+	int		update;
+
+	update = 0;
+	objects = data->objs;
+	while (objects)
+	{
+		object = (t_obj *)objects->content;
+		if (object->idx == object_id)
+			break ;
+		objects = objects->next;
+	}
+	if (objects && object->type == SPHERE)
+		update = sphere_key_transformation(data, keycode, object);
+	else if (objects && object->type == PLANE)
+		update = plane_key_transformation(data, keycode, object);	// plane_key_transformation(data, keycode, object)
+	else if (objects && object->type == CYLIND)
+		printf("do cylinder tranform.\n");	// cylinder_key_transformation(data, keycode, object)
+	else if (objects && object->type == CONE)
+		printf("do cone tranform.\n");		// cone_key_tranformation(data, keycode, object)
+	else if (objects && object->type == LIGHT)
+		update = light_key_transformation(data, keycode, object);
+	return (update);
 }

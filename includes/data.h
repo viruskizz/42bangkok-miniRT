@@ -32,8 +32,8 @@
 # define READ_SIZE	1024
 # define COLOR_MAX	255.0
 # define COLORF_MAX	1.0
-# define TRANSF_VALUE 0.1 // 0.25; // 0.04;
-# define RESIZE_VALUE 0.1 // 0.25; //0.05;
+# define TRANSF_VALUE 0.25 //0.05 // 0.25; // 0.04;
+# define RESIZE_VALUE 0.25 //0.05 // 0.25; //0.05;
 
 # define COL	0
 # define ROW	1
@@ -137,6 +137,7 @@ typedef struct s_obj
 	int			idx;
 	int			type;
 	char		*name;
+	float		bright; //* range[0.0-1.0];
 	float		**mtrans;
 	float		**itrans;
 	t_vtr		pos;
@@ -174,7 +175,7 @@ typedef struct s_data
 	t_obj	scene;
 	t_amb	amb;
 	t_cam	cam;
-	t_list	*lht;
+	// t_list	*lht;
 	t_list	*objs;
 }	t_data;
 

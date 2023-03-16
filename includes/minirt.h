@@ -40,8 +40,10 @@ void	cam_geometry(t_cam *cam);
 t_ray	cam_ray(t_cam cam, float proj_x, float proj_y);
 
 // * light
-void	lht_initialise(t_data* data, char **object);
-void	lht_illuminated(t_lht lht, t_ints *ints, t_list *objs);
+void	lht_initialise(t_data* data, char **object, int idx);
+// void	lht_initialise(t_data* data, char **object);
+// void	lht_illuminated(t_lht lht, t_ints *ints, t_list *objs);
+void	lht_illuminated(t_obj lht, t_ints *ints, t_list *objs);
 
 // * obj
 void	set_objs(t_data *data);
