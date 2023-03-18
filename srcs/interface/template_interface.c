@@ -6,16 +6,17 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:06:41 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 16:30:22 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:34:18 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 static void	header_identifier_interface(t_data *data, t_img *img);
-void		body_indentifier_interface(t_data *data, t_img *img, int objects, int *colour);
+void		body_indentifier_interface(t_data *data, t_img *img,
+				int objects, int *colour);
 static void	put_colour_to_window(t_data *data, t_img *img, int line, int color);
-static void		selection_interface(t_data *data, t_img *img);
+static void	selection_interface(t_data *data, t_img *img);
 static void	selected_box_statute_to_window(t_data *data, t_img *img);
 static void	draw_topbott_box(t_img *img, int y, int x, int start);
 void		draw_square(t_data *data, int width, int height, int start);
@@ -40,7 +41,6 @@ void	put_template_to_window(t_data *data, int objects, int *colour)
 	draw_square(data, WIDTH_EX, 3, HEIGHT - 3);
 	draw_square(data, 2, HEIGHT, 0);
 	// real_world_interface(data);
-	// * [real world] tag.
 }
 
 /*
@@ -82,7 +82,8 @@ static void	header_identifier_interface(t_data *data, t_img *img)
 * c[COL] : y | c[ROW] : x
 * (1) y = 28 | x = WIDTH | 
 */
-void	body_indentifier_interface(t_data *data, t_img *img, int objects, int *colour)
+void	body_indentifier_interface(t_data *data, t_img *img,
+			int objects, int *colour)
 {
 	int	c[2];
 	int	start;
@@ -183,7 +184,7 @@ static void	draw_topbott_box(t_img *img, int y, int x, int start)
 		{
 			if (!(y > start + 6 && y < HEIGHT - 6
 					&& x >= 1 && x < 4)
-					&& !(y > start + 6 && y < HEIGHT - 6
+				&& !(y > start + 6 && y < HEIGHT - 6
 					&& x <= 149 && x > 146))
 				pixel_put_img(img, x, y, 0x0E0E0E0);
 			x++;
@@ -245,9 +246,9 @@ void	draw_square(t_data *data, int width, int height, int start)
 		x = 0;
 		while (x < width)
 		{
-				pixel_put_img(&img, x, y, 0x0E0E0E0);
-				x++;
-			}
+			pixel_put_img(&img, x, y, 0x0E0E0E0);
+			x++;
+		}
 		y++;
 	}
 	mlx_put_image_to_window(data->mlx, data->win, img.ptr, 0, start);

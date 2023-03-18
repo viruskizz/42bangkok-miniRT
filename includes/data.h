@@ -175,7 +175,7 @@ typedef struct s_data
 	t_obj	scene;
 	t_amb	amb;
 	t_cam	cam;
-	// t_list	*lht;
+	t_list	*lht;
 	t_list	*objs;
 }	t_data;
 

@@ -6,25 +6,14 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:43:42 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/12 23:46:28 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/17 13:08:05 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-extern float position;
-
 void		sphere_assigned(int index, char *trimed_obj, t_obj *sphere);
 static int	intersec_tranf(t_obj *obj, t_ints *ints, t_pnt point, t_ray bvray);
-
-void	debug(float pos, int i)
-{
-	if (position != pos)
-	{
-		printf("(%d)\n", i);
-		exit (1);
-	}
-}
 
 /*
 * [function initialise and checking sphere value]

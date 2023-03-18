@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:27:38 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/17 04:08:55 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:40:48 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	lht_initialise(t_data *data, char **object, int idx)
 	if (light->bright < 0.0 || light->bright > 1.0)
 		exit_error(INVALID_BRIGHT_L);
 	light->idx = idx;
-	ft_lstadd_back(&data->objs, ft_lstnew((void *)light));
+	ft_lstadd_back(&data->lht, ft_lstnew((void *)light));
 }
 
 /*
@@ -234,13 +234,10 @@ void	lht_inst_objs(t_ray lray, t_ints *lints, t_ints *ints, t_list *objs)
 	while (obj)
 	{
 		o = (t_obj *) obj->content;
-		// if (o->type != LIGHT) // * new added.
-		// {
-			if (o != ints->obj)
-				obj_ints(o, lray, lints);
-			if (lints->valid)
-				return ;
-		// }
+		if (o != ints->obj)
+			obj_ints(o, lray, lints);
+		if (lints->valid)
+			return ;
 		obj = obj->next;
 	}
 }

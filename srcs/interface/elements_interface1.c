@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 02:28:50 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/17 03:21:17 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/18 17:00:12 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int			put_none_to_window(t_data *data, int line);
 * line will start at 40.
 * each line for a chracter is 11.
 */
-void	put_elements_to_window(t_data *data, t_list *objects)
+void	put_elements_to_window(t_data *data, int object_amount, t_obj **objects)
 {
 	int		count;
 	t_obj	*object;
@@ -34,20 +34,15 @@ void	put_elements_to_window(t_data *data, t_list *objects)
 	line = 40;
 	mlx_string_put(data->mlx, data->win, WIDTH + 1, 18,
 		0xE0E0E0, "[ELEMENTS-IDENTIFIER]");
-	while (count < 5)
+	while (count < object_amount)
 	{
-		if (objects)
-		{
-			object = objects->content;
-			line = put_object_to_window(data, object, line);
-			line = put_coordinates_to_window(data, object, line);
-			line = put_size_to_window(data, object, line);
-			objects = objects->next;
-		}
-		else
-			line = put_none_to_window(data, line);
+		line = put_object_to_window(data, objects[count], line);
+		line = put_coordinates_to_window(data, objects[count], line);
+		line = put_size_to_window(data, objects[count], line);
 		count++;
 	}
+	while (count++ < 5)
+		line = put_none_to_window(data, line);
 }
 
 /*

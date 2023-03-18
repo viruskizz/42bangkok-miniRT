@@ -6,14 +6,11 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:57:35 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/17 03:43:03 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:42:17 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-int hello;
-float	position;
 
 static t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
 static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints);
@@ -27,10 +24,6 @@ int	render_scene(t_data *data)
 	t_colorf	colorf;
 
 	y = 0;
-
-	hello = 0;
-	t_obj *object = (t_obj *)data->objs->content;
-	position = object->pos.x;
 	while (y < data->scene.size.h)
 	{
 		x = 0;
@@ -97,25 +90,25 @@ static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 }
 */
 
+/* 
+* 
+*/
 static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_colorf	colorf;
 	t_colorf	colorfl;
 	t_list		*light;
 
-	light = data->objs; //light - data->lht;
+	light = data->lht;
 	colorf = color_to_colorf(rgb_to_color(0, 0, 0));
 	while (light)
 	{
-		if (((t_obj *)light->content)->type == LIGHT) // * new added.
+		lht_illuminated(*((t_obj *)(light->content)), ints, data->objs);
+		if (ints->valid)
 		{
-			lht_illuminated(*((t_obj *)(light->content)), ints, data->objs); // lht_illuminated(*((t_lht *)(light->content)), ints, data->objs);
-			if (ints->valid)
-			{
-				colorf.r += ints->illum.r * ints->illum.alpha;
-				colorf.g += ints->illum.g * ints->illum.alpha;
-				colorf.b += ints->illum.b * ints->illum.alpha;
-			}
+			colorf.r += ints->illum.r * ints->illum.alpha;
+			colorf.g += ints->illum.g * ints->illum.alpha;
+			colorf.b += ints->illum.b * ints->illum.alpha;
 		}
 		light = light->next;
 	}
@@ -129,6 +122,9 @@ static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 	return (colorf);
 }
 
+/*
+*
+*/
 static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_ints	oints;
