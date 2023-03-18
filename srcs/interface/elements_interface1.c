@@ -41,7 +41,8 @@ void	put_elements_to_window(t_data *data, int object_amount, t_obj **objects)
 		line = put_size_to_window(data, objects[count], line);
 		count++;
 	}
-	while (count++ < 5)
+	int n = (HEIGHT - 28 - 37) / 83;
+	while (count++ < n)
 		line = put_none_to_window(data, line);
 }
 

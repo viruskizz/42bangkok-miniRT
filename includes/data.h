@@ -24,8 +24,11 @@
 # define TRANS_BCK 1
 
 # define WIDTH		720
-# define WIDTH_EX	870
 # define HEIGHT		480
+// # define WIDTH		640
+// # define HEIGHT		360
+# define PANEL		150
+
 # define HALF_PI	1.5708
 # define PI			3.14159265359
 

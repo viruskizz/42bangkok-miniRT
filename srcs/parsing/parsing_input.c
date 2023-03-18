@@ -74,6 +74,7 @@ static void	get_input(t_data *data, int fd)
 
 	file = NULL;
 	// * read from the file
+	data->lht = NULL;
 	while (1 > 0)
 	{
 		read_byte = read(fd, buff, READ_SIZE);

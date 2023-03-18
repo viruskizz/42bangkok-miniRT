@@ -60,7 +60,8 @@ static int	get_object_ptr(t_data *data, t_obj **buff, int *colour, int first)
 	objects = data->objs;
 	lights = data->lht;
 	move_list_to_first(&objects, &lights, first);
-	while ((objects || lights) && count < 5)
+	int n = (HEIGHT - 28 - 37) / 83;
+	while ((objects || lights) && count < n)
 	{
 		if (objects && ((t_obj *)objects->content)->idx == first + count)
 		{
