@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:27:04 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/17 03:33:46 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 03:03:03 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
 TODO utility functions that must add into header files
 */
 
-static int	file_checking(char *file);
-static void	get_input(t_data *data, int fd);
-static int	identifier_checking(char **object, int index);
-static void	object_lexering(t_data *data, char **object, int identifier);
+static int		file_checking(char *file);
+static void		get_input(t_data *data, int fd);
+static int		identifier_checking(char **object, int index);
+static void		object_lexering(t_data *data, char **object, int identifier);
+static t_data	data_initialize(void);
 
 /*
 * [function parsing input from the file and conveting into struct data]
@@ -39,11 +40,32 @@ t_data	parsing_input(int argc, char **argv)
 	if (argc != 2)
 		exit_error("minirt: wrong argurment");
 	// * file check;
+	data = data_initialize();
 	fd = file_checking(argv[1]);
 	// *.attribute check;
-	// data.lht = NULL;
-	data.objs = NULL;
 	get_input(&data, fd);
+	return (data);
+}
+
+static t_data	data_initialize(void)
+{
+	t_data	data;
+	int		count;
+
+	data.mlx = NULL;
+	data.win = NULL;
+	data.w = WIDTH;
+	data.h = HEIGHT;
+	data.update = 0;
+	data.ctrl_key = 0;
+	data.lshift_key = 0;
+	data.rshift_key = 0;
+	data.selectp = -1;
+	count = 0;
+	while (count < 4)
+		data.selectv[count++] = 0;
+	data.lht = NULL;
+	data.objs = NULL;
 	return (data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:06:41 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/18 18:34:18 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 04:18:44 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		body_indentifier_interface(t_data *data, t_img *img,
 				int objects, int *colour);
 static void	put_colour_to_window(t_data *data, t_img *img, int line, int color);
 static void	selection_interface(t_data *data, t_img *img);
-static void	selected_box_statute_to_window(t_data *data, t_img *img);
+static void	selected_box_status_to_window(t_data *data, t_img *img);
 static void	draw_topbott_box(t_img *img, int y, int x, int start);
 void		draw_square(t_data *data, int width, int height, int start);
 
@@ -35,7 +35,7 @@ void	put_template_to_window(t_data *data, int objects, int *colour)
 	body_indentifier_interface(data, &img, objects, colour);
 	selection_interface(data, &img);
 	if (data->selectp == -1)
-		selected_box_statute_to_window(data, &img);
+		selected_box_status_to_window(data, &img);
 	mlx_put_image_to_window(data->mlx, data->win, img.ptr, WIDTH, 0);
 	// draw_square(data, WIDTH_EX, 3, 0);
 	draw_square(data, WIDTH + PANEL, 3, HEIGHT - 3);
@@ -92,10 +92,8 @@ void	body_indentifier_interface(t_data *data, t_img *img,
 	count = -1;
 	c[COL] = 28;
 	int n = (HEIGHT - 28 - 37) / 83;
-	printf("n = %d\n", n);
 	while (++count < n)
 	{
-		printf("%d,%d\n", c[ROW], c[COL]);
 		start = c[COL];
 		if (count < objects)
 			put_colour_to_window(data, img, c[COL], colour[count]);
@@ -112,6 +110,13 @@ void	body_indentifier_interface(t_data *data, t_img *img,
 				pixel_put_img(img, PANEL - 2, c[COL]++, 0x0E0E0E0);
 			}
 		}
+	}
+	while (c[COL] < HEIGHT - 37)
+	{
+		c[ROW] = 0;
+		while (c[ROW] < PANEL && c[COL] >= start + 81)
+			pixel_put_img(img, c[ROW]++, c[COL], 0x0E0E0E0);
+		c[COL]++;
 	}
 }
 
@@ -206,7 +211,7 @@ static void	draw_topbott_box(t_img *img, int y, int x, int start)
 * [put to window when status is selecting]
 * (1) y = 459 | x = WIDTH + 141 | end_x = WIDTH +152 | end_y = y + 8
 */
-static void	selected_box_statute_to_window(t_data *data, t_img *img)
+static void	selected_box_status_to_window(t_data *data, t_img *img)
 {
 	int	x;
 	int	y;
@@ -215,7 +220,7 @@ static void	selected_box_statute_to_window(t_data *data, t_img *img)
 	int	colour;
 
 	colour = rgb_to_int(224, 224, 224);
-	y = 459;
+	y = HEIGHT - 21;
 	end_y = y + 8;
 	end_x = 141;
 	while (y < end_y)

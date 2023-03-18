@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:01:48 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/18 22:03:07 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 03:25:38 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ static int	moving_key_check(t_data *data, int keycode, t_obj *object);
 * return [1] : keycode is in cordition and some value was changed.
 * return [0] : keycode is not in cordition.
 */
-int	plane_key_transf(t_data *data, int keycode, t_obj *object)
+void	plane_key_transf(t_data *data, int keycode, t_obj *object)
 {
 	if (!rotation_key_check(data, keycode, object))
 	{
 		if (!moving_key_check(data, keycode, object))
-			return (0);
+			return ;
 			// resizing_key_check(data, keycode, object);
 	}
 	plane_value_update(object);
-	return (1);
+	data->update = 1;
 }
 
 /*

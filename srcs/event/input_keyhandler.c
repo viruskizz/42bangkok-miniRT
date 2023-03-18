@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:54:53 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/18 22:11:55 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 05:41:53 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			camera_key_transformation(t_data *data, int keycode);
 void		revalue_camera_keyhandler(t_data *data);
 static void	selection_keyhandler(t_data *data, int keycode);
 static void	element_transformation_keyhandler(t_data *data, int keycode);
-static int	objects_key_transformation(t_data *data, int id, int keycode);
+static void	objects_key_transformation(t_data *data, int id, int keycode);
 
 /*
 * [function key press handler]
@@ -78,13 +78,11 @@ int	keyhandler_press(int keycode, t_data *data)
 		window_interface(data, INCREASE);
 	else if (data->selectp > -1)
 		selection_keyhandler(data, keycode);
-	else if (keycode == KEY_SPACE)
+	else if (keycode == KEY_SPACE && !data->update)
 		revalue_camera_keyhandler(data);
-	else
+	else if (!data->update)
 		element_transformation_keyhandler(data, keycode);
-	window_interface(data, NONE);
-	printf("ctrl_key: %d | keycode: %d\n", data->ctrl_key, keycode);
-	return (keycode);
+	return (window_interface(data, NONE));
 }
 
 /*
@@ -141,53 +139,44 @@ static void	element_transformation_keyhandler(t_data *data, int keycode)
 {
 	int		count;
 	int		object_id;
-	int		update;
 
 	count = 0;
-	update = 0;
 	object_id = 0;
 	while (count < 4)
 		object_id = (object_id * 10) + data->selectv[count++];
 	if (object_id == 0)
-		update = camera_key_transformation(data, keycode);
+		camera_key_transformation(data, keycode);
 	else
-		update = objects_key_transformation(data, object_id, keycode);
-	if (update)
-	{
-		mlx_clear_window(data->mlx, data->win);
-		cam_geometry(&data->cam);
-		render_scene(data);
-	}
+		objects_key_transformation(data, object_id, keycode);
 }
 
 /*
 * [helper function of element_transformation_keyhandler]
 * [find index of object andchecking type of object then apply ransformation]
 */
-static int	objects_key_transformation(t_data *data, int id, int keycode)
+static void	objects_key_transformation(t_data *data, int id, int keycode)
 {
 	t_list	*objects;
-	int		update;
+	int		next;
 
-	update = 1;
+	next = 1;
 	objects = data->lht;
 	while (objects)
 	{
 		if (((t_obj *)objects->content)->idx == id)
 			break ;
 		objects = objects->next;
-		if (objects == NULL && update-- == 1)
+		if (objects == NULL && next-- == 1)
 			objects = data->objs;
 	}
 	if (objects && ((t_obj *)objects->content)->type == SPHERE)
-		update = sphere_key_transf(data, keycode, (t_obj *)objects->content);
+		sphere_key_transf(data, keycode, (t_obj *)objects->content);
 	else if (objects && ((t_obj *)objects->content)->type == PLANE)
-		update = plane_key_transf(data, keycode, (t_obj *)objects->content);	// plane_key_transf(data, keycode, object)
+		plane_key_transf(data, keycode, (t_obj *)objects->content);	// plane_key_transf(data, keycode, object)
 	else if (objects && ((t_obj *)objects->content)->type == CYLIND)
 		printf("do cylinder tranform.\n");	// cylinder_key_transf(data, keycode, object)
 	else if (objects && ((t_obj *)objects->content)->type == CONE)
 		printf("do cone tranform.\n");		// cone_key_tranf(data, keycode, object)
 	else if (objects && ((t_obj *)objects->content)->type == LIGHT)
-		update = light_key_transf(data, keycode, (t_obj *)objects->content);
-	return (update);
+		light_key_transf(data, keycode, (t_obj *)objects->content);
 }

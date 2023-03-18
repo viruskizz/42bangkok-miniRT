@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:45:52 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/17 05:43:37 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 03:31:23 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 static int	rotation_key_check(t_data *data, int keycode);
 static int	moving_key_check(t_data *data, int keycode);
 
-int	camera_key_transformation(t_data *data, int keycode)
+void	camera_key_transformation(t_data *data, int keycode)
 {
 	if (!rotation_key_check(data, keycode))
 	{
 		if (!moving_key_check(data, keycode))
-			return (0);
+			return ;
 	}
-	return (1);
+	data->update = 1;
 	// if (data->ctrl_key && data->rshift_key && keycode == KEY_RIGHT)
 	// {
 	// 	// * rotate camera right along z-axis.

@@ -153,13 +153,13 @@ typedef struct s_obj
 
 typedef struct s_ints
 {
-	float	value;
-	int		valid;
-	float	dist;
-	t_obj	*obj;
-	t_vtr	p;
-	t_vtr	localn;	// local normal in normalize vector
-	t_color	localc; // local color
+	float		value;
+	int			valid;
+	float		dist;
+	t_obj		*obj;
+	t_vtr		p;
+	t_vtr		localn;	// local normal in normalize vector
+	t_color		localc; // local color
 	t_colorf	illum;
 }	t_ints;
 
@@ -169,7 +169,7 @@ typedef struct s_data
 	void	*win;
 	int		w;
 	int		h;
-	int		frame;
+	int		update;
 	int		ctrl_key;
 	int		lshift_key;
 	int		rshift_key;

@@ -21,7 +21,7 @@ int	error_exit(t_data *data, int code);
 int rt_setup(t_data *data, char *filename);
 
 // * interface
-void    window_interface(t_data *data, int mode);
+int    window_interface(t_data *data, int mode);
 
 // * parsing_intput
 t_data	parsing_input(int argc, char **argv);

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 03:45:27 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/18 22:03:47 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 03:29:19 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 * return [1] : keycode is in cordition and some value was changed.
 * return [0] : keycode is not in cordition.
 */
-int	light_key_transf(t_data *data, int keycode, t_obj *object)
+void	light_key_transf(t_data *data, int keycode, t_obj *object)
 {
 	int	update;
 
@@ -41,5 +41,5 @@ int	light_key_transf(t_data *data, int keycode, t_obj *object)
 		object->pos.y -= TRANSF_VALUE;
 	else if (keycode == KEY_DOWN && !update++)
 		object->pos.y += TRANSF_VALUE;
-	return (update);
+	data->update = update;
 }

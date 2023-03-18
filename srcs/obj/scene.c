@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:36:07 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/17 03:13:31 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 03:00:24 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	scene_initialise(t_data *data)
 {
-	data->w = WIDTH;
-	data->h = HEIGHT;
 	data->scene.color.r = 0;
 	data->scene.color.g = 0;
 	data->scene.color.b = 0;
