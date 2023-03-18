@@ -69,3 +69,8 @@ static void	cylinder_assignd(int index, char *trimed_obj, t_obj *cylinder)
 	else if (index == 5)
 		cylinder->color = ato_tcolor(trimed_obj);
 }
+
+void	cylinder_ints(t_obj *obj, t_ray ray, t_ints *ints)
+{
+
+}
