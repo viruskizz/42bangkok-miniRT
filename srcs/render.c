@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:57:35 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/10 01:04:01 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:42:17 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 }
 */
 
+/* 
+* 
+*/
 static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_colorf	colorf;
@@ -100,7 +103,7 @@ static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 	colorf = color_to_colorf(rgb_to_color(0, 0, 0));
 	while (light)
 	{
-		lht_illuminated(*((t_lht *)(light->content)), ints, data->objs);
+		lht_illuminated(*((t_obj *)(light->content)), ints, data->objs);
 		if (ints->valid)
 		{
 			colorf.r += ints->illum.r * ints->illum.alpha;
@@ -119,6 +122,9 @@ static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 	return (colorf);
 }
 
+/*
+*
+*/
 static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_ints	oints;

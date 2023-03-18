@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:43:42 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/10 13:16:03 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/17 13:08:05 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	intersec_tranf(t_obj *obj, t_ints *ints, t_pnt point, t_ray bvray);
 * => [success] : intialize value into t_obj
 * => [exit] : unsuccessful initialize value cause invalid value or character.
 */
-void	sphere_initialise(t_data *data, char **object)
+void	sphere_initialise(t_data *data, char **object, int idx)
 {
 	int		index;
 	t_obj	*sphere;
@@ -43,6 +43,7 @@ void	sphere_initialise(t_data *data, char **object)
 	sphere->itrans = mtx_inverse(sphere->mtrans, 4);
 	if (index != 4)
 		exit_error(TOO_LESS_INPUT_SP);
+	sphere->idx = idx;
 	ft_lstadd_back(&data->objs, ft_lstnew((void *)sphere));
 }
 

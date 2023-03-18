@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 01:06:25 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/10 13:15:53 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/16 21:20:31 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	intersec_tranf(t_ray bvray, t_vtr vray, t_obj *obj, t_ints *ints);
 * => [success] : intialize value into t_obj
 * => [exit] : unsuccessful initialize value cause invalid value or character.
 */
-void	plane_initialise(t_data *data, char **object)
+void	plane_initialise(t_data *data, char **object, int idx)
 {
 	int		index;
 	t_obj	*plane;
@@ -43,6 +43,7 @@ void	plane_initialise(t_data *data, char **object)
 		exit_error(TOO_LESS_INPUT_PL);
 	if (!tvector_inrange(plane->norm, -1.0, 1.0))
 		exit_error(INVALID_NORM_PL);
+	plane->idx = idx;
 	ft_lstadd_back(&data->objs, ft_lstnew((void *)plane));
 }
 
@@ -64,8 +65,10 @@ static void	plane_assigned(int index, t_obj *plane, char *trimed_obj)
 		plane->color = ato_tcolor(trimed_obj);
 			plane->mtrans = trans_homo(
 				plane->pos,
-				vtrset(0.0, 0.0, 0.0),
+				// vtrset(0, 0, 0),
+				vtrset(plane->norm.x, plane->norm.y, plane->norm.z),
 				vtrset(5.0, 5.0, 5.0));
+				// vtrset(100, 100, 100));
 		plane->itrans = mtx_inverse(plane->mtrans, 4);
 		plane->colorf = color_to_colorf(plane->color);
 	}

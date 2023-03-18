@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:27:38 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/10 00:28:11 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:40:48 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		lht_inst_objs(
 				t_ray lray, t_ints *linst, t_ints *ints, t_list *objs);
-static void	light_assigned(int index, char *trimed_obj, t_lht *light);
+static void	light_assigned(int index, char *trimed_obj, t_obj *light);
 
 /*
 * [function initialize and checking ambient light value]
@@ -50,10 +50,10 @@ void	ambient_initialise(t_data *data, char **object)
 }
 
 /*
+* old
 * [function initialise and checking light value]
 * => [success] : intialize value into t_lht.
 * => [exit] : unsuccessful initialize value cause invalid value or character.
-*/
 void	lht_initialise(t_data *data, char **object)
 {
 	int		index;
@@ -82,13 +82,73 @@ void	lht_initialise(t_data *data, char **object)
 	light->colorf = color_to_colorf(light->color);
 	ft_lstadd_back(&data->lht, ft_lstnew((void *)light));
 }
+*/
 
 /*
+* new
+* [function initialise and checking light value]
+* => [success] : intialize value into t_lht.
+* => [exit] : unsuccessful initialize value cause invalid value or character.
+*/
+void	lht_initialise(t_data *data, char **object, int idx)
+{
+	int		index;
+	char	*trimed_obj;
+	t_obj	*light;
+
+	index = 0;
+	light = (t_obj *)ft_calloc(sizeof(t_obj), 1);
+	if (!light)
+		exit_error(FAIL_ALLOC);
+	while (object[index])
+	{
+		if (index > 3)
+			exit_error(TOO_MANY_INPUT_L);
+		trimed_obj = ft_strtrim(object[index], "/t");
+		if (!trimed_obj)
+			exit_error(FAIL_TRIM);
+		light_assigned(index, trimed_obj, light);
+		free(trimed_obj);
+		index++;
+	}
+	if (index < 3)
+		exit_error(TOO_LESS_INPUT_L);
+	if (light->bright < 0.0 || light->bright > 1.0)
+		exit_error(INVALID_BRIGHT_L);
+	light->idx = idx;
+	ft_lstadd_back(&data->lht, ft_lstnew((void *)light));
+}
+
+/*
+* new
 * [helper function of lht_initialise]
 * [checking string of light input, converting and assigned into light(t_lht)]
 * => [return] : valid input, covert and store into light.
 * => [exit] : invalid input, print error and exit program.
 */
+static void	light_assigned(int index, char *trimed_obj, t_obj *light)
+{
+	if (index == 0 && ft_strncmp(trimed_obj, "L", 2))
+		exit_error(INVALID_IDENT_L);
+	else if (index == 1)
+		light->pos = ato_tvector(trimed_obj);
+	else if (index == 2)
+		light->bright = ato_float(trimed_obj);
+	else if (index == 3)
+	{
+		light->color = ato_tcolor(trimed_obj);
+		light->colorf = color_to_colorf(light->color);
+		light->type = LIGHT;
+	}
+}
+
+/*
+* old
+* [helper function of lht_initialise]
+* [checking string of light input, converting and assigned into light(t_lht)]
+* => [return] : valid input, covert and store into light.
+* => [exit] : invalid input, print error and exit program.
+
 static void	light_assigned(int index, char *trimed_obj, t_lht *light)
 {
 	if (index == 0 && ft_strncmp(trimed_obj, "L", 2))
@@ -100,14 +160,47 @@ static void	light_assigned(int index, char *trimed_obj, t_lht *light)
 	else if (index == 3)
 		light->color = ato_tcolor(trimed_obj);
 }
+*/
 
 /*
+* old
+ * compute light between light point and intersection point
+ * reflecing the local normal surface (inside object)
+ ? lvtr = light vector in normalize
+ ? svtr = starting vector
+void	lht_illuminated(t_lht lht, t_ints *ints, t_list *objs)
+{
+	t_vtr	lvtr;
+	t_ray	lray;
+	t_ints	lints;
+	float	angle;
+
+	lvtr = vtrnorm(vtrsub(lht.pos, ints->p));
+	lray = set_ray(ints->p, vtradd(ints->p, lvtr));
+	lht_inst_objs(lray, &lints, ints, objs);
+	ints->illum = lht.colorf;
+	ints->valid = 0;
+	ints->illum.alpha = 0.0;
+	if (!lints.valid)
+	{
+		angle = acos(vtrdot(ints->localn, lvtr));
+		if (angle <= HALF_PI)
+		{
+			ints->valid = 1;
+			ints->illum.alpha = lht.bright * (1.0 - (angle / HALF_PI));
+		}
+	}
+}
+*/
+
+/*
+ * new
  * compute light between light point and intersection point
  * reflecing the local normal surface (inside object)
  ? lvtr = light vector in normalize
  ? svtr = starting vector
 */
-void	lht_illuminated(t_lht lht, t_ints *ints, t_list *objs)
+void	lht_illuminated(t_obj lht, t_ints *ints, t_list *objs)
 {
 	t_vtr	lvtr;
 	t_ray	lray;
