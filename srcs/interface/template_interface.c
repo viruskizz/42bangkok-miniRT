@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:06:41 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/18 18:34:18 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 16:41:20 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ void		body_indentifier_interface(t_data *data, t_img *img,
 				int objects, int *colour);
 static void	put_colour_to_window(t_data *data, t_img *img, int line, int color);
 static void	selection_interface(t_data *data, t_img *img);
-static void	selected_box_statute_to_window(t_data *data, t_img *img);
+static void	selected_box_status_to_window(t_data *data, t_img *img);
 static void	draw_topbott_box(t_img *img, int y, int x, int start);
 void		draw_square(t_data *data, int width, int height, int start);
+
+static void	draw_side(t_img *img, int x, int y);
+static void	draw_bottom(t_img *img, int start, int x, int y);
 
 /*
 * [function draw interface onto image and put to window]
@@ -29,16 +32,16 @@ void	put_template_to_window(t_data *data, int objects, int *colour)
 {
 	t_img	img;
 
-	img.ptr = mlx_new_image(data->mlx, 150, HEIGHT);
+	img.ptr = mlx_new_image(data->mlx, PANEL, HEIGHT);
 	img.addr = mlx_get_data_addr(img.ptr, &img.bpp, &img.lh, &img.endian);
 	header_identifier_interface(data, &img);
 	body_indentifier_interface(data, &img, objects, colour);
 	selection_interface(data, &img);
 	if (data->selectp == -1)
-		selected_box_statute_to_window(data, &img);
+		selected_box_status_to_window(data, &img);
 	mlx_put_image_to_window(data->mlx, data->win, img.ptr, WIDTH, 0);
 	// draw_square(data, WIDTH_EX, 3, 0);
-	draw_square(data, WIDTH_EX, 3, HEIGHT - 3);
+	draw_square(data, WIDTH + PANEL, 3, HEIGHT - 3);
 	draw_square(data, 2, HEIGHT, 0);
 	// real_world_interface(data);
 }
@@ -61,7 +64,7 @@ static void	header_identifier_interface(t_data *data, t_img *img)
 		x = 0;
 		if (y <= 4 || y >= 23)
 		{
-			while (x < 150)
+			while (x < PANEL)
 				pixel_put_img(img, x++, y, colour);
 		}
 		else
@@ -69,8 +72,8 @@ static void	header_identifier_interface(t_data *data, t_img *img)
 			pixel_put_img(img, x, y, colour);
 			pixel_put_img(img, x + 1, y, colour);
 			// pixel_put_img(img, 150, y, colour);
-			pixel_put_img(img, 149, y, colour);
-			pixel_put_img(img, 148, y, colour);
+			pixel_put_img(img, PANEL - 1, y, colour);
+			pixel_put_img(img, PANEL - 2, y, colour);
 		}
 		y++;
 	}
@@ -88,10 +91,12 @@ void	body_indentifier_interface(t_data *data, t_img *img,
 	int	c[2];
 	int	start;
 	int	count;
+	int	boxes_amount;
 
 	count = -1;
 	c[COL] = 28;
-	while (++count < 5)
+	boxes_amount = (HEIGHT - 28 - 37) / 83;
+	while (++count < boxes_amount)
 	{
 		start = c[COL];
 		if (count < objects)
@@ -99,17 +104,32 @@ void	body_indentifier_interface(t_data *data, t_img *img,
 		while (c[COL] <= start + 82)
 		{
 			c[ROW] = 0;
-			while (c[ROW] < 150 && c[COL] >= start + 81)
+			while (c[ROW] < PANEL && c[COL] >= start + 81)
 				pixel_put_img(img, c[ROW]++, c[COL], 0x0E0E0E0);
 			if (c[COL]++ < start + 81)
-			{
-				pixel_put_img(img, c[ROW], --c[COL], 0x0E0E0E0);
-				pixel_put_img(img, c[ROW] + 1, c[COL], 0x0E0E0E0);
-				pixel_put_img(img, 150 - 1, c[COL], 0x0E0E0E0);
-				pixel_put_img(img, 150 - 2, c[COL]++, 0x0E0E0E0);
-			}
+				draw_side(img, c[ROW], c[COL] - 1);
 		}
 	}
+	draw_bottom(img, start, c[ROW], c[COL]);
+}
+
+static void	draw_bottom(t_img *img, int start, int x, int y)
+{
+	while (y < HEIGHT - 37)
+	{
+		x = 0;
+		while (x < PANEL && y >= start + 81)
+			pixel_put_img(img, x++, y, 0x0E0E0E0);
+		y++;
+	}
+}
+
+static void	draw_side(t_img *img, int x, int y)
+{
+	pixel_put_img(img, x, y, 0x0E0E0E0);
+	pixel_put_img(img, x++, y, 0x0E0E0E0);
+	pixel_put_img(img, PANEL - 1, y, 0x0E0E0E0);
+	pixel_put_img(img, PANEL - 2, y, 0x0E0E0E0);
 }
 
 /*
@@ -151,7 +171,7 @@ static void	selection_interface(t_data *data, t_img *img)
 	int	start;
 	int	count;
 
-	y = 443;
+	y = HEIGHT - 37;
 	start = y;
 	while (y < HEIGHT)
 	{
@@ -164,7 +184,7 @@ static void	selection_interface(t_data *data, t_img *img)
 			while (count < 6)
 			{
 				pixel_put_img(img, x + count, y, 0x0E0E0E0);
-				pixel_put_img(img, 150 - count++, y, 0x0E0E0E0);
+				pixel_put_img(img, PANEL - count++, y, 0x0E0E0E0);
 			}
 		}
 		y++;
@@ -180,7 +200,7 @@ static void	draw_topbott_box(t_img *img, int y, int x, int start)
 	if (!(y >= HEIGHT - 6 && y <= HEIGHT - 5)
 		&& !(y <= start + 6 && y >= start + 5))
 	{
-		while (x < 150)
+		while (x < PANEL)
 		{
 			if (!(y > start + 6 && y < HEIGHT - 6
 					&& x >= 1 && x < 4)
@@ -193,7 +213,7 @@ static void	draw_topbott_box(t_img *img, int y, int x, int start)
 	else
 	{
 		pixel_put_img(img, x, y, 0x0E0E0E0);
-		pixel_put_img(img, 150, y, 0x0E0E0E0);
+		pixel_put_img(img, PANEL, y, 0x0E0E0E0);
 	}
 }
 
@@ -203,7 +223,7 @@ static void	draw_topbott_box(t_img *img, int y, int x, int start)
 * [put to window when status is selecting]
 * (1) y = 459 | x = WIDTH + 141 | end_x = WIDTH +152 | end_y = y + 8
 */
-static void	selected_box_statute_to_window(t_data *data, t_img *img)
+static void	selected_box_status_to_window(t_data *data, t_img *img)
 {
 	int	x;
 	int	y;
@@ -212,7 +232,7 @@ static void	selected_box_statute_to_window(t_data *data, t_img *img)
 	int	colour;
 
 	colour = rgb_to_int(224, 224, 224);
-	y = 459;
+	y = HEIGHT - 21;
 	end_y = y + 8;
 	end_x = 141;
 	while (y < end_y)
@@ -261,7 +281,7 @@ void	real_world_interface(t_data *data)
 	int		y;
 	t_img	img;
 
-	img.ptr = mlx_new_image(data->mlx, WIDTH_EX, HEIGHT);
+	img.ptr = mlx_new_image(data->mlx, WIDTH + PANEL, HEIGHT);
 	img.addr = mlx_get_data_addr(img.ptr, &img.bpp, &img.lh, &img.endian);
 	if (data->selectp < 0)
 		colour = rgb_to_int(224, 224, 224);

@@ -16,16 +16,19 @@
 # define FRAME_RATE	60
 
 # define LIGHT	0
-# define PLANE	1
-# define SPHERE	2
+# define SPHERE	1
+# define PLANE	2
 # define CYLIND	3
 # define CONE	4
 # define TRANS_FWD -1
 # define TRANS_BCK 1
 
 # define WIDTH		720
-# define WIDTH_EX	870
 # define HEIGHT		480
+// # define WIDTH		640
+// # define HEIGHT		360
+# define PANEL		150
+
 # define HALF_PI	1.5708
 # define PI			3.14159265359
 
@@ -150,13 +153,13 @@ typedef struct s_obj
 
 typedef struct s_ints
 {
-	float	value;
-	int		valid;
-	float	dist;
-	t_obj	*obj;
-	t_vtr	p;
-	t_vtr	localn;	// local normal in normalize vector
-	t_color	localc; // local color
+	float		value;
+	int			valid;
+	float		dist;
+	t_obj		*obj;
+	t_vtr		p;
+	t_vtr		localn;	// local normal in normalize vector
+	t_color		localc; // local color
 	t_colorf	illum;
 }	t_ints;
 
@@ -166,7 +169,7 @@ typedef struct s_data
 	void	*win;
 	int		w;
 	int		h;
-	int		frame;
+	int		update;
 	int		ctrl_key;
 	int		lshift_key;
 	int		rshift_key;

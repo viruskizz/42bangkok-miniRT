@@ -132,7 +132,7 @@ static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 	t_obj	*obj;
 
 	objs = data->objs;
-	ints->dist = MAXFLOAT;
+	ints->dist = FLT_MAX;
 	oints.valid = 0;
 	while (objs)
 	{
