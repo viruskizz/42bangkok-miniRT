@@ -96,7 +96,7 @@ static void	get_input(t_data *data, int fd)
 	if (!file_line)
 		exit_error("minirt: spliting file_line is failed.");
 	// print_twoarray_char(file_line);
-
+	data->lht = NULL;
 	while (file_line[index])
 	{
 		// * check identifier //

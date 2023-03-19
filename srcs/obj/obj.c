@@ -68,7 +68,7 @@ void	obj_ints(t_obj *obj, t_ray ray, t_ints *ints)
 	else if (obj->type == PLANE)
 		plane_ints(obj, ray, ints);
 	else if (obj->type == CYLIND)
-		printf("CYLINDER\n");
+		cylinder_ints(obj, ray, ints);
 	else if (obj->type == CONE)
 		printf("CONE\n");
 }
