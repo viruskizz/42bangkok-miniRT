@@ -70,7 +70,7 @@ void	obj_ints(t_obj *obj, t_ray ray, t_ints *ints)
 	else if (obj->type == CYLIND)
 		cylinder_ints(obj, ray, ints);
 	else if (obj->type == CONE)
-		printf("CONE\n");
+		cone_ints(obj, ray, ints);
 }
 
 void	free_obj(t_obj *obj)
