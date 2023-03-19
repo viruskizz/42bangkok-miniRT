@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 01:06:25 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 21:20:31 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 16:43:47 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ static void	plane_assigned(int index, t_obj *plane, char *trimed_obj)
 		plane->color = ato_tcolor(trimed_obj);
 			plane->mtrans = trans_homo(
 				plane->pos,
-				// vtrset(0, 0, 0),
-				vtrset(plane->norm.x, plane->norm.y, plane->norm.z),
+				vtrset(0.0, 0.0, 0.0),
+				// vtrset(plane->norm.x, plane->norm.y, plane->norm.z),
 				vtrset(5.0, 5.0, 5.0));
 				// vtrset(100, 100, 100));
 		plane->itrans = mtx_inverse(plane->mtrans, 4);

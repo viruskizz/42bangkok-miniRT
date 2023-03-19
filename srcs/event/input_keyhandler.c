@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:54:53 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/19 05:41:53 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 15:00:04 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 // * [MODE:REAL-WORLD]
 // * [MODE:SELECTION.]
 
-int			sphere_key_transf(t_data *data, int keycode, t_obj *object);
-int			plane_key_transf(t_data *data, int keycode, t_obj *object);
-int			light_key_transf(t_data *data, int keycode, t_obj *object);
+// int			sphere_key_transf(t_data *data, int keycode, t_obj *object);
+// int			plane_key_transf(t_data *data, int keycode, t_obj *object);
+// int			light_key_transf(t_data *data, int keycode, t_obj *object);
+void		objects_transformation(t_data *data, int keycode, t_obj *object);
 int			camera_key_transformation(t_data *data, int keycode);
 void		revalue_camera_keyhandler(t_data *data);
 static void	selection_keyhandler(t_data *data, int keycode);
@@ -82,6 +83,7 @@ int	keyhandler_press(int keycode, t_data *data)
 		revalue_camera_keyhandler(data);
 	else if (!data->update)
 		element_transformation_keyhandler(data, keycode);
+	// printf("ctrl %d, lshift %d, rshift %d, keycode %d\n", data->ctrl_key, data->lshift_key, data->rshift_key, keycode);
 	return (window_interface(data, NONE));
 }
 
@@ -96,6 +98,18 @@ int	keyhandler_release(int keycode, t_data *data)
 		data->lshift_key = 0;
 	if (keycode == KEY_RSHIFT)
 		data->rshift_key = 0;
+	return (keycode);
+}
+
+/*
+* [handler mouse function]
+*/
+int	mouse_hook(int keycode, int x, int y, t_data *data)
+{
+	if (keycode == 4)
+		window_interface(data, DECREASE);
+	else if (keycode == 5)
+		window_interface(data, INCREASE);
 	return (keycode);
 }
 
@@ -132,51 +146,34 @@ static void	selection_keyhandler(t_data *data, int keycode)
 }
 
 /*
-* [function apply tranmation to objecte]
-* [apple transformation value to object then clear window and rerender scene]
+* [function apply tranmation to objecte by keyinput]
+* [find index of object and checking objec type then apply transformation]
 */
 static void	element_transformation_keyhandler(t_data *data, int keycode)
 {
 	int		count;
 	int		object_id;
+	int		next;
+	t_list	*objects;
 
 	count = 0;
 	object_id = 0;
+	next = 1;
 	while (count < 4)
 		object_id = (object_id * 10) + data->selectv[count++];
 	if (object_id == 0)
 		camera_key_transformation(data, keycode);
 	else
-		objects_key_transformation(data, object_id, keycode);
-}
-
-/*
-* [helper function of element_transformation_keyhandler]
-* [find index of object andchecking type of object then apply ransformation]
-*/
-static void	objects_key_transformation(t_data *data, int id, int keycode)
-{
-	t_list	*objects;
-	int		next;
-
-	next = 1;
-	objects = data->lht;
-	while (objects)
 	{
-		if (((t_obj *)objects->content)->idx == id)
-			break ;
-		objects = objects->next;
-		if (objects == NULL && next-- == 1)
-			objects = data->objs;
+		objects = data->lht;
+		while (objects)
+		{
+			if (((t_obj *)objects->content)->idx == object_id)
+				break ;
+			objects = objects->next;
+			if (objects == NULL && next-- == 1)
+				objects = data->objs;
+		}
+		objects_transformation(data, keycode, (t_obj *)objects->content);
 	}
-	if (objects && ((t_obj *)objects->content)->type == SPHERE)
-		sphere_key_transf(data, keycode, (t_obj *)objects->content);
-	else if (objects && ((t_obj *)objects->content)->type == PLANE)
-		plane_key_transf(data, keycode, (t_obj *)objects->content);	// plane_key_transf(data, keycode, object)
-	else if (objects && ((t_obj *)objects->content)->type == CYLIND)
-		printf("do cylinder tranform.\n");	// cylinder_key_transf(data, keycode, object)
-	else if (objects && ((t_obj *)objects->content)->type == CONE)
-		printf("do cone tranform.\n");		// cone_key_tranf(data, keycode, object)
-	else if (objects && ((t_obj *)objects->content)->type == LIGHT)
-		light_key_transf(data, keycode, (t_obj *)objects->content);
 }

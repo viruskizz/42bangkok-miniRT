@@ -16,8 +16,8 @@
 # define FRAME_RATE	60
 
 # define LIGHT	0
-# define PLANE	1
-# define SPHERE	2
+# define SPHERE	1
+# define PLANE	2
 # define CYLIND	3
 # define CONE	4
 # define TRANS_FWD -1

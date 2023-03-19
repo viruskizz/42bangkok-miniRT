@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 01:08:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/19 04:41:03 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 16:39:01 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ static int	get_object_ptr(t_data *data, t_obj **buff, int *colour, int first)
 	int		count;
 	t_list	*objects;
 	t_list	*lights;
+	// int		boxes_amount;
 
-	// first++;
 	count = 0;
 	objects = data->objs;
 	lights = data->lht;
 	move_list_to_first(&objects, &lights, first);
-	int n = (HEIGHT - 28 - 37) / 83;
-	while ((objects || lights) && count < n)
+	// boxes_amount = (HEIGHT - 28 - 37) / 83;
+	while ((objects || lights) && count < (HEIGHT - 28 - 37) / 83)
 	{
 		if (objects && ((t_obj *)objects->content)->idx == first + count)
 		{

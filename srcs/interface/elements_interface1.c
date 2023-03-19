@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 02:28:50 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/18 17:00:12 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 16:34:03 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ void	put_elements_to_window(t_data *data, int object_amount, t_obj **objects)
 	int		count;
 	t_obj	*object;
 	int		line;
+	int		boxes_amount;
 
 	count = 0;
 	line = 40;
+	boxes_amount = (HEIGHT - 28 - 37) / 83;
 	mlx_string_put(data->mlx, data->win, WIDTH + 1, 18,
 		0xE0E0E0, "[ELEMENTS-IDENTIFIER]");
 	while (count < object_amount)
@@ -41,8 +43,7 @@ void	put_elements_to_window(t_data *data, int object_amount, t_obj **objects)
 		line = put_size_to_window(data, objects[count], line);
 		count++;
 	}
-	int n = (HEIGHT - 28 - 37) / 83;
-	while (count++ < n)
+	while (count++ < boxes_amount)
 		line = put_none_to_window(data, line);
 }
 

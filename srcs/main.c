@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:31:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/19 05:42:06 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 16:32:07 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char **argv)
 
 	data = parsing_input(argc, argv);
 	// print_tdata(&data);
-
 	initial(&data);
 	render_scene(&data);
 	window_interface(&data, NONE);
@@ -53,9 +52,11 @@ static void	initial(t_data *data)
 	scene_initialise(data);
 }
 
+/*
+* [fucntion clear window and rerender scene when update value is occur]
+*/
 static int	render(t_data *data)
 {
-
 	if (data->update == 1)
 	{
 		mlx_clear_window(data->mlx, data->win);
@@ -66,15 +67,5 @@ static int	render(t_data *data)
 	}
 	if (data->update < 0)
 		data->update++;
-
 	return (0);
-}
-
-int	mouse_hook(int keycode, int x, int y, t_data *data)
-{
-	if (keycode == 4)
-		window_interface(data, DECREASE);
-	else if (keycode == 5)
-		window_interface(data, INCREASE);
-	return (keycode);
 }

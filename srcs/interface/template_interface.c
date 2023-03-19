@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 00:06:41 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/19 04:18:44 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/19 16:41:20 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ static void	selection_interface(t_data *data, t_img *img);
 static void	selected_box_status_to_window(t_data *data, t_img *img);
 static void	draw_topbott_box(t_img *img, int y, int x, int start);
 void		draw_square(t_data *data, int width, int height, int start);
+
+static void	draw_side(t_img *img, int x, int y);
+static void	draw_bottom(t_img *img, int start, int x, int y);
 
 /*
 * [function draw interface onto image and put to window]
@@ -88,11 +91,12 @@ void	body_indentifier_interface(t_data *data, t_img *img,
 	int	c[2];
 	int	start;
 	int	count;
+	int	boxes_amount;
 
 	count = -1;
 	c[COL] = 28;
-	int n = (HEIGHT - 28 - 37) / 83;
-	while (++count < n)
+	boxes_amount = (HEIGHT - 28 - 37) / 83;
+	while (++count < boxes_amount)
 	{
 		start = c[COL];
 		if (count < objects)
@@ -103,21 +107,29 @@ void	body_indentifier_interface(t_data *data, t_img *img,
 			while (c[ROW] < PANEL && c[COL] >= start + 81)
 				pixel_put_img(img, c[ROW]++, c[COL], 0x0E0E0E0);
 			if (c[COL]++ < start + 81)
-			{
-				pixel_put_img(img, c[ROW], --c[COL], 0x0E0E0E0);
-				pixel_put_img(img, c[ROW] + 1, c[COL], 0x0E0E0E0);
-				pixel_put_img(img, PANEL - 1, c[COL], 0x0E0E0E0);
-				pixel_put_img(img, PANEL - 2, c[COL]++, 0x0E0E0E0);
-			}
+				draw_side(img, c[ROW], c[COL] - 1);
 		}
 	}
-	while (c[COL] < HEIGHT - 37)
+	draw_bottom(img, start, c[ROW], c[COL]);
+}
+
+static void	draw_bottom(t_img *img, int start, int x, int y)
+{
+	while (y < HEIGHT - 37)
 	{
-		c[ROW] = 0;
-		while (c[ROW] < PANEL && c[COL] >= start + 81)
-			pixel_put_img(img, c[ROW]++, c[COL], 0x0E0E0E0);
-		c[COL]++;
+		x = 0;
+		while (x < PANEL && y >= start + 81)
+			pixel_put_img(img, x++, y, 0x0E0E0E0);
+		y++;
 	}
+}
+
+static void	draw_side(t_img *img, int x, int y)
+{
+	pixel_put_img(img, x, y, 0x0E0E0E0);
+	pixel_put_img(img, x++, y, 0x0E0E0E0);
+	pixel_put_img(img, PANEL - 1, y, 0x0E0E0E0);
+	pixel_put_img(img, PANEL - 2, y, 0x0E0E0E0);
 }
 
 /*
