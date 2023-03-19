@@ -38,7 +38,6 @@ void	set_objs(t_data *data)
 	t_list	*lst;
 
 	obj = new_obj(data);
-	// if (type == 'p')
 	obj = set_plane_img(data, obj);
 	lst = ft_lstnew(obj);
 	if (data->objs)

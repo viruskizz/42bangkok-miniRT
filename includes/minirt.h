@@ -30,6 +30,9 @@ t_obj	*object_initialise(int type);
 void	plane_initialise(t_data *data, char **object, int idx);
 void	cylinder_inititialize(t_data *data, char **object, int idx);
 
+int	validate_code(char **object, int index);
+int	validate_file(char *file);
+
 // * render
 void	render_objects(t_data *data);
 int 	render_scene(t_data *data);
@@ -41,8 +44,6 @@ t_ray	cam_ray(t_cam cam, float proj_x, float proj_y);
 
 // * light
 void	lht_initialise(t_data* data, char **object, int idx);
-// void	lht_initialise(t_data* data, char **object);
-// void	lht_illuminated(t_lht lht, t_ints *ints, t_list *objs);
 void	lht_illuminated(t_obj lht, t_ints *ints, t_list *objs);
 
 // * obj

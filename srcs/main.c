@@ -26,7 +26,6 @@ int	main(int argc, char **argv)
 	char	*filename;
 
 	data = parsing_input(argc, argv);
-	// print_tdata(&data);
 	initial(&data);
 	render_scene(&data);
 	window_interface(&data, NONE);
