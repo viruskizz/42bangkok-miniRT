@@ -52,6 +52,14 @@
 # define INCREASE	1
 # define DECREASE	2
 
+typedef struct s_formula
+{
+	float	a;
+	float	b;
+	float	c;
+	float	result;
+}	t_fml;
+
 typedef struct s_size
 {
 	float	w; // width

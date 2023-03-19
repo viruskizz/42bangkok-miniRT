@@ -58,6 +58,12 @@ t_obj	*set_plane_img(t_data *data, t_obj *obj);
 void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints);
 
 void	cylinder_ints(t_obj *obj, t_ray ray, t_ints *ints);
+t_fml	cylinder_ints_formula(t_ray bvray, t_vtr vray);
+t_ints	*cylinder_ints_core(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss);
+t_ints	*cylinder_ints_cap(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss);
+int		cylinder_ints_point(t_ints *intss, t_ints *ints);
+int		cylinder_ints_set(t_obj *obj, t_ints *ints);
+
 void	cone_inititialize(t_data *data, char **object, int idx);
 void	cone_ints(t_obj *obj, t_ray ray, t_ints *ints);
 
