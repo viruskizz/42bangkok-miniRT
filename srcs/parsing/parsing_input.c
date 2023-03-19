@@ -119,7 +119,7 @@ static void	get_input(t_data *data, int fd)
 	if (!file_line)
 		exit_error("minirt: spliting file_line is failed.");
 	// print_twoarray_char(file_line);
-
+	data->lht = NULL;
 	while (file_line[index])
 	{
 		// * check identifier //
@@ -163,6 +163,8 @@ void	object_lexering(t_data *data, char **object, int identifier)
 			plane_initialise(data, object, index++);//printf("%s\n", "go to fucntion ol");
 		else if (!ft_strncmp(object[identifier], "cy", 3))
 			cylinder_inititialize(data, object, index++);//printf("%s\n", "go to fucntion cy");
+		else if (!ft_strncmp(object[identifier], "cn", 3))
+			cone_inititialize(data, object, index++);//printf("%s\n", "go to fucntion cy");
 		else
 			printf("%s\n", "ship hay aew\n"); // ! dont forget to delete...
 	}
@@ -178,7 +180,7 @@ static int	identifier_checking(char **object, int index)
 
 	position_count[0] = -1;
 	position_count[1] = 0;
-	identifier = ft_split("A C L sp pl cy", ' ');
+	identifier = ft_split("A C L sp pl cy cn", ' ');
 	if (!identifier)
 		exit_error("minirt: spliting identifier constant is failed.");
 	while (object[++index])

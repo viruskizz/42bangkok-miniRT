@@ -104,7 +104,7 @@ static void	cam_value_check(int inputs, t_data *data)
 */
 static void	cam_special_init(t_data *data)
 {
-	// data->cam.pos = vtrset(0, 0, 10.0);
+	// data->cam.pos = vtrset(0, 10.0, 10.0);
 	data->cam.lookat = vtrset(0, 0, 0);
 	data->cam.up = vtrset(0, 1.00, 0);
 	data->cam.length = 1.0;
