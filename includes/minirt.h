@@ -56,6 +56,8 @@ void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints);
 t_obj	*set_plane_img(t_data *data, t_obj *obj);
 void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints);
 
+void	cylinder_ints(t_obj *obj, t_ray ray, t_ints *ints);
+
 // * utils from sharnvon..
 void	exit_error(char *str);
 void	free_twopointer_char(char **ptr);
