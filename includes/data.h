@@ -163,7 +163,7 @@ typedef struct s_ints
 {
 	float		value;
 	int			valid;
-	float		dist;
+	float		t;
 	t_obj		*obj;
 	t_vtr		p;
 	t_vtr		localn;	// local normal in normalize vector

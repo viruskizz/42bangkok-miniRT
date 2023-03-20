@@ -13,6 +13,7 @@
 #include "minirt.h"
 
 static void		cylinder_assignd(int index, char *trimed_obj, t_obj *cylinder);
+static int		cylinder_ints_set(t_obj *obj, t_ints *ints);
 
 /*
 * [function initialise and checking cylinder value]
@@ -38,11 +39,6 @@ void	cylinder_inititialize(t_data *data, char **object, int idx)
 		free(trimed_obj);
 		index++;
 	}
-	cylinder->mtrans = trans_homo(
-			cylinder->pos,
-			vtrset(0.0, 0.0, 0.0),
-			vtrset(cylinder->size.w, cylinder->size.h, cylinder->size.d));
-	cylinder->itrans = mtx_inverse(cylinder->mtrans, 4);
 	if (index != 6)
 		exit_error(TOO_LESS_INPUT_CY);
 	if (!tvector_inrange(cylinder->norm, -1.0, 1.0))
@@ -69,8 +65,15 @@ static void	cylinder_assignd(int index, char *trimed_obj, t_obj *cylinder)
 	else if (index == 3)
 		diameter = ato_float(trimed_obj);
 	else if (index == 4)
+	{
 		cylinder->size = size_initialise(ato_float
 				(trimed_obj), diameter, diameter);
+		cylinder->mtrans = trans_homo(
+				cylinder->pos,
+				vtrset(0.0, 0.0, 0.0),
+				vtrset(cylinder->size.w, cylinder->size.h, cylinder->size.d));
+		cylinder->itrans = mtx_inverse(cylinder->mtrans, 4);
+	}
 	else if (index == 5)
 		cylinder->color = ato_tcolor(trimed_obj);
 }
@@ -79,27 +82,32 @@ void	cylinder_ints(t_obj *obj, t_ray ray, t_ints *ints)
 {
 	t_vtr	vray;
 	t_ray	bvray;
-	t_fml	fml;
-	t_ints	*intss;
+	int		ints_idx;
 
 	bvray = trans_ray(ray, obj->itrans);
 	vray = vtrnorm(bvray.l);
-	fml = cylinder_ints_formula(bvray, vray);
-	intss = ft_calloc(sizeof(t_ints), 4);
-	intss = cylinder_ints_core(bvray, vray, fml, intss);
-	intss = cylinder_ints_cap(bvray, vray, fml, intss);
-	ints->valid = 0;
-	if (!intss[0].valid && !intss[1].valid && !intss[2].valid && !intss[3].valid)
-		return (free(intss));
-	if (cylinder_ints_point(intss, ints) < 2)
+	ints_idx = cylinder_ints_formula(bvray, vray, ints);
+	if (ints_idx < 0)
+		return ;
+	else if (ints_idx < 2)
 	{
 		obj->norm = vtrset(ints->p.x, 0.0, ints->p.z);
 		cylinder_ints_set(obj, ints);
 	}
-	else if (!close0(vray.y, 0.0) && sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)) < 1.0)
+	else if (!close0(vray.y, 0.0)
+		&& sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)) < 1.0)
 	{
 		obj->norm = vtrset(0, ints->p.y, 0);
 		cylinder_ints_set(obj, ints);
 	}
-	free(intss);
+}
+
+static int	cylinder_ints_set(t_obj *obj, t_ints *ints)
+{
+	obj->pos = trans_vtr(vtrset(0, 0, 0), obj->mtrans);
+	ints->valid = 1;
+	ints->p = trans_vtr(ints->p, obj->mtrans);
+	ints->localn = vtrnorm(vtrsub(trans_vtr(obj->norm, obj->mtrans), obj->pos));
+	ints->localc = obj->color;
+	ints->illum.alpha = 1.0;
 }

@@ -13,6 +13,7 @@
 #include "minirt.h"
 
 static void	cone_assignd(int index, char *trimed_obj, t_obj *cone);
+static int	cone_ints_set(t_obj *obj, t_ints *ints);
 
 /*
 * [function initialise and checking cone value]
@@ -79,119 +80,35 @@ void	cone_ints(t_obj *obj, t_ray ray, t_ints *ints)
 {
 	t_vtr	vray;
 	t_ray	bvray;
-	float	a;
-	float	b;
-	float	c;
+	int		ints_idx;
 
 	bvray = trans_ray(ray, obj->itrans);
 	vray = vtrnorm(bvray.l);
-	a = powf(vray.x, 2.0) + powf(vray.z, 2.0) - powf(vray.y, 2.0);
-	b = 2.0 * (bvray.a.x * vray.x + bvray.a.z * vray.z - bvray.a.y * vray.y);
-	c = powf(bvray.a.x, 2.0) + powf(bvray.a.z, 2.0) - powf(bvray.a.y, 2.0);
-	ints->value = sqrtf(powf(b, 2.0) - 4.0 * a * c);
-
-	int		valid[3];
-	float	t[3];
-	t_vtr	poi[3];
-	if (ints->value > 0.0)
-	{
-		t[0] = (-b + ints->value) / (2.0 * a);
-		t[1] = (-b - ints->value) / (2.0 * a);
-		poi[0] = vtradd(bvray.a, vtrscale(vray, t[0]));
-		poi[1] = vtradd(bvray.a, vtrscale(vray, t[1]));
-
-		if ((t[0] > 0.0) && (poi[0].y > 0.0) && (poi[0].y < 1.0))
-		{
-			valid[0] = 1;
-		}
-		else
-		{
-			valid[0] = 0;
-			t[0] = 100e6;
-		}
-		if ((t[1] > 0.0) && (poi[1].y > 0.0) && (poi[1].y < 1.0))
-		{
-			valid[1] = 1;
-		}
-		else
-		{
-			valid[1] = 0;
-			t[1] = 100e6;
-		}
-	}
-	else
-	{
-		valid[0] = 0;
-		valid[1] = 0;
-		t[0] = 100e6;
-		t[1] = 100e6;
-	}
-
-	// And test the end caps
-	if (close0(vray.y, 0.0))
-	{
-		valid[2] = 0;
-		t[2] = 100e6;
-	}
-	else
-	{
-		t[2] = (bvray.a.y - 1.0) / -vray.y;
-		poi[2] = vtradd(bvray.a, vtrscale(vray, t[2]));
-		
-		if ((t[2] > 0.0) && (sqrtf(powf(poi[2].x, 2.0) + powf(poi[2].z, 2.0)) < 1.0))
-		{
-			valid[2] = 1;
-		}
-		else
-		{
-			valid[2] = 0;
-			t[2] = 100e6;
-		}
-	}
-	ints->valid = 0;
-	if (!valid[0] && !valid[1] && !valid[2])
+	ints_idx = cone_ints_formula(bvray, vray, ints);
+	if (ints_idx < 0)
 		return ;
-	int idx = 0;
-	float val = 10e6;
-	int i = -1;
-	while (++i < 3)
+	else if (ints_idx < 2)
 	{
-		if (t[i] < val)
-		{
-			val = t[i];
-			idx = i;
-		}
-	}
-	ints->p = poi[idx];
-	if (idx < 2)
-	{
-		ints->valid = 1;
-		ints->p = trans_vtr(ints->p, obj->mtrans);
-		t_vtr pos0 = vtrset(0, 0, 0);
-		obj->pos = trans_vtr(pos0, obj->mtrans);
-		t_vtr orgn = vtrset(
+		obj->norm = vtrset(
 			ints->p.x,
 			-sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)),
 			ints->p.z);
-		ints->localn = vtrnorm(vtrsub(trans_vtr(orgn, obj->mtrans), obj->pos));
-		ints->localc = obj->color;
-		ints->illum.alpha = 1.0;
+		cone_ints_set(obj, ints);
 	}
-	else
+	else if (!close0(vray.y, 0.0)
+		&& sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)) < 1.0)
 	{
-		if (!close0(vray.y, 0.0))
-		{
-			if (sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)) < 1.0)
-			{
-				ints->valid = 1;
-				ints->p = trans_vtr(ints->p, obj->mtrans);
-				t_vtr pos0 = vtrset(0, 0, 0);
-				obj->pos = trans_vtr(pos0, obj->mtrans);
-				// obj->norm = vtrset(0, 1.0, 0);
-				ints->localn = vtrnorm(vtrsub(trans_vtr(obj->norm, obj->mtrans), obj->pos));
-				ints->localc = obj->color;
-				ints->illum.alpha = 1.0;
-			}
-		}
+		obj->norm = vtrset(0, ints->p.y, 0);
+		cone_ints_set(obj, ints);
 	}
+}
+
+static int	cone_ints_set(t_obj *obj, t_ints *ints)
+{
+	obj->pos = trans_vtr(vtrset(0, 0, 0), obj->mtrans);
+	ints->valid = 1;
+	ints->p = trans_vtr(ints->p, obj->mtrans);
+	ints->localn = vtrnorm(vtrsub(trans_vtr(obj->norm, obj->mtrans), obj->pos));
+	ints->localc = obj->color;
+	ints->illum.alpha = 1.0;
 }
