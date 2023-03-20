@@ -21,7 +21,6 @@ void	cam_geometry(t_cam *cam)
 	t_vtr	u;
 	t_vtr	v;
 
-	// l = vtrnorm(vtrsub(cam->lookat, cam->pos));
 	l = cam->norm;
 	u = vtrnorm(vtrcross(l, cam->up));
 	v = vtrnorm(vtrcross(u, l));
@@ -99,10 +98,11 @@ static void	cam_value_check(int inputs, t_data *data)
 */
 static void	cam_special_init(t_data *data)
 {
-	// data->cam.lookat = vtrset(0, 0, 0);
-	// data->cam.length = 1.0;
+	float	fov;
+
+	fov = degree_radian(data->cam.fov / 2.0);
+	data->cam.length = 1.0;
 	data->cam.up = vtrset(0, 1.00, 0);
-	data->cam.horz = 2;
-	data->cam.length = tanf(degree_radian(data->cam.fov / 2.0));
+	data->cam.horz = tanf(fov) * 2.0 * data->cam.length;
 	data->cam.ratio = 16.0 / 9.0;
 }
