@@ -39,11 +39,6 @@ void	cone_inititialize(t_data *data, char **object, int idx)
 		free(trimed_obj);
 		index++;
 	}
-	cone->mtrans = trans_homo(
-				cone->pos,
-				vtrset(0.0, 0.0, 0.0),
-				vtrset(cone->size.w, cone->size.h, cone->size.d));
-	cone->itrans = mtx_inverse(cone->mtrans, 4);
 	if (index != 6)
 		exit_error(TOO_LESS_INPUT_CY);
 	if (!tvector_inrange(cone->norm, -1.0, 1.0))
@@ -70,8 +65,15 @@ static void	cone_assignd(int index, char *trimed_obj, t_obj *cone)
 	else if (index == 3)
 		diameter = ato_float(trimed_obj);
 	else if (index == 4)
+	{
 		cone->size = size_initialise(ato_float
 				(trimed_obj), diameter, diameter);
+		cone->mtrans = trans_homo(
+				cone->pos,
+				vtrset(0.0, 0.0, 0.0),
+				vtrset(cone->size.w, cone->size.h, cone->size.d));
+		cone->itrans = mtx_inverse(cone->mtrans, 4);
+	}
 	else if (index == 5)
 		cone->color = ato_tcolor(trimed_obj);
 }
@@ -90,9 +92,9 @@ void	cone_ints(t_obj *obj, t_ray ray, t_ints *ints)
 	else if (ints_idx < 2)
 	{
 		obj->norm = vtrset(
-			ints->p.x,
-			-sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)),
-			ints->p.z);
+				ints->p.x,
+				-sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)),
+				ints->p.z);
 		cone_ints_set(obj, ints);
 	}
 	else if (!close0(vray.y, 0.0)

@@ -23,10 +23,10 @@ int	cone_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
 	t_ints	*intss;
 	int		idx;
 
-	fml.a = powf(vray.x, 2.0) + powf(vray.z, 2.0) - powf(vray.y, 2.0);
-	fml.b = 2.0 * (bvray.a.x * vray.x + bvray.a.z * vray.z - bvray.a.y * vray.y);
-	fml.c = powf(bvray.a.x, 2.0) + powf(bvray.a.z, 2.0) - powf(bvray.a.y, 2.0);
-	fml.result = sqrtf(powf(fml.b, 2.0) - 4.0 * fml.a * fml.c);
+	fml.a = powf(vray.x, 2) + powf(vray.z, 2) - powf(vray.y, 2);
+	fml.b = 2 * (bvray.a.x * vray.x + bvray.a.z * vray.z - bvray.a.y * vray.y);
+	fml.c = powf(bvray.a.x, 2.0) + powf(bvray.a.z, 2) - powf(bvray.a.y, 2);
+	fml.result = sqrtf(powf(fml.b, 2) - 4 * fml.a * fml.c);
 	intss = ft_calloc(sizeof(t_ints), 4);
 	intss = cn_ints_bd(bvray, vray, fml, intss);
 	intss = cn_ints_tp(bvray, vray, fml, intss);
