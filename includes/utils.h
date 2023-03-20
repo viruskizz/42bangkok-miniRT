@@ -8,6 +8,7 @@ t_color	set_color(int r, int g, int b);
 t_size	set_size(float w, float h, float d);
 t_ray	set_ray(t_vtr a, t_vtr b);
 int		close0(const float f1, const float f2);
+float	degree_radian(float degree);
 
 // * pixel
 int		rgb_to_int(int r, int g, int b);

@@ -49,3 +49,8 @@ int	close0(const float f1, const float f2)
 	else
 		return (0);
 }
+
+float	degree_radian(float degree)
+{
+	return (degree * (PI / 180));
+}
