@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:31:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/19 16:32:07 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 05:06:35 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int			mouse_hook(int keycode, int x, int y, t_data *data);
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	char	*filename;
 
 	data = parsing_input(argc, argv);
 	initial(&data);
@@ -40,8 +39,6 @@ int	main(int argc, char **argv)
 
 static void	initial(t_data *data)
 {
-	int	count;
-
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		error_exit(data, ERROR_MLX);

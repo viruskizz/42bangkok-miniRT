@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:43:42 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/17 13:08:05 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 04:59:54 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ void	sphere_initialise(t_data *data, char **object, int idx)
 	int		index;
 	t_obj	*sphere;
 	char	*trimed_obj;
-	float	diameter;
 
 	index = 0;
 	sphere = object_initialise(SPHERE);
 	while (object[index])
 	{
 		if (index > 3)
-			exit_error(TOO_MANY_INPUT_SP);
+			exit_error(MANY_SP);
 		trimed_obj = ft_strtrim(object[index], "\t");
 		if (!trimed_obj)
 			exit_error(FAIL_TRIM);
@@ -42,7 +41,7 @@ void	sphere_initialise(t_data *data, char **object, int idx)
 	}
 	sphere->itrans = mtx_inverse(sphere->mtrans, 4);
 	if (index != 4)
-		exit_error(TOO_LESS_INPUT_SP);
+		exit_error(LESS_SP);
 	sphere->idx = idx;
 	ft_lstadd_back(&data->objs, ft_lstnew((void *)sphere));
 }

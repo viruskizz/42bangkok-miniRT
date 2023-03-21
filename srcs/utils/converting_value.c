@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:27 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/09 23:42:23 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 04:53:28 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ float	ato_float(char *str)
 	sign = 1.0;
 	index = 0;
 	if (str[0] == '.' || str[ft_strlen(str) - 1] == '.')
-		exit_error("minirt: invalid value for element in ito_float.");
+		exit_error("ERROR::invalid value for element in ito_float.");
 	while ((str[index] >= 9 && str[index] <= 13) || str[index] == 32)
 		index++;
 	if (str[index] == '-')
@@ -56,7 +56,7 @@ static double	float_convert(int index, char *str)
 	while (str[index])
 	{
 		if (!ft_isdigit(str[index]) && str[index] != '.')
-			exit_error("minirt: invalid character for value in ito_float..");
+			exit_error("ERROR::invalid character for value in ito_float..");
 		if (str[index] == '.')
 			precision = 10;
 		else if (precision == 0)
@@ -67,7 +67,7 @@ static double	float_convert(int index, char *str)
 			precision *= 10;
 		}
 		if (result > FLT_MAX || result < -FLT_MAX)
-			exit_error("minirt: invalid value for element in ito_float...");
+			exit_error("ERROR::invalid value for element in ito_float...");
 		index++;
 	}
 	return (result);
@@ -86,7 +86,7 @@ t_color	ato_tcolor(char *str)
 
 	value = ft_split(str, ',');
 	if (!value)
-		exit_error("minirt: value spliting is fail in ato_tcolor.");
+		exit_error("ERROR::value spliting is fail in ato_tcolor.");
 	color_convert(value, color);
 	result.r = color[0];
 	result.g = color[1];
@@ -110,22 +110,22 @@ static void	color_convert(char **value, int *color)
 	while (value[index])
 	{
 		if (index > 2)
-			exit_error("minirt: too many values for color's element.");
+			exit_error("ERROR::too many values for color's element.");
 		chracter = 0;
 		while (value[index][chracter])
 		{
 			if (!ft_isdigit(value[index][chracter]))
-				exit_error("minirt: invalid color's value..");
+				exit_error("ERROR::invalid color's value..");
 			chracter++;
 		}
 		color[index] = ft_atoi(value[index]);
 		if (color[index] < 0 || color[index] > 255)
-			exit_error("minirt: invalid value of color.\n"
+			exit_error("ERROR::invalid value of color.\n"
 				"• (hint) the value of color must be between 0 - 255.");
 		index++;
 	}
 	if (index != 3)
-		exit_error("minirt: too less values for color's element.");
+		exit_error("ERROR::too less values for color's element.");
 }
 
 /*
@@ -143,16 +143,16 @@ t_vtr	ato_tvector(char *str)
 	index = 0;
 	value = ft_split(str, ',');
 	if (!value)
-		exit_error("minirt: value spliting is fail in ato_tvector.");
+		exit_error("ERROR::value spliting is fail in ato_tvector.");
 	while (value[index])
 	{
 		if (index > 2)
-			exit_error("minirt: too many information input for vactor value.");
+			exit_error("ERROR::too many information input for vactor value.");
 		vector[index] = ato_float(value[index]);
 		index++;
 	}
 	if (index != 3)
-		exit_error("minirt: too less information input for vector value.");
+		exit_error("ERROR::too less information input for vector value.");
 	result.x = vector[0];
 	result.y = vector[1];
 	result.z = vector[2];

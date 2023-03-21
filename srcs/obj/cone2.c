@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cone.c                                             :+:      :+:    :+:   */
+/*   cone2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:16:31 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/12 23:46:57 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 04:58:31 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include "minirt.h"
 
 static int		cn_ints_pt(t_ints *intss, t_ints *ints);
 static t_ints	*cn_ints_bd(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss);
-static t_ints	*cn_ints_tp(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss);
+static t_ints	*cn_ints_tp(t_ray bvray, t_vtr vray, t_ints *intss);
 
 int	cone_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
 {
@@ -29,7 +28,7 @@ int	cone_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
 	fml.result = sqrtf(powf(fml.b, 2) - 4 * fml.a * fml.c);
 	intss = ft_calloc(sizeof(t_ints), 4);
 	intss = cn_ints_bd(bvray, vray, fml, intss);
-	intss = cn_ints_tp(bvray, vray, fml, intss);
+	intss = cn_ints_tp(bvray, vray, intss);
 	ints->valid = 0;
 	if (!intss[0].valid && !intss[1].valid && !intss[2].valid)
 		return (free(intss), -1);
@@ -61,7 +60,7 @@ static t_ints	*cn_ints_bd(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss)
 	return (intss);
 }
 
-static t_ints	*cn_ints_tp(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss)
+static t_ints	*cn_ints_tp(t_ray bvray, t_vtr vray, t_ints *intss)
 {
 	intss[2].valid = 0;
 	intss[2].t = 100e6;

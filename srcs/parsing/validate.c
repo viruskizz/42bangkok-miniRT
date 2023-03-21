@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araiva <tsomsa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:49:49 by araiva            #+#    #+#             */
-/*   Updated: 2023/03/19 19:49:50 by araiva           ###   ########.fr       */
+/*   Updated: 2023/03/22 05:06:44 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@
 int	validate_file(char *file)
 {
 	int		fd;
-	char	*type;
 
 	if (ft_strncmp(ft_strrchr(file, '.'), ".rt", 4))
-		exit_error("minirt: wrong file type.");
+		exit_error("ERROR::wrong file type.");
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		exit_error("minirt: the file cannot open.");
+		exit_error("ERROR::the file cannot open.");
 	return (fd);
 }
 
@@ -41,7 +40,7 @@ int	validate_code(char **objs, int idx)
 	pos[1] = 0;
 	code = ft_split("A C L sp pl cy cn", ' ');
 	if (!code)
-		exit_error("minirt: spliting code constant is failed.");
+		exit_error(FAIL_SPLIT);
 	while (objs[++idx])
 	{
 		xedni = 0;

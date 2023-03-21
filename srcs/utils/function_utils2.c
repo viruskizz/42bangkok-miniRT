@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 00:49:47 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/18 18:46:22 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 04:53:58 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ t_size	size_initialise(float height, float width, float depth)
 	t_size	size;
 
 	if (height < 0.0)
-		exit_error("minirt: ERROR::invalid height value.\n" \
-			"(hint) • the object height must be positive number.\n");
+		exit_error("ERROR::invalid height value.\n" \
+			"(hint) • the object height must be positive number.");
 	if (width < 0.0)
-		exit_error("minirt: ERROR::invalid width value.\n" \
-			"(hint) •the object diameter must be positive number.\n");
+		exit_error("ERROR::invalid width value.\n" \
+			"(hint) •the object diameter must be positive number.");
 	if (depth < 0.0)
-		exit_error("minirt: ERROR::invalid depth value.\n" \
-			"(hint) •the object diameter must be positive number.\n");
+		exit_error("ERROR::invalid depth value.\n" \
+			"(hint) •the object diameter must be positive number.");
 	size.d = depth;
 	size.w = width;
 	size.h = height;

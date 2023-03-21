@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cylinder.c                                         :+:      :+:    :+:   */
+/*   cylinder1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:16:31 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/12 23:46:57 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 04:42:31 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void		cylinder_assignd(int index, char *trimed_obj, t_obj *cylinder);
-static int		cylinder_ints_set(t_obj *obj, t_ints *ints);
+static void	cylinder_assignd(int index, char *trimed_obj, t_obj *cylinder);
+static void	cylinder_ints_set(t_obj *obj, t_ints *ints);
 
 /*
 * [function initialise and checking cylinder value]
@@ -31,7 +31,7 @@ void	cylinder_inititialize(t_data *data, char **object, int idx)
 	while (object[index])
 	{
 		if (index > 5)
-			exit_error(TOO_MANY_INPUT_CY);
+			exit_error("MANY_CY");
 		trimed_obj = ft_strtrim(object[index], "\t");
 		if (!trimed_obj)
 			exit_error(FAIL_TRIM);
@@ -40,9 +40,9 @@ void	cylinder_inititialize(t_data *data, char **object, int idx)
 		index++;
 	}
 	if (index != 6)
-		exit_error(TOO_LESS_INPUT_CY);
+		exit_error(LESS_CY);
 	if (!tvector_inrange(cylinder->norm, -1.0, 1.0))
-		exit_error(INVALID_NORM_CY);
+		exit_error(NORM_CY);
 	cylinder->idx = idx;
 	ft_lstadd_back(&data->objs, ft_lstnew((void *)cylinder));
 }
@@ -102,7 +102,7 @@ void	cylinder_ints(t_obj *obj, t_ray ray, t_ints *ints)
 	}
 }
 
-static int	cylinder_ints_set(t_obj *obj, t_ints *ints)
+static void	cylinder_ints_set(t_obj *obj, t_ints *ints)
 {
 	obj->pos = trans_vtr(vtrset(0, 0, 0), obj->mtrans);
 	ints->valid = 1;

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 03:05:41 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 16:48:58 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 01:20:18 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	put_size_to_window(t_data *data, t_obj *object, int line)
 
 	colour = color_to_int(ato_tcolor("244,244,244"));
 	pointer2 = ft_floattoa(object->size.h);
-	if (object->type != PLANE && object->type != LIGHT) // * added for light.
+	if (object->type != PLANE && object->type != LIGHT)
 		pointer1 = ft_strjoin("|HEIGHT:   ", pointer2);
 	else
 		pointer1 = ft_strjoin("|HEIGHT:   NON", "E");
@@ -33,7 +33,7 @@ int	put_size_to_window(t_data *data, t_obj *object, int line)
 	free(pointer1);
 	line += 11;
 	pointer2 = ft_floattoa(object->size.w);
-	if (object->type != PLANE && object->type != LIGHT) // * added fot light.
+	if (object->type != PLANE && object->type != LIGHT)
 		pointer1 = ft_strjoin("|DIAMETER: ", pointer2);
 	else
 		pointer1 = ft_strjoin("|DIAMETER: NON", "E");

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:02:54 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/11 22:06:17 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 05:00:55 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	set_objs(t_data *data)
 	t_obj	*obj;
 	t_list	*lst;
 
-	obj = new_obj(data);
+	obj = new_obj();
 	obj = set_plane_img(data, obj);
 	lst = ft_lstnew(obj);
 	if (data->objs)
@@ -46,7 +46,7 @@ void	set_objs(t_data *data)
 		ft_lstadd_back(&data->objs, lst);
 }
 
-t_obj	*new_obj(t_data *data)
+t_obj	*new_obj(void)
 {
 	t_obj	*obj;
 

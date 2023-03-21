@@ -6,14 +6,14 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:57:35 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/18 18:42:17 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 05:05:44 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 static t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
-static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints);
+static t_colorf	lht_ints(t_data *data, t_ints *ints);
 static void		camray_ints(t_data *data, t_ray camray, t_ints *ints);
 static void		set_obj_ints(t_ints *ints, t_ints oints);
 
@@ -53,11 +53,11 @@ static t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 	ints.valid = 0;
 	camray_ints(data, camray, &ints);
 	if (ints.valid)
-		colorf = lht_ints(data, camray, &ints);
+		colorf = lht_ints(data, &ints);
 	return (colorf);
 }
 
-static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
+static t_colorf	lht_ints(t_data *data, t_ints *ints)
 {
 	t_colorf	colorf;
 	t_colorf	colorfl;

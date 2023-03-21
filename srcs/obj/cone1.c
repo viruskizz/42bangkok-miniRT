@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cone.c                                             :+:      :+:    :+:   */
+/*   cone1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:16:31 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/12 23:46:57 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 04:45:38 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 static void	cone_assignd(int index, char *trimed_obj, t_obj *cone);
-static int	cone_ints_set(t_obj *obj, t_ints *ints);
+static void	cone_ints_set(t_obj *obj, t_ints *ints);
 
 /*
 * [function initialise and checking cone value]
@@ -31,7 +31,7 @@ void	cone_inititialize(t_data *data, char **object, int idx)
 	while (object[index])
 	{
 		if (index > 5)
-			exit_error(TOO_MANY_INPUT_CY);
+			exit_error(MANY_CO);
 		trimed_obj = ft_strtrim(object[index], "\t");
 		if (!trimed_obj)
 			exit_error(FAIL_TRIM);
@@ -40,9 +40,9 @@ void	cone_inititialize(t_data *data, char **object, int idx)
 		index++;
 	}
 	if (index != 6)
-		exit_error(TOO_LESS_INPUT_CY);
+		exit_error(LESS_CO);
 	if (!tvector_inrange(cone->norm, -1.0, 1.0))
-		exit_error(INVALID_NORM_CY);
+		exit_error(NORM_CO);
 	cone->idx = idx;
 	ft_lstadd_back(&data->objs, ft_lstnew((void *)cone));
 }
@@ -57,7 +57,7 @@ static void	cone_assignd(int index, char *trimed_obj, t_obj *cone)
 	static float	diameter;
 
 	if (index == 0 && ft_strncmp(trimed_obj, "cn", 3))
-		exit_error(INVALID_IDENT_CY);
+		exit_error(INVALID_IDENT_CO);
 	else if (index == 1)
 		cone->pos = ato_tvector(trimed_obj);
 	else if (index == 2)
@@ -105,7 +105,7 @@ void	cone_ints(t_obj *obj, t_ray ray, t_ints *ints)
 	}
 }
 
-static int	cone_ints_set(t_obj *obj, t_ints *ints)
+static void	cone_ints_set(t_obj *obj, t_ints *ints)
 {
 	obj->pos = trans_vtr(vtrset(0, 0, 0), obj->mtrans);
 	ints->valid = 1;

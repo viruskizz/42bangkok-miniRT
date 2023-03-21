@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:27:04 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/19 03:03:03 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 05:49:44 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ static t_data	data_initialize(void);
 * [function parsing input from the file and conveting into struct data]
 * => [return] :
 * => [exit] :
-TODO check lists amount of "data.lht" | 0 < lht_amount < 3 |
-TODO check lists amount of "data.objs" | 0 < objs_amount |
-TODO add mlx, window init when parsing is okay + init.obj->img.
 */
 t_data	parsing_input(int argc, char **argv)
 {
@@ -37,10 +34,18 @@ t_data	parsing_input(int argc, char **argv)
 	char	*filedata;
 
 	if (argc != 2)
-		exit_error("minirt: wrong argurment");
+		exit_error("ERROR::wrong argurmenst.");
 	filedata = read_file(argv[1]);
 	data = data_initialize();
 	set_data(&data, filedata);
+	if (data.check[0] != 1)
+		exit_error("ERROR::invalid amount of ambian light element.");
+	if (data.check[1] != 1)
+		exit_error("ERROR::invalid amount of camera element.");
+	if (data.lht == NULL)
+		exit_error("ERROR::invalid amount of light element.");
+	if (data.objs == NULL)
+		exit_error("ERROR::invalid amount of object element.");
 	return (data);
 }
 
@@ -61,6 +66,8 @@ static t_data	data_initialize(void)
 	count = 0;
 	while (count < 4)
 		data.selectv[count++] = 0;
+	data.check[0] = 0;
+	data.check[1] = 0;
 	data.lht = NULL;
 	data.objs = NULL;
 	return (data);
@@ -100,18 +107,18 @@ static void	set_data(t_data *data, char *filedata)
 	i = 0;
 	line = ft_split(filedata, '\n');
 	if (!line)
-		exit_error("minirt: spliting file_line is failed.");
+		exit_error(FAIL_SPLIT);
 	data->lht = NULL;
 	while (line[i])
 	{
 		obj = ft_split(line[i], ' ');
 		if (!line)
-			exit_error("minirt: spliting line is failed.");
+			exit_error(FAIL_SPLIT);
 		if (*obj[0] == '#' && i++)
 			continue ;
 		code = validate_code(obj, -1);
 		if (code < 0)
-			exit_error ("minirt: invalid identifier...");
+			exit_error ("ERROR::invalid identifier...");
 		object_lexering(data, obj, code);
 		free_twopointer_char(obj);
 		i++;
@@ -143,9 +150,7 @@ void	object_lexering(t_data *data, char **object, int identifier)
 			cylinder_inititialize(data, object, index++);
 		else if (!ft_strncmp(object[identifier], "cn", 3))
 			cone_inititialize(data, object, index++);
-		else
-			printf("%s\n", "ship hay aew\n");
 	}
 	else
-		exit_error("minirt: too many objects..");
+		exit_error("ERROR::too many objects, object cannot more than 9999.");
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cylinder_ints.c                                    :+:      :+:    :+:   */
+/*   cylinder2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araiva <tsomsa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 23:51:17 by araiva            #+#    #+#             */
-/*   Updated: 2023/03/19 23:51:19 by araiva           ###   ########.fr       */
+/*   Updated: 2023/03/22 04:59:41 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int		cy_ints_pt(t_ints *intss, t_ints *ints);
 static t_ints	*cy_ints_bd(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss);
-static t_ints	*cy_ints_tp(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss);
+static t_ints	*cy_ints_tp(t_ray bvray, t_vtr vray, t_ints *intss);
 
 int	cylinder_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
 {
@@ -29,7 +29,7 @@ int	cylinder_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
 	fml.result = sqrtf(powf(fml.b, 2.0) - 4.0 * fml.a * fml.c);
 	intss = ft_calloc(sizeof(t_ints), 4);
 	intss = cy_ints_bd(bvray, vray, fml, intss);
-	intss = cy_ints_tp(bvray, vray, fml, intss);
+	intss = cy_ints_tp(bvray, vray, intss);
 	ints->valid = 0;
 	if (!intss[0].valid && !intss[1].valid
 		&& !intss[2].valid && !intss[3].valid)
@@ -62,7 +62,7 @@ static t_ints	*cy_ints_bd(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss)
 	return (intss);
 }
 
-static t_ints	*cy_ints_tp(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss)
+static t_ints	*cy_ints_tp(t_ray bvray, t_vtr vray, t_ints *intss)
 {
 	intss[2].valid = 0;
 	intss[3].valid = 0;

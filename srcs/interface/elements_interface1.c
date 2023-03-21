@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 02:28:50 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/19 16:34:03 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 05:04:48 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int			put_none_to_window(t_data *data, int line);
 void	put_elements_to_window(t_data *data, int object_amount, t_obj **objects)
 {
 	int		count;
-	t_obj	*object;
 	int		line;
 	int		boxes_amount;
 
@@ -103,7 +102,7 @@ static char	*object_cordition_str(t_obj *object, char *string, int mode)
 		else if (object->type == CONE)
 			return (ft_strjoin("|[ ]CONE", string));
 		else if (object->type == LIGHT)
-			return (ft_strjoin("|[ ]LIGHT", string)); // * added fot light
+			return (ft_strjoin("|[ ]LIGHT", string));
 	}
 	return (NULL);
 }
@@ -116,7 +115,6 @@ static int	put_coordinates_to_window(t_data *data, t_obj *object, int line)
 {
 	char	*pointer1;
 	char	*pointer2;
-	char	*pointer3;
 	int		count;
 
 	count = 0;

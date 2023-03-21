@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 01:06:25 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 21:20:31 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 04:39:47 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	plane_initialise(t_data *data, char **object, int idx)
 	while (object[index])
 	{
 		if (index > 4)
-			exit_error(TOO_MANY_INPUT_PL);
+			exit_error(MANY_PL);
 		trimed_obj = ft_strtrim(object[index], "\t");
 		if (!trimed_obj)
 			exit_error(FAIL_TRIM);
@@ -40,9 +40,9 @@ void	plane_initialise(t_data *data, char **object, int idx)
 		index++;
 	}
 	if (index != 4)
-		exit_error(TOO_LESS_INPUT_PL);
+		exit_error(LESS_PL);
 	if (!tvector_inrange(plane->norm, -1.0, 1.0))
-		exit_error(INVALID_NORM_PL);
+		exit_error(NORM_PL);
 	plane->idx = idx;
 	ft_lstadd_back(&data->objs, ft_lstnew((void *)plane));
 }
@@ -63,10 +63,13 @@ static void	plane_assigned(int index, t_obj *plane, char *trimed_obj)
 	else if (index == 3)
 	{
 		plane->color = ato_tcolor(trimed_obj);
+		plane->size.w = 5.0;
+		plane->size.h = 5.0;
+		plane->size.d = 5.0;
 			plane->mtrans = trans_homo(
 				plane->pos,
-				vtrset(0, 0, 0),
-				vtrset(5.0, 5.0, 5.0));
+				vtrset(0.0, 0.0, 0.0),
+				vtrset(plane->size.w, plane->size.h, plane->size.d));
 		plane->itrans = mtx_inverse(plane->mtrans, 4);
 		plane->colorf = color_to_colorf(plane->color);
 	}

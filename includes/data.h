@@ -1,7 +1,19 @@
-#ifndef DATA_H
-#define DATA_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   data.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/22 03:15:26 by sharnvon          #+#    #+#             */
+/*   Updated: 2023/03/22 05:45:38 by sharnvon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "libft.h"
+#ifndef DATA_H
+# define DATA_H
+
+# include "libft.h"
 
 # ifdef __linux__
 #  define IS_LINUX 1
@@ -62,25 +74,25 @@ typedef struct s_formula
 
 typedef struct s_size
 {
-	float	w; // width
-	float	h; // height
-	float	d; // depth
+	float	w;
+	float	h;
+	float	d;
 }	t_size;
 
 typedef struct s_color
 {
-	int	r;  // red
-	int	g;  // green
-	int	b;  // blue
-	float	intens;	// intensity [0.0 - 1.0]
+	int		r;
+	int		g;
+	int		b;
+	float	intens;
 }	t_color;
 
-// color between 0.0-1.0
+/* color between 0.0-1.0 */
 typedef struct s_colorf
 {
-	float	r;  // red
-	float	g;  // green
-	float	b;  // blue
+	float	r;
+	float	g;
+	float	b;
 	float	alpha;
 }	t_colorf;
 
@@ -116,30 +128,30 @@ typedef struct s_img {
 
 typedef struct s_ambient
 {
-	float	ratio;	//* range[0.0-1.0];
-	t_color	color;	//* range[0-255];
+	float	ratio;
+	t_color	color;
 }	t_amb;
 
 typedef struct s_camara
 {
 	t_vtr	pos;
-	t_vtr	norm;	//* range[-1-1];
-	int		fov;	//* horizountal field view in degree range[0-180];
+	t_vtr	norm;
+	int		fov;
 	t_vtr	lookat;
 	t_vtr	up;
 	float	length;
 	float	horz;
 	float	ratio;
-	t_vtr	proj_c;	// norm_vector in projection center screen
-	t_vtr	proj_u;	// norm_vector in projection screen u
-	t_vtr	proj_v;	// norm_vector in projection screen v
-} 	t_cam;
+	t_vtr	proj_c;
+	t_vtr	proj_u;
+	t_vtr	proj_v;
+}	t_cam;
 
 typedef struct s_lht
 {
 	t_vtr		pos;
-	float		bright; //* range[0.0-1.0];
-	t_color		color;	// normal color
+	float		bright;
+	t_color		color;
 	t_colorf	colorf;
 }	t_lht;
 
@@ -148,7 +160,7 @@ typedef struct s_obj
 	int			idx;
 	int			type;
 	char		*name;
-	float		bright; //* range[0.0-1.0];
+	float		bright;
 	float		**mtrans;
 	float		**itrans;
 	t_vtr		pos;
@@ -166,8 +178,8 @@ typedef struct s_ints
 	float		t;
 	t_obj		*obj;
 	t_vtr		p;
-	t_vtr		localn;	// local normal in normalize vector
-	t_color		localc; // local color
+	t_vtr		localn;
+	t_color		localc;
 	t_colorf	illum;
 }	t_ints;
 
@@ -182,6 +194,7 @@ typedef struct s_data
 	int		lshift_key;
 	int		rshift_key;
 	int		selectp;
+	int		check[2];
 	int		selectv[4];
 	t_obj	scene;
 	t_amb	amb;
