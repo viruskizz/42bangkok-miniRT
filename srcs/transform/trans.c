@@ -36,6 +36,24 @@ t_ray	trans_ray(t_ray ray, float **mtxtrans)
 			trans_vtr(ray.b, mtxtrans)));
 }
 
+t_vtr	trans_norm_vtr_rot(t_vtr norm)
+{
+	t_vtr	rot;
+
+	rot.x = atanf(norm.z / norm.y);
+	rot.y = atanf(norm.x / norm.z);
+	rot.z = atanf(norm.x / norm.y);
+	if (isnan(rot.x))
+		rot.x = 0;
+	if (isnan(rot.y))
+		rot.y = 0;
+	if (isnan(rot.z))
+		rot.z = 0;
+	printf("rad: ");
+	vtrprint(rot);
+	return (rot);
+}
+
 static float	*mtx_crs(float **m44, float *m41)
 {
 	float	*m;

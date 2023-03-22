@@ -68,7 +68,9 @@ static void	plane_assigned(int index, t_obj *plane, char *trimed_obj)
 		plane->size.d = 5.0;
 			plane->mtrans = trans_homo(
 				plane->pos,
-				vtrset(0.0, 0.0, 0.0),
+				// vtrset(0.0, 0.0, 0.5),
+				trans_norm_vtr_rot(plane->norm),
+				// vtrset(-1.570796, 0.0, 0.0),
 				vtrset(plane->size.w, plane->size.h, plane->size.d));
 		plane->itrans = mtx_inverse(plane->mtrans, 4);
 		plane->colorf = color_to_colorf(plane->color);
@@ -144,8 +146,8 @@ static void	intersec_tranf(t_ray bvray, t_vtr vray, t_obj *obj, t_ints *ints)
 		ints->p = trans_vtr(ints->p, obj->mtrans);
 		pos0 = vtrset(0, 0, 0);
 		obj->pos = trans_vtr(pos0, obj->mtrans);
-		ints->localn = trans_vtr(obj->norm, obj->mtrans);
-		ints->localn = vtrnorm(vtrsub(obj->pos, ints->localn));
+		ints->localn = trans_vtr(vtrset(0, -1, 0), obj->mtrans);
+		ints->localn = vtrnorm(vtrsub(ints->localn, obj->pos));
 		ints->localc = obj->color;
 	}
 }
