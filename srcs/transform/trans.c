@@ -40,8 +40,8 @@ t_vtr	trans_norm_vtr_rot(t_vtr norm)
 {
 	t_vtr	rot;
 
-	rot.x = atanf(norm.z / norm.y);
-	rot.y = atanf(norm.x / norm.z);
+	rot.y = atanf(norm.y / -norm.z);
+	rot.x = atanf(-norm.z / norm.x);
 	rot.z = atanf(norm.x / norm.y);
 	if (isnan(rot.x))
 		rot.x = 0;

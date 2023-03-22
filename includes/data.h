@@ -173,7 +173,6 @@ typedef struct s_obj
 
 typedef struct s_ints
 {
-	// int			valid;
 	int			hit;
 	float		t;
 	t_obj		*obj;
