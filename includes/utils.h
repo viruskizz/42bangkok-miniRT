@@ -53,4 +53,16 @@ float		mtx_det(float **m, int size);
 void		mtx_print(float **m, int size);
 void		mtx_free(float **m, int size);
 
+// * utils from sharnvon..
+void		exit_error(char *str);
+void		free_twopointer_char(char **ptr);
+char		*ft_strjoin_pro(char *str1, char *str2);
+char		*ft_floattoa(float number);
+int			character_count(char *str, char c);
+float		ato_float(char *str);
+t_color		ato_tcolor(char *str);
+t_vtr		ato_tvector(char *str);
+int			tvector_inrange(t_vtr vactor, float min, float max);
+t_size		size_initialise(float height, float width, float depth);
+
 #endif

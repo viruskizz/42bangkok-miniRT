@@ -26,11 +26,9 @@
 # include "error.h"
 # include "data.h"
 # include "utils.h"
-# include "trans.h"
 
 int		rt_close(t_data *data, int code);
 int		error_exit(t_data *data, int code);
-int		rt_setup(t_data *data);
 
 // * interface
 int		window_interface(t_data *data, int mode);
@@ -74,16 +72,11 @@ void	cone_inititialize(t_data *data, char **object, int idx);
 void	cone_ints(t_obj *obj, t_ray ray, t_ints *ints);
 int		cone_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints);
 
-// * utils from sharnvon..
-void	exit_error(char *str);
-void	free_twopointer_char(char **ptr);
-char	*ft_strjoin_pro(char *str1, char *str2);
-char	*ft_floattoa(float number);
-int		character_count(char *str, char c);
-float	ato_float(char *str);
-t_color	ato_tcolor(char *str);
-t_vtr	ato_tvector(char *str);
-int		tvector_inrange(t_vtr vactor, float min, float max);
-t_size	size_initialise(float height, float width, float depth);
+// tran
+float	**trans_homo(t_vtr trans, t_vtr rotate, t_vtr scale);
+void	trans_rot_xyz(t_vtr rotate, float ***result);
+t_vtr	trans_vtr(t_vtr v, float **mtxtrans);
+t_ray	trans_ray(t_ray ray, float **mtxtrans);
+t_vtr	trans_norm_vtr_rot(t_vtr norm);
 
 #endif

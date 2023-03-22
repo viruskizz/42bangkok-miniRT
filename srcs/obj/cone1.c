@@ -70,7 +70,7 @@ static void	cone_assignd(int index, char *trimed_obj, t_obj *cone)
 				(trimed_obj), diameter, diameter);
 		cone->mtrans = trans_homo(
 				cone->pos,
-				vtrset(0.0, 0.0, 0.0),
+				trans_norm_vtr_rot(cone->norm),
 				vtrset(cone->size.w, cone->size.h, cone->size.d));
 		cone->itrans = mtx_inverse(cone->mtrans, 4);
 	}
