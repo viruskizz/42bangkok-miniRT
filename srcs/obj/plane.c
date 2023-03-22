@@ -13,7 +13,7 @@
 #include "minirt.h"
 
 static void	plane_assigned(int index, t_obj *plane, char *trimed_obj);
-static void	intersec_tranf(t_ray bvray, t_vtr vray, t_obj *obj, t_ints *ints);
+static void	plane_ints_set(t_ray ray, t_vtr vray, t_obj *obj, t_ints *ints);
 
 /*
 * [function initialise and checking plane value]
@@ -109,6 +109,8 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 {
 	t_ray	bvray;
 	t_vtr	vray;
+	float	u;
+	float	v;
 
 	bvray = trans_ray(ray, obj->itrans);
 	vray = vtrnorm(bvray.l);
@@ -119,33 +121,25 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 		ints->t = bvray.a.y / -vray.y;
 		if (ints->t > 0.0)
 		{
-			intersec_tranf(bvray, vray, obj, ints);
+			u = bvray.a.x + (vray.x * ints->t);
+			v = bvray.a.z + (vray.z * ints->t);
+			if ((fabsf(u) < 1.0) && (fabsf(v) < 1.0))
+			{
+				ints->hit = 1;
+				ints->p = vtradd(bvray.a, vtrscale(vray, ints->t));
+				plane_ints_set(bvray, vray, obj, ints);
+			}
 		}
 	}
 }
 
-/*
-* [helper function of plane_ints]
-* [tranform the intersection point into real world coordinate]
-* => [success]: if the codition is true tranformation value will store in ints.
-*/
-static void	intersec_tranf(t_ray bvray, t_vtr vray, t_obj *obj, t_ints *ints)
+static void	plane_ints_set(t_ray ray, t_vtr vray, t_obj *obj, t_ints *ints)
 {
-	float	u;
-	float	v;
-	t_vtr	pos0;
-
-	u = bvray.a.x + (vray.x * ints->t);
-	v = bvray.a.z + (vray.z * ints->t);
-	if ((fabsf(u) < 1.0) && (fabsf(v) < 1.0))
-	{
-		ints->hit = 1;
-		ints->p = vtradd(bvray.a, vtrscale(vray, ints->t));
-		ints->p = trans_vtr(ints->p, obj->mtrans);
-		pos0 = vtrset(0, 0, 0);
-		obj->pos = trans_vtr(pos0, obj->mtrans);
-		ints->localn = trans_vtr(vtrset(0, -1, 0), obj->mtrans);
-		ints->localn = vtrnorm(vtrsub(ints->localn, obj->pos));
-		ints->localc = obj->color;
-	}
+	ints->hit = 1;
+	ints->p = vtradd(ray.a, vtrscale(vray, ints->t));
+	ints->p = trans_vtr(ints->p, obj->mtrans);
+	obj->pos = trans_vtr(vtrset(0, 0, 0), obj->mtrans);
+	ints->localn = trans_vtr(vtrset(0, -1, 0), obj->mtrans);
+	ints->localn = vtrnorm(vtrsub(ints->localn, obj->pos));
+	ints->localc = obj->color;
 }
