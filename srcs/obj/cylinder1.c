@@ -70,7 +70,7 @@ static void	cylinder_assignd(int index, char *trimed_obj, t_obj *cylinder)
 				(trimed_obj), diameter, diameter);
 		cylinder->mtrans = trans_homo(
 				cylinder->pos,
-				vtrset(0.0, 0.0, 0.0),
+				trans_norm_vtr_rot(cylinder->norm),
 				vtrset(cylinder->size.w, cylinder->size.h, cylinder->size.d));
 		cylinder->itrans = mtx_inverse(cylinder->mtrans, 4);
 	}
