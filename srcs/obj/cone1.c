@@ -108,7 +108,7 @@ void	cone_ints(t_obj *obj, t_ray ray, t_ints *ints)
 static void	cone_ints_set(t_obj *obj, t_ints *ints)
 {
 	obj->pos = trans_vtr(vtrset(0, 0, 0), obj->mtrans);
-	ints->valid = 1;
+	ints->hit = 1;
 	ints->p = trans_vtr(ints->p, obj->mtrans);
 	ints->localn = vtrnorm(vtrsub(trans_vtr(obj->norm, obj->mtrans), obj->pos));
 	ints->localc = obj->color;

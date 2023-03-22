@@ -164,37 +164,6 @@ static void	light_assigned(int index, char *trimed_obj, t_lht *light)
 */
 
 /*
-* old
- * compute light between light point and intersection point
- * reflecing the local normal surface (inside object)
- ? lvtr = light vector in normalize
- ? svtr = starting vector
-void	lht_illuminated(t_lht lht, t_ints *ints, t_list *objs)
-{
-	t_vtr	lvtr;
-	t_ray	lray;
-	t_ints	lints;
-	float	angle;
-
-	lvtr = vtrnorm(vtrsub(lht.pos, ints->p));
-	lray = set_ray(ints->p, vtradd(ints->p, lvtr));
-	lht_inst_objs(lray, &lints, ints, objs);
-	ints->illum = lht.colorf;
-	ints->valid = 0;
-	ints->illum.alpha = 0.0;
-	if (!lints.valid)
-	{
-		angle = acos(vtrdot(ints->localn, lvtr));
-		if (angle <= HALF_PI)
-		{
-			ints->valid = 1;
-			ints->illum.alpha = lht.bright * (1.0 - (angle / HALF_PI));
-		}
-	}
-}
-*/
-
-/*
  * new
  * compute light between light point and intersection point
  * reflecing the local normal surface (inside object)
@@ -212,14 +181,14 @@ void	lht_illuminated(t_obj lht, t_ints *ints, t_list *objs)
 	lray = set_ray(ints->p, vtradd(ints->p, lvtr));
 	lht_inst_objs(lray, &lints, ints, objs);
 	ints->illum = lht.colorf;
-	ints->valid = 0;
+	ints->hit = 0;
 	ints->illum.alpha = 0.0;
-	if (!lints.valid)
+	if (!lints.hit)
 	{
 		angle = acos(vtrdot(ints->localn, lvtr));
 		if (angle <= HALF_PI)
 		{
-			ints->valid = 1;
+			ints->hit = 1;
 			ints->illum.alpha = lht.bright * (1.0 - (angle / HALF_PI));
 		}
 	}
@@ -231,13 +200,13 @@ void	lht_inst_objs(t_ray lray, t_ints *lints, t_ints *ints, t_list *objs)
 	t_obj	*o;
 
 	obj = objs;
-	lints->valid = 0;
+	lints->hit = 0;
 	while (obj)
 	{
 		o = (t_obj *) obj->content;
 		if (o != ints->obj)
 			obj_ints(o, lray, lints);
-		if (lints->valid)
+		if (lints->hit)
 			return ;
 		obj = obj->next;
 	}

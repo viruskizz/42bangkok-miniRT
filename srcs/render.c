@@ -50,9 +50,9 @@ static t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 
 	camray = cam_ray(data->cam, cox, coy);
 	colorf = color_to_colorf(data->amb.color);
-	ints.valid = 0;
+	ints.hit = 0;
 	camray_ints(data, camray, &ints);
-	if (ints.valid)
+	if (ints.hit)
 		colorf = lht_ints(data, &ints);
 	return (colorf);
 }
@@ -68,7 +68,7 @@ static t_colorf	lht_ints(t_data *data, t_ints *ints)
 	while (light)
 	{
 		lht_illuminated(*((t_obj *)(light->content)), ints, data->objs);
-		if (ints->valid)
+		if (ints->hit)
 		{
 			colorf.r += ints->illum.r * ints->illum.alpha;
 			colorf.g += ints->illum.g * ints->illum.alpha;
@@ -76,7 +76,7 @@ static t_colorf	lht_ints(t_data *data, t_ints *ints)
 		}
 		light = light->next;
 	}
-	if (ints->valid)
+	if (ints->hit)
 	{
 		colorfl = color_to_colorf(ints->localc);
 		colorf.r = colorfl.r * colorf.r;
@@ -94,17 +94,17 @@ static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 
 	objs = data->objs;
 	ints->t = FLT_MAX;
-	oints.valid = 0;
+	oints.hit = 0;
 	while (objs)
 	{
 		if (objs->content)
 		{
 			obj = (t_obj *)objs->content;
 			obj_ints(obj, camray, &oints);
-			if (oints.valid)
+			if (oints.hit)
 			{
 				oints.t = vtrmag(vtrsub(oints.p, camray.a));
-				ints->valid = 1;
+				ints->hit = 1;
 				set_obj_ints(ints, oints);
 			}
 		}

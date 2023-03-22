@@ -89,13 +89,13 @@ void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints)
 	point.a = 1.0;
 	point.b = 2.0 * vtrdot(bvray.a, vray);
 	point.c = vtrdot(bvray.a, bvray.a) - 1.0;
-	ints->value = point.b * point.b - 4.0 * point.c;
-	ints->valid = 0;
-	if (ints->value > 0.0)
+	ints->t = point.b * point.b - 4.0 * point.c;
+	ints->hit = 0;
+	if (ints->t > 0.0)
 	{
 		if (!intersec_tranf(obj, ints, point, bvray))
 			return ;
-		ints->valid = 1;
+		ints->hit = 1;
 	}
 }
 
@@ -113,7 +113,7 @@ static int	intersec_tranf(t_obj *obj, t_ints *ints, t_pnt point, t_ray bvray)
 	t_vtr	vray;
 
 	vray = vtrnorm(bvray.l);
-	sqt = sqrtf(ints->value);
+	sqt = sqrtf(ints->t);
 	t1 = (-point.b + sqt) / 2.0;
 	t2 = (-point.b - sqt) / 2.0;
 	if (t1 < 0.0 || t2 < 0.0)

@@ -49,8 +49,6 @@ t_vtr	trans_norm_vtr_rot(t_vtr norm)
 		rot.y = 0;
 	if (isnan(rot.z))
 		rot.z = 0;
-	printf("rad: ");
-	vtrprint(rot);
 	return (rot);
 }
 

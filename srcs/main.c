@@ -24,7 +24,6 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-
 	data = parsing_input(argc, argv);
 	initial(&data);
 	render_scene(&data);

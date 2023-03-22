@@ -68,9 +68,7 @@ static void	plane_assigned(int index, t_obj *plane, char *trimed_obj)
 		plane->size.d = 5.0;
 			plane->mtrans = trans_homo(
 				plane->pos,
-				// vtrset(0.0, 0.0, 0.5),
 				trans_norm_vtr_rot(plane->norm),
-				// vtrset(-1.570796, 0.0, 0.0),
 				vtrset(plane->size.w, plane->size.h, plane->size.d));
 		plane->itrans = mtx_inverse(plane->mtrans, 4);
 		plane->colorf = color_to_colorf(plane->color);
@@ -114,12 +112,12 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 
 	bvray = trans_ray(ray, obj->itrans);
 	vray = vtrnorm(bvray.l);
-	ints->value = 0;
-	ints->valid = 0;
+	ints->t = 0;
+	ints->hit = 0;
 	if (!close0(vray.y, 0.0f))
 	{
-		ints->value = bvray.a.y / -vray.y;
-		if (ints->value > 0.0)
+		ints->t = bvray.a.y / -vray.y;
+		if (ints->t > 0.0)
 		{
 			intersec_tranf(bvray, vray, obj, ints);
 		}
@@ -137,12 +135,12 @@ static void	intersec_tranf(t_ray bvray, t_vtr vray, t_obj *obj, t_ints *ints)
 	float	v;
 	t_vtr	pos0;
 
-	u = bvray.a.x + (vray.x * ints->value);
-	v = bvray.a.z + (vray.z * ints->value);
+	u = bvray.a.x + (vray.x * ints->t);
+	v = bvray.a.z + (vray.z * ints->t);
 	if ((fabsf(u) < 1.0) && (fabsf(v) < 1.0))
 	{
-		ints->valid = 1;
-		ints->p = vtradd(bvray.a, vtrscale(vray, ints->value));
+		ints->hit = 1;
+		ints->p = vtradd(bvray.a, vtrscale(vray, ints->t));
 		ints->p = trans_vtr(ints->p, obj->mtrans);
 		pos0 = vtrset(0, 0, 0);
 		obj->pos = trans_vtr(pos0, obj->mtrans);

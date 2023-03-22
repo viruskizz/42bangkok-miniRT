@@ -30,9 +30,9 @@ int	cylinder_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
 	intss = ft_calloc(sizeof(t_ints), 4);
 	intss = cy_ints_bd(bvray, vray, fml, intss);
 	intss = cy_ints_tp(bvray, vray, intss);
-	ints->valid = 0;
-	if (!intss[0].valid && !intss[1].valid
-		&& !intss[2].valid && !intss[3].valid)
+	ints->hit = 0;
+	if (!intss[0].hit && !intss[1].hit
+		&& !intss[2].hit && !intss[3].hit)
 		return (free(intss), -1);
 	idx = cy_ints_pt(intss, ints);
 	return (free(intss), idx);
@@ -40,8 +40,8 @@ int	cylinder_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
 
 static t_ints	*cy_ints_bd(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss)
 {
-	intss[0].valid = 0;
-	intss[1].valid = 0;
+	intss[0].hit = 0;
+	intss[1].hit = 0;
 	intss[0].t = 100e6;
 	intss[1].t = 100e6;
 	if (fml.result > 0.0)
@@ -51,11 +51,11 @@ static t_ints	*cy_ints_bd(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss)
 		intss[0].p = vtradd(bvray.a, vtrscale(vray, intss[0].t));
 		intss[1].p = vtradd(bvray.a, vtrscale(vray, intss[1].t));
 		if ((intss[0].t > 0.0) && (fabsf(intss[0].p.y) < 1.0))
-			intss[0].valid = 1;
+			intss[0].hit = 1;
 		else
 			intss[0].t = 100e6;
 		if ((intss[1].t > 0.0) && (fabsf(intss[1].p.y) < 1.0))
-			intss[1].valid = 1;
+			intss[1].hit = 1;
 		else
 			intss[1].t = 100e6;
 	}
@@ -64,8 +64,8 @@ static t_ints	*cy_ints_bd(t_ray bvray, t_vtr vray, t_fml fml, t_ints *intss)
 
 static t_ints	*cy_ints_tp(t_ray bvray, t_vtr vray, t_ints *intss)
 {
-	intss[2].valid = 0;
-	intss[3].valid = 0;
+	intss[2].hit = 0;
+	intss[3].hit = 0;
 	intss[2].t = 100e6;
 	intss[3].t = 100e6;
 	if (!close0(vray.y, 0.0))
@@ -76,12 +76,12 @@ static t_ints	*cy_ints_tp(t_ray bvray, t_vtr vray, t_ints *intss)
 		intss[3].p = vtradd(bvray.a, vtrscale(vray, intss[3].t));
 		if ((intss[2].t > 0.0)
 			&& (sqrtf(powf(intss[2].p.x, 2.0) + powf(intss[2].p.z, 2.0)) < 1.0))
-			intss[2].valid = 1;
+			intss[2].hit = 1;
 		else
 			intss[2].t = 100e6;
 		if ((intss[3].t > 0.0)
 			&& (sqrtf(powf(intss[3].p.x, 2.0) + powf(intss[3].p.z, 2.0)) < 1.0))
-			intss[3].valid = 1;
+			intss[3].hit = 1;
 		else
 			intss[3].t = 100e6;
 	}
