@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:27:38 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/18 18:40:48 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 05:46:49 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	ambient_initialise(t_data *data, char **object)
 	while (object[index])
 	{
 		if (index > 2)
-			exit_error (TOO_MANY_INPUT_A);
+			exit_error (MANY_AM);
 		trimed_obj = ft_strtrim(object[index], "\t");
 		if (!trimed_obj)
 			exit_error (FAIL_TRIM);
 		if (index == 0 && ft_strncmp(trimed_obj, "A", 2))
-			exit_error (INVALID_IDENT_A);
+			exit_error (INVALID_ID_A);
 		else if (index == 1)
 			data->amb.ratio = ato_float(trimed_obj);
 		else if (index == 2)
@@ -44,9 +44,10 @@ void	ambient_initialise(t_data *data, char **object)
 		index++;
 	}
 	if (index != 3)
-		exit_error(TOO_LESS_INPUT_A);
+		exit_error(LESS_AM);
 	if (data->amb.ratio < 0.0 || data->amb.ratio > 1.0)
-		exit_error (INVALID_RATIO_A);
+		exit_error (INVALID_RA_A);
+	data->check[0]++;
 }
 
 /*
@@ -67,7 +68,7 @@ void	lht_initialise(t_data *data, char **object)
 	while (object[index])
 	{
 		if (index > 3)
-			exit_error(TOO_MANY_INPUT_L);
+			exit_error(MANY_L);
 		trimed_obj = ft_strtrim(object[index], "/t");
 		if (!trimed_obj)
 			exit_error(FAIL_TRIM);
@@ -76,9 +77,9 @@ void	lht_initialise(t_data *data, char **object)
 		index++;
 	}
 	if (index < 3)
-		exit_error(TOO_LESS_INPUT_L);
+		exit_error(LESS_L);
 	if (light->bright < 0.0 || light->bright > 1.0)
-		exit_error(INVALID_BRIGHT_L);
+		exit_error(BRIGHT_L);
 	light->colorf = color_to_colorf(light->color);
 	ft_lstadd_back(&data->lht, ft_lstnew((void *)light));
 }
@@ -103,7 +104,7 @@ void	lht_initialise(t_data *data, char **object, int idx)
 	while (object[index])
 	{
 		if (index > 3)
-			exit_error(TOO_MANY_INPUT_L);
+			exit_error(MANY_L);
 		trimed_obj = ft_strtrim(object[index], "/t");
 		if (!trimed_obj)
 			exit_error(FAIL_TRIM);
@@ -112,9 +113,9 @@ void	lht_initialise(t_data *data, char **object, int idx)
 		index++;
 	}
 	if (index < 3)
-		exit_error(TOO_LESS_INPUT_L);
+		exit_error(LESS_L);
 	if (light->bright < 0.0 || light->bright > 1.0)
-		exit_error(INVALID_BRIGHT_L);
+		exit_error(BRIGHT_L);
 	light->idx = idx;
 	ft_lstadd_back(&data->lht, ft_lstnew((void *)light));
 }

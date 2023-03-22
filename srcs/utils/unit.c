@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:13:49 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/10 00:13:50 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:24:22 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,9 @@ int	close0(const float f1, const float f2)
 		return (1);
 	else
 		return (0);
+}
+
+float	degree_radian(float degree)
+{
+	return (degree * (PI / 180));
 }

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:43:42 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/17 13:08:05 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 04:59:54 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ void	sphere_initialise(t_data *data, char **object, int idx)
 	int		index;
 	t_obj	*sphere;
 	char	*trimed_obj;
-	float	diameter;
 
 	index = 0;
 	sphere = object_initialise(SPHERE);
 	while (object[index])
 	{
 		if (index > 3)
-			exit_error(TOO_MANY_INPUT_SP);
+			exit_error(MANY_SP);
 		trimed_obj = ft_strtrim(object[index], "\t");
 		if (!trimed_obj)
 			exit_error(FAIL_TRIM);
@@ -42,7 +41,7 @@ void	sphere_initialise(t_data *data, char **object, int idx)
 	}
 	sphere->itrans = mtx_inverse(sphere->mtrans, 4);
 	if (index != 4)
-		exit_error(TOO_LESS_INPUT_SP);
+		exit_error(LESS_SP);
 	sphere->idx = idx;
 	ft_lstadd_back(&data->objs, ft_lstnew((void *)sphere));
 }
@@ -125,7 +124,6 @@ static int	intersec_tranf(t_obj *obj, t_ints *ints, t_pnt point, t_ray bvray)
 			ints->p = vtradd(bvray.a, vtrscale(vray, t1));
 		else
 			ints->p = vtradd(bvray.a, vtrscale(vray, t2));
-		// * Transform the intersection point back into world coordinates.
 		ints->p = trans_vtr(ints->p, obj->mtrans);
 		obj->pos = trans_vtr(vtrset(0, 0, 0), obj->mtrans);
 		ints->localn = vtrnorm(vtrsub(ints->p, obj->pos));
@@ -134,49 +132,3 @@ static int	intersec_tranf(t_obj *obj, t_ints *ints, t_pnt point, t_ray bvray)
 	}
 	return (1);
 }
-
-/*
-void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints)
-{
-	t_vtr	vray; // compute the values of a,b,c
-	t_ray	bvray; // compute the values of a,b,c
-	float	a;
-	float	b;
-	float	c;
-
-	bvray = trans_ray(ray, obj->itrans);
-	vray = vtrnorm(bvray.l);
-	// a = 1.0;
-	b = 2.0 * vtrdot(bvray.a, vray);
-	c = vtrdot(bvray.a, bvray.a) - 1.0;
-	ints->value = b * b - 4.0 * c;
-	ints->valid = 0;
-	if (ints->value > 0.0)
-	{
-		float sqt = sqrtf(ints->value);
-		float t1 = (-b + sqt) / 2.0;
-		float t2 = (-b - sqt) / 2.0;
-		if (t1 < 0.0 || t2 < 0.0)
-			return ;
-		else
-		{
-			if (t1 < t2)
-			{
-				ints->p = vtradd(bvray.a, vtrscale(vray, t1));
-			}
-			else
-			{
-				ints->p = vtradd(bvray.a, vtrscale(vray, t2));
-			}
-			// Transform the intersection point back into world coordinates.
-			ints->p = trans_vtr(ints->p, obj->mtrans);
-			t_vtr pos0 = vtrset(0, 0, 0);
-			obj->pos = trans_vtr(pos0, obj->mtrans);
-			ints->localn = vtrnorm(vtrsub(ints->p, obj->pos));
-			ints->localc = obj->color;
-			ints->illum.alpha = 1.0;
-		}
-		ints->valid = 1;
-	}
-}
-*/

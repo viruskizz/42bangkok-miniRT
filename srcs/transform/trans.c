@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 18:18:54 by tsomsa            #+#    #+#             */
-/*   Updated: 2023/03/10 00:42:13 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 05:07:00 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_vtr	trans_vtr(t_vtr v, float **mtxtrans)
 {
 	float	*mtxv;
 	float	*mtxr;
-	float	**itrans;
 	t_vtr	vr;
 
 	mtxv = vtrtmtx(v);

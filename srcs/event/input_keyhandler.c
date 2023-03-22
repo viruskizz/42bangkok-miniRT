@@ -6,24 +6,17 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:54:53 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/19 15:00:04 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 05:07:45 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-// * [MODE:REAL-WORLD]
-// * [MODE:SELECTION.]
-
-// int			sphere_key_transf(t_data *data, int keycode, t_obj *object);
-// int			plane_key_transf(t_data *data, int keycode, t_obj *object);
-// int			light_key_transf(t_data *data, int keycode, t_obj *object);
 void		objects_transformation(t_data *data, int keycode, t_obj *object);
 int			camera_key_transformation(t_data *data, int keycode);
 void		revalue_camera_keyhandler(t_data *data);
 static void	selection_keyhandler(t_data *data, int keycode);
 static void	element_transformation_keyhandler(t_data *data, int keycode);
-static void	objects_key_transformation(t_data *data, int id, int keycode);
 
 /*
 * [function key press handler]
@@ -77,13 +70,10 @@ int	keyhandler_press(int keycode, t_data *data)
 		window_interface(data, DECREASE);
 	else if (data->rshift_key && keycode == KEY_DOWN)
 		window_interface(data, INCREASE);
-	else if (data->selectp > -1)
+	else if (data->selectp > -1 || keycode == KEY_SPACE)
 		selection_keyhandler(data, keycode);
-	else if (keycode == KEY_SPACE && !data->update)
-		revalue_camera_keyhandler(data);
 	else if (!data->update)
 		element_transformation_keyhandler(data, keycode);
-	// printf("ctrl %d, lshift %d, rshift %d, keycode %d\n", data->ctrl_key, data->lshift_key, data->rshift_key, keycode);
 	return (window_interface(data, NONE));
 }
 
@@ -104,7 +94,7 @@ int	keyhandler_release(int keycode, t_data *data)
 /*
 * [handler mouse function]
 */
-int	mouse_hook(int keycode, int x, int y, t_data *data)
+int	mouse_hook(int keycode, t_data *data)
 {
 	if (keycode == 4)
 		window_interface(data, DECREASE);

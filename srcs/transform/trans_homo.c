@@ -23,13 +23,7 @@ float	**trans_homo(t_vtr trans, t_vtr rotate, t_vtr scale)
 	float	**mrot;
 
 	trans_trans(trans, scale, &mtrans);
-	// vtrprint(trans);
-	// vtrprint(rotate);
 	trans_rot_xyz(rotate, &mrot);
-	// printf("mtrans\n");
-	// mtx_print(mtrans, 4);
-	// printf("mrot\n");
-	// mtx_print(mrot, 4);
 	result = mtx_multi(mtrans, mrot, 4);
 	mtx_free(mtrans, 4);
 	mtx_free(mrot, 4);

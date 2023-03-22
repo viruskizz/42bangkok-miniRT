@@ -6,14 +6,14 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:57:35 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/18 18:42:17 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 05:05:44 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 static t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
-static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints);
+static t_colorf	lht_ints(t_data *data, t_ints *ints);
 static void		camray_ints(t_data *data, t_ray camray, t_ints *ints);
 static void		set_obj_ints(t_ints *ints, t_ints oints);
 
@@ -53,47 +53,11 @@ static t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 	ints.valid = 0;
 	camray_ints(data, camray, &ints);
 	if (ints.valid)
-		colorf = lht_ints(data, camray, &ints);
+		colorf = lht_ints(data, &ints);
 	return (colorf);
 }
 
-/*
-static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
-{
-	t_colorf	colorf;
-	t_colorf	colorfl;
-	t_list		*lht;
-	t_lht		*light;
-
-	lht = data->lht;
-	colorf = color_to_colorf(rgb_to_color(0, 0, 0));
-	while (lht)
-	{
-		light = (t_lht *) lht->content;
-		lht_illuminated(*light, ints, data->objs);
-		if (ints->valid)
-		{
-			colorf.r += ints->illum.r * ints->illum.alpha;
-			colorf.g += ints->illum.g * ints->illum.alpha;
-			colorf.b += ints->illum.b * ints->illum.alpha;
-		}
-		lht = lht->next;
-	}
-	if (ints->valid)
-	{
-		colorfl = color_to_colorf(ints->localc);
-		colorf.r = colorfl.r * colorf.r;
-		colorf.g = colorfl.g * colorf.g;
-		colorf.b = colorfl.b * colorf.b;
-	}
-	return (colorf);
-}
-*/
-
-/* 
-* 
-*/
-static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
+static t_colorf	lht_ints(t_data *data, t_ints *ints)
 {
 	t_colorf	colorf;
 	t_colorf	colorfl;
@@ -122,9 +86,6 @@ static t_colorf	lht_ints(t_data *data, t_ray camray, t_ints *ints)
 	return (colorf);
 }
 
-/*
-*
-*/
 static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 {
 	t_ints	oints;
@@ -132,7 +93,7 @@ static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 	t_obj	*obj;
 
 	objs = data->objs;
-	ints->dist = FLT_MAX;
+	ints->t = FLT_MAX;
 	oints.valid = 0;
 	while (objs)
 	{
@@ -142,7 +103,7 @@ static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 			obj_ints(obj, camray, &oints);
 			if (oints.valid)
 			{
-				oints.dist = vtrmag(vtrsub(oints.p, camray.a));
+				oints.t = vtrmag(vtrsub(oints.p, camray.a));
 				ints->valid = 1;
 				set_obj_ints(ints, oints);
 			}
@@ -153,9 +114,9 @@ static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 
 static void	set_obj_ints(t_ints *ints, t_ints oints)
 {
-	if (oints.dist < ints->dist)
+	if (oints.t < ints->t)
 	{
-		ints->dist = oints.dist;
+		ints->t = oints.t;
 		ints->obj = oints.obj;
 		ints->p = oints.p;
 		ints->localn = oints.localn;

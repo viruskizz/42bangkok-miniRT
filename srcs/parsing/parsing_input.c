@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:27:04 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/19 03:03:03 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/22 05:49:44 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
 TODO utility functions that must add into header files
 */
 
-static int		file_checking(char *file);
-static void		get_input(t_data *data, int fd);
-static int		identifier_checking(char **object, int index);
+static void		set_data(t_data *data, char *filedata);
+static char		*read_file(char *filename);
 static void		object_lexering(t_data *data, char **object, int identifier);
 static t_data	data_initialize(void);
 
@@ -28,22 +27,25 @@ static t_data	data_initialize(void);
 * [function parsing input from the file and conveting into struct data]
 * => [return] :
 * => [exit] :
-TODO check lists amount of "data.lht" | 0 < lht_amount < 3 |
-TODO check lists amount of "data.objs" | 0 < objs_amount |
-TODO add mlx, window init when parsing is okay + init.obj->img.
 */
 t_data	parsing_input(int argc, char **argv)
 {
 	t_data	data;
-	int		fd;
+	char	*filedata;
 
 	if (argc != 2)
-		exit_error("minirt: wrong argurment");
-	// * file check;
+		exit_error("ERROR::wrong argurmenst.");
+	filedata = read_file(argv[1]);
 	data = data_initialize();
-	fd = file_checking(argv[1]);
-	// *.attribute check;
-	get_input(&data, fd);
+	set_data(&data, filedata);
+	if (data.check[0] != 1)
+		exit_error("ERROR::invalid amount of ambian light element.");
+	if (data.check[1] != 1)
+		exit_error("ERROR::invalid amount of camera element.");
+	if (data.lht == NULL)
+		exit_error("ERROR::invalid amount of light element.");
+	if (data.objs == NULL)
+		exit_error("ERROR::invalid amount of object element.");
 	return (data);
 }
 
@@ -64,39 +66,22 @@ static t_data	data_initialize(void)
 	count = 0;
 	while (count < 4)
 		data.selectv[count++] = 0;
+	data.check[0] = 0;
+	data.check[1] = 0;
 	data.lht = NULL;
 	data.objs = NULL;
 	return (data);
 }
 
-/*
-* [funciton checking input file that is it valid or available ?]
-* => [return > 2] : valid file and openable.
-* => [exit] : any invalid the function will exit.
- */
-static int	file_checking(char *file)
+static char	*read_file(char *filename)
 {
+	char	buff[READ_SIZE + 1];
+	int		read_byte;
+	char	*str;
 	int		fd;
-	char	*type;
 
-	if (ft_strncmp(ft_strrchr(file, '.'), ".rt", 4))
-		exit_error("minirt: wrong file type.");
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		exit_error("minirt: the file cannot open.");
-	return (fd);
-}
-
-static void	get_input(t_data *data, int fd)
-{
-	char buff[READ_SIZE + 1];
-	int	read_byte;
-	char *file;
-	char **file_line;
-
-	file = NULL;
-	// * read from the file
-	data->lht = NULL;
+	str = NULL;
+	fd = validate_file(filename);
 	while (1 > 0)
 	{
 		read_byte = read(fd, buff, READ_SIZE);
@@ -104,39 +89,39 @@ static void	get_input(t_data *data, int fd)
 		if (read_byte < READ_SIZE)
 		{
 			if (read_byte > 0)
-				file = ft_strjoin_pro(file, buff);
+				str = ft_strjoin_pro(str, buff);
 			break ;
 		}
-		file = ft_strjoin_pro(file, buff);
+		str = ft_strjoin_pro(str, buff);
 	}
+	return (str);
+}
 
-	char	**object;
-	int		index;
-	int		identifier;
+static void	set_data(t_data *data, char *filedata)
+{
+	char	**line;
+	char	**obj;
+	int		i;
+	int		code;
 
-	index = 0;
-	file_line = ft_split(file, '\n');
-	if (!file_line)
-		exit_error("minirt: spliting file_line is failed.");
-	// print_twoarray_char(file_line);
+	i = 0;
+	line = ft_split(filedata, '\n');
+	if (!line)
+		exit_error(FAIL_SPLIT);
 	data->lht = NULL;
-	while (file_line[index])
+	while (line[i])
 	{
-		// * check identifier //
-		object = ft_split(file_line[index], ' ');
-		if (!file_line)
-			exit_error("minirt: spliting line is failed.");
-		// print_twoarray_char(object);
-		if (*object[0] == '#' && index++)
-			continue;
-		identifier = identifier_checking(object, -1);
-		if (identifier < 0)
-			exit_error ("minirt: invalid identifier...");
-
-		// * lexering
-		object_lexering(data, object, identifier);
-		free_twopointer_char(object);
-		index++;
+		obj = ft_split(line[i], ' ');
+		if (!line)
+			exit_error(FAIL_SPLIT);
+		if (*obj[0] == '#' && i++)
+			continue ;
+		code = validate_code(obj, -1);
+		if (code < 0)
+			exit_error ("ERROR::invalid identifier...");
+		object_lexering(data, obj, code);
+		free_twopointer_char(obj);
+		i++;
 	}
 }
 
@@ -154,49 +139,18 @@ void	object_lexering(t_data *data, char **object, int identifier)
 		if (!ft_strncmp(object[identifier], "A", 2))
 			ambient_initialise(data, object);
 		else if (!ft_strncmp(object[identifier], "C", 2))
-			cam_initialise(data, object);// printf("%s\n", "go to fucntion C");
+			cam_initialise(data, object);
 		else if (!ft_strncmp(object[identifier], "L", 2))
-			lht_initialise(data, object, index++);//printf("%s\n", "go to fucntion L");
+			lht_initialise(data, object, index++);
 		else if (!ft_strncmp(object[identifier], "sp", 3))
-			sphere_initialise(data, object, index++);//printf("%s\n", "go to fucntion sp");
+			sphere_initialise(data, object, index++);
 		else if (!ft_strncmp(object[identifier], "pl", 3))
-			plane_initialise(data, object, index++);//printf("%s\n", "go to fucntion ol");
+			plane_initialise(data, object, index++);
 		else if (!ft_strncmp(object[identifier], "cy", 3))
-			cylinder_inititialize(data, object, index++);//printf("%s\n", "go to fucntion cy");
+			cylinder_inititialize(data, object, index++);
 		else if (!ft_strncmp(object[identifier], "cn", 3))
-			cone_inititialize(data, object, index++);//printf("%s\n", "go to fucntion cy");
-		else
-			printf("%s\n", "ship hay aew\n"); // ! dont forget to delete...
+			cone_inititialize(data, object, index++);
 	}
 	else
-		exit_error("minirt: too many objects..");
-}
-
-static int	identifier_checking(char **object, int index)
-{
-	int 	xedni;
-	char	**identifier;
-	int		position_count[2];
-
-	position_count[0] = -1;
-	position_count[1] = 0;
-	identifier = ft_split("A C L sp pl cy cn", ' ');
-	if (!identifier)
-		exit_error("minirt: spliting identifier constant is failed.");
-	while (object[++index])
-	{
-		xedni = 0;
-		while (identifier[xedni])
-		{
-			if (!(ft_strncmp(object[index], identifier[xedni++], ft_strlen(object[index]))))
-			{
-				position_count[0] = index;
-				position_count[1]++;
-			}
-		}
-	}
-	free_twopointer_char(identifier);
-	if (position_count[0] != -1 && position_count[1] == 1)
-		return (position_count[0]);
-	return(-1);
+		exit_error("ERROR::too many objects, object cannot more than 9999.");
 }
