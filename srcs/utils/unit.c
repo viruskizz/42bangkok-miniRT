@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/10 00:13:49 by sharnvon          #+#    #+#             */
+/*   Updated: 2023/03/20 18:24:22 by sharnvon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 t_color	set_color(int r, int g, int b)
@@ -10,7 +22,7 @@ t_color	set_color(int r, int g, int b)
 	return (color);
 }
 
-t_size set_size(double w, double h, double d)
+t_size	set_size(float w, float h, float d)
 {
 	t_size	size;
 
@@ -28,4 +40,17 @@ t_ray	set_ray(t_vtr a, t_vtr b)
 	r.b = b;
 	r.l = vtrsub(b, a);
 	return (r);
+}
+
+int	close0(const float f1, const float f2)
+{
+	if (fabsf(f1 - f2) < FLT_EPSILON)
+		return (1);
+	else
+		return (0);
+}
+
+float	degree_radian(float degree)
+{
+	return (degree * (PI / 180));
 }
