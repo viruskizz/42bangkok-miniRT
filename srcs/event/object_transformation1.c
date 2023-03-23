@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:01:48 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/22 05:07:55 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:00:33 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ static void	object_value_update(t_obj *object);
 static int	rotation_key_check(t_data *data, int keycode, t_obj *object);
 static int	moving_key_check(t_data *data, int keycode, t_obj *object);
 static int	resizing_key_check(t_data *data, int keycode, t_obj *object);
-int			rotation_object_x(t_data *data, t_obj *object, int keycode);
-int			rotation_object_y(t_data *data, t_obj *object, int keycode);
-int			rotation_object_z(t_data *data, t_obj *object, int keycode);
 
 /*
 * [function apply transformation to object with keycode input]
@@ -54,11 +51,24 @@ static int	rotation_key_check(t_data *data, int keycode, t_obj *object)
 	int	update;
 
 	update = 0;
-	if (!rotation_object_z(data, object, keycode)
-		&& !rotation_object_y(data, object, keycode)
-		&& !rotation_object_x(data, object, keycode))
-		return (update);
-	update++;
+	if ((data->lshift_key && data->ctrl_key && keycode == KEY_RIGHT
+			&& !update++))
+		object->n_radian.z += ROTATE_VALUE;
+	else if ((data->lshift_key && data->ctrl_key && keycode == KEY_LEFT
+			&& !update++))
+		object->n_radian.z -= ROTATE_VALUE;
+	else if (!data->lshift_key && data->ctrl_key && keycode == KEY_UP
+		&& !update++)
+		object->n_radian.x += ROTATE_VALUE;
+	else if (!data->lshift_key && data->ctrl_key && keycode == KEY_DOWN
+		&& !update++)
+		object->n_radian.x -= ROTATE_VALUE;
+	else if (!data->lshift_key && data->ctrl_key && keycode == KEY_RIGHT
+		&& !update++)
+		object->n_radian.y += ROTATE_VALUE;
+	else if (!data->lshift_key && data->ctrl_key && keycode == KEY_LEFT
+		&& !update++)
+		object->n_radian.y -= ROTATE_VALUE;
 	data->update = update;
 	return (update);
 }
@@ -78,13 +88,13 @@ static int	moving_key_check(t_data *data, int keycode, t_obj *object)
 	else if (!data->ctrl_key && data->lshift_key
 		&& keycode == KEY_DOWN && !update++)
 		object->pos.z += TRANSF_VALUE;
-	else if (!data->ctrl_key && keycode == KEY_RIGHT && !update++)
+	else if (!data->lshift_key &&!data->ctrl_key && keycode == KEY_RIGHT && !update++)
 		object->pos.x += TRANSF_VALUE;
-	else if (!data->ctrl_key && keycode == KEY_LEFT && !update++)
+	else if (!data->lshift_key &&!data->ctrl_key && keycode == KEY_LEFT && !update++)
 		object->pos.x -= TRANSF_VALUE;
-	else if (!data->ctrl_key && keycode == KEY_UP && !update++)
+	else if (!data->lshift_key &&!data->ctrl_key && keycode == KEY_UP && !update++)
 		object->pos.y -= TRANSF_VALUE;
-	else if (!data->ctrl_key && keycode == KEY_DOWN && !update++)
+	else if (!data->lshift_key &&!data->ctrl_key && keycode == KEY_DOWN && !update++)
 		object->pos.y += TRANSF_VALUE;
 	data->update = update;
 	return (update);
@@ -125,7 +135,7 @@ static void	object_value_update(t_obj *object)
 {
 	object->mtrans = trans_homo(
 			object->pos,
-			vtrset(0.0, 0.0, 0.0),
+			object->n_radian,
 			vtrset(object->size.w,
 				object->size.h,
 				object->size.d));

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:54:53 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/22 05:07:45 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:05:52 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,12 +143,10 @@ static void	element_transformation_keyhandler(t_data *data, int keycode)
 {
 	int		count;
 	int		object_id;
-	int		next;
 	t_list	*objects;
 
 	count = 0;
 	object_id = 0;
-	next = 1;
 	while (count < 4)
 		object_id = (object_id * 10) + data->selectv[count++];
 	if (object_id == 0)
@@ -161,9 +159,10 @@ static void	element_transformation_keyhandler(t_data *data, int keycode)
 			if (((t_obj *)objects->content)->idx == object_id)
 				break ;
 			objects = objects->next;
-			if (objects == NULL && next-- == 1)
+			if (objects == NULL && count++ == 4)
 				objects = data->objs;
 		}
-		objects_transformation(data, keycode, (t_obj *)objects->content);
+		if (objects)
+			objects_transformation(data, keycode, (t_obj *)objects->content);
 	}
 }

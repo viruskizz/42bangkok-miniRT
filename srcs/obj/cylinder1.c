@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:16:31 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/22 04:42:31 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:36:18 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	cylinder_inititialize(t_data *data, char **object, int idx)
 	while (object[index])
 	{
 		if (index > 5)
-			exit_error("MANY_CY");
+			exit_error(MANY_CY);
 		trimed_obj = ft_strtrim(object[index], "\t");
 		if (!trimed_obj)
 			exit_error(FAIL_TRIM);
@@ -61,7 +61,10 @@ static void	cylinder_assignd(int index, char *trimed_obj, t_obj *cylinder)
 	else if (index == 1)
 		cylinder->pos = ato_tvector(trimed_obj);
 	else if (index == 2)
+	{
 		cylinder->norm = ato_tvector(trimed_obj);
+		cylinder->n_radian = trans_norm_vtr_rot(cylinder->norm);
+	}
 	else if (index == 3)
 		diameter = ato_float(trimed_obj);
 	else if (index == 4)
@@ -70,7 +73,7 @@ static void	cylinder_assignd(int index, char *trimed_obj, t_obj *cylinder)
 				(trimed_obj), diameter, diameter);
 		cylinder->mtrans = trans_homo(
 				cylinder->pos,
-				trans_norm_vtr_rot(cylinder->norm),
+				cylinder->n_radian,
 				vtrset(cylinder->size.w, cylinder->size.h, cylinder->size.d));
 		cylinder->itrans = mtx_inverse(cylinder->mtrans, 4);
 	}

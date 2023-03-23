@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:16:31 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/22 04:45:38 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:16:37 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ static void	cone_assignd(int index, char *trimed_obj, t_obj *cone)
 	else if (index == 1)
 		cone->pos = ato_tvector(trimed_obj);
 	else if (index == 2)
+	{
 		cone->norm = ato_tvector(trimed_obj);
+		cone->n_radian = trans_norm_vtr_rot(cone->norm);
+	}
 	else if (index == 3)
 		diameter = ato_float(trimed_obj);
 	else if (index == 4)
@@ -69,8 +72,7 @@ static void	cone_assignd(int index, char *trimed_obj, t_obj *cone)
 		cone->size = size_initialise(ato_float
 				(trimed_obj), diameter, diameter);
 		cone->mtrans = trans_homo(
-				cone->pos,
-				trans_norm_vtr_rot(cone->norm),
+				cone->pos, cone->n_radian,
 				vtrset(cone->size.w, cone->size.h, cone->size.d));
 		cone->itrans = mtx_inverse(cone->mtrans, 4);
 	}
