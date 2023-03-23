@@ -156,6 +156,13 @@ typedef struct s_lht
 	t_colorf	colorf;
 }	t_lht;
 
+typedef struct s_material
+{
+	float	shin;
+	float	reflc;
+} t_mat;
+
+
 typedef struct s_obj
 {
 	int			idx;
@@ -170,11 +177,13 @@ typedef struct s_obj
 	t_color		color;
 	t_colorf	colorf;
 	t_size		size;
+	t_mat		mat;
 	t_img		img;
 }	t_obj;
 
 typedef struct s_ints
 {
+	t_ray		camray;
 	int			hit;
 	float		t;
 	t_obj		*obj;

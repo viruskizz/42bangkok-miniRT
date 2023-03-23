@@ -48,3 +48,13 @@ t_colorf	color_to_colorf(t_color color)
 	cf.b = color.b / COLOR_MAX;
 	return (cf);
 }
+
+t_colorf	colorf_add(t_colorf c1, t_colorf c2)
+{
+	t_colorf	cf;
+
+	cf.r = c1.r + c2.r;
+	cf.g = c1.g + c2.g;
+	cf.b = c1.b + c2.b;
+	return (cf);
+}
