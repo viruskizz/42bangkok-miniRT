@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:27:38 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/22 05:46:49 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:33:53 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	lht_initialise(t_data *data, char **object, int idx)
 		free(trimed_obj);
 		index++;
 	}
-	if (index < 3)
+	if (index < 4)
 		exit_error(LESS_L);
 	if (light->bright < 0.0 || light->bright > 1.0)
 		exit_error(BRIGHT_L);

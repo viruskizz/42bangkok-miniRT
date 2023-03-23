@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 03:15:26 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/22 05:45:38 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:29:57 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@
 # define READ_SIZE	1024
 # define COLOR_MAX	255.0
 # define COLORF_MAX	1.0
-# define TRANSF_VALUE 0.25 //0.05 // 0.25; // 0.04;
-# define RESIZE_VALUE 0.25 //0.05 // 0.25; //0.05;
+# define TRANSF_VALUE 0.25
+# define RESIZE_VALUE 0.05
+# define ROTATE_VALUE HALF_PI / 4
 
 # define COL	0
 # define ROW	1
@@ -165,6 +166,7 @@ typedef struct s_obj
 	float		**itrans;
 	t_vtr		pos;
 	t_vtr		norm;
+	t_vtr		n_radian;
 	t_color		color;
 	t_colorf	colorf;
 	t_size		size;

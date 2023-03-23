@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:49:49 by araiva            #+#    #+#             */
-/*   Updated: 2023/03/22 05:06:44 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:11:56 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@
 int	validate_file(char *file)
 {
 	int		fd;
+	char	*file_type;
 
-	if (ft_strncmp(ft_strrchr(file, '.'), ".rt", 4))
+	file_type = ft_strrchr(file, '.');
+	if (!file_type)
+		exit_error("ERROR::wrong file type.");
+	if (ft_strncmp(file_type, ".rt", 4))
 		exit_error("ERROR::wrong file type.");
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
