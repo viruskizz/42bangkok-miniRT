@@ -13,7 +13,6 @@
 #include "minirt.h"
 
 static t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
-static t_colorf	lht_ints(t_data *data, t_ints *ints);
 static void		camray_ints(t_data *data, t_ray camray, t_ints *ints);
 static void		set_obj_ints(t_ints *ints, t_ints oints);
 
@@ -53,36 +52,7 @@ static t_colorf	scene_pixel_img(t_data *data, float cox, float coy)
 	ints.hit = 0;
 	camray_ints(data, camray, &ints);
 	if (ints.hit)
-		colorf = lht_ints(data, &ints);
-	return (colorf);
-}
-
-static t_colorf	lht_ints(t_data *data, t_ints *ints)
-{
-	t_colorf	colorf;
-	t_colorf	colorfl;
-	t_list		*light;
-
-	light = data->lht;
-	colorf = color_to_colorf(rgb_to_color(0, 0, 0));
-	while (light)
-	{
-		lht_illuminated(*((t_obj *)(light->content)), ints, data->objs);
-		if (ints->hit)
-		{
-			colorf.r += ints->illum.r * ints->illum.alpha;
-			colorf.g += ints->illum.g * ints->illum.alpha;
-			colorf.b += ints->illum.b * ints->illum.alpha;
-		}
-		light = light->next;
-	}
-	if (ints->hit)
-	{
-		colorfl = color_to_colorf(ints->localc);
-		colorf.r = colorfl.r * colorf.r;
-		colorf.g = colorfl.g * colorf.g;
-		colorf.b = colorfl.b * colorf.b;
-	}
+		colorf = material_color(data, &ints);
 	return (colorf);
 }
 
@@ -94,6 +64,7 @@ static void	camray_ints(t_data *data, t_ray camray, t_ints *ints)
 
 	objs = data->objs;
 	ints->t = FLT_MAX;
+	ints->camray = camray;
 	oints.hit = 0;
 	while (objs)
 	{

@@ -29,6 +29,9 @@ t_obj	*object_initialise(int type)
 	object->norm = ato_tvector("0,0,0");
 	object->color = ato_tcolor("0,0,0");
 	object->size = size_initialise(0, 0, 0);
+	object->mat.reflc = 0.5; // 0.0 - 1.0
+	// object->mat.shin = 10.0;
+	object->mat.shin = 0.0;
 	return (object);
 }
 
