@@ -52,7 +52,8 @@ t_ray	cam_ray(t_cam cam, float proj_x, float proj_y);
 
 // * light
 void	lht_initialise(t_data *data, char **object, int idx);
-void	lht_illuminated(t_obj lht, t_ints *ints, t_list *objs);
+t_colorf	diffuse_light(t_obj lht, t_ints *ints, t_list *objs);
+t_colorf	specular_light(t_obj lht, t_ints *ints, t_list *objs);
 void	lht_inst_objs(
 			t_ray lray, t_ints *linst, t_ints *ints, t_list *objs);
 

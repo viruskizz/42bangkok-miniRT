@@ -12,15 +12,13 @@
 
 #include "minirt.h"
 
-static t_colorf	specular_light(t_obj lht, t_ints *ints, t_list *objs);
-
 t_colorf	material_color(t_data *data, t_ints *ints)
 {
 	t_colorf	difclr;
 	t_colorf	spcclr;
 
 	difclr = diffuse_color(data, ints);
-
+	spcclr = color_to_colorf(rgb_to_color(0, 0, 0));
 	if (ints->obj->mat.shin > 0.0)
 		spcclr = specular_color(data, ints);
 	return (colorf_add(difclr, spcclr));
@@ -28,31 +26,24 @@ t_colorf	material_color(t_data *data, t_ints *ints)
 
 t_colorf	diffuse_color(t_data *data, t_ints *ints)
 {
-	t_colorf	colorf;
+	t_colorf	difclr;
 	t_colorf	colorfl;
 	t_list		*light;
+	t_colorf	cf;
 
 	light = data->lht;
-	colorf = color_to_colorf(rgb_to_color(0, 0, 0));
+	difclr = colorf_set(0, 0, 0);
 	while (light)
 	{
-		lht_illuminated(*((t_obj *)(light->content)), ints, data->objs);
-		if (ints->hit)
-		{
-			colorf.r += ints->illum.r * ints->illum.alpha;
-			colorf.g += ints->illum.g * ints->illum.alpha;
-			colorf.b += ints->illum.b * ints->illum.alpha;
-		}
+		cf = diffuse_light(*((t_obj *)(light->content)), ints, data->objs);
+		difclr = colorf_add(difclr, cf);
 		light = light->next;
 	}
-	if (ints->hit)
-	{
-		colorfl = color_to_colorf(ints->localc);
-		colorf.r = colorfl.r * colorf.r;
-		colorf.g = colorfl.g * colorf.g;
-		colorf.b = colorfl.b * colorf.b;
-	}
-	return (colorf);
+	colorfl = color_to_colorf(ints->localc);
+	difclr.r *= colorfl.r;
+	difclr.g *= colorfl.g;
+	difclr.b *= colorfl.b;
+	return (difclr);
 }
 
 t_colorf	specular_color(t_data *data, t_ints *ints)
@@ -62,7 +53,7 @@ t_colorf	specular_color(t_data *data, t_ints *ints)
 	t_list		*light;
 
 	light = data->lht;
-	spcclr = color_to_colorf(rgb_to_color(0, 0,0 ));
+	spcclr = colorf_set(0, 0, 0);
 	while (light)
 	{
 		cf = specular_light(*((t_obj *)(light->content)), ints, data->objs);
@@ -70,34 +61,4 @@ t_colorf	specular_color(t_data *data, t_ints *ints)
 		light = light->next;
 	}
 	return (spcclr);
-}
-
-static t_colorf	specular_light(t_obj lht, t_ints *ints, t_list *objs)
-{
-	t_vtr	lvtr;
-	t_ray	lray;
-	t_ints	lints;
-	float	alpha;
-	t_colorf	cf;
-
-	alpha = 0.0;
-	lvtr = vtrnorm(vtrsub(lht.pos, ints->p));
-	lray = set_ray(ints->p, vtradd(ints->p, vtrscale(lvtr, 0.001)));
-	lht_inst_objs(lray, &lints, ints, objs);
-	if (!lints.hit)
-	{
-		t_vtr	d = lray.l;
-		t_vtr	r = vtrscale(ints->localn, vtrdot(lray.l, ints->localn) * 2);
-		r = vtrnorm(vtrsub(lray.l, r));
-		t_vtr v = vtrnorm(ints->camray.l);
-		// t_vtr v = vtrnorm(lray.l);
-		float dot = vtrdot(r, v);
-		
-		if (dot > 0.0)
-			alpha = ints->obj->mat.reflc * pow(dot, ints->obj->mat.shin);
-	}
-	cf.r = lht.colorf.r * alpha;
-	cf.g = lht.colorf.g * alpha;
-	cf.b = lht.colorf.b * alpha;
-	return (cf);
 }

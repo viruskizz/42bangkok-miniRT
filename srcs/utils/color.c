@@ -39,6 +39,16 @@ t_color	colorf_to_color(t_colorf cf)
 	return (c);
 }
 
+t_colorf	colorf_set(float r, float g, float b)
+{
+	t_colorf	cf;
+
+	cf.r = r;
+	cf.g = g;
+	cf.b = b;
+	return (cf);
+}
+
 t_colorf	color_to_colorf(t_color color)
 {
 	t_colorf	cf;

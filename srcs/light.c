@@ -94,7 +94,7 @@ static void	light_assigned(int index, char *trimed_obj, t_obj *light)
 	}
 }
 
-void	lht_illuminated(t_obj lht, t_ints *ints, t_list *objs)
+t_colorf	diffuse_light(t_obj lht, t_ints *ints, t_list *objs)
 {
 	t_vtr	lvtr;
 	t_ray	lray;
@@ -104,8 +104,6 @@ void	lht_illuminated(t_obj lht, t_ints *ints, t_list *objs)
 	lvtr = vtrnorm(vtrsub(lht.pos, ints->p));
 	lray = set_ray(ints->p, vtradd(ints->p, lvtr));
 	lht_inst_objs(lray, &lints, ints, objs);
-	ints->illum = lht.colorf;
-	ints->hit = 0;
 	ints->illum.alpha = 0.0;
 	if (!lints.hit)
 	{
@@ -116,6 +114,40 @@ void	lht_illuminated(t_obj lht, t_ints *ints, t_list *objs)
 			ints->illum.alpha = lht.bright * (1.0 - (angle / HALF_PI));
 		}
 	}
+	return (colorf_set(
+		lht.colorf.r * ints->illum.alpha,
+		lht.colorf.g * ints->illum.alpha,
+		lht.colorf.b * ints->illum.alpha
+	));
+}
+
+t_colorf	specular_light(t_obj lht, t_ints *ints, t_list *objs)
+{
+	t_vtr	lvtr;
+	t_ray	lray;
+	t_ints	lints;
+	float	alpha;
+	t_colorf	cf;
+
+	alpha = 0.0;
+	lvtr = vtrnorm(vtrsub(lht.pos, ints->p));
+	lray = set_ray(ints->p, vtradd(ints->p, vtrscale(lvtr, 0.001)));
+	lht_inst_objs(lray, &lints, ints, objs);
+	if (!lints.hit)
+	{
+		t_vtr	d = lray.l;
+		t_vtr	r = vtrscale(ints->localn, vtrdot(lray.l, ints->localn) * 2);
+		r = vtrnorm(vtrsub(lray.l, r));
+		t_vtr v = vtrnorm(ints->camray.l);
+		float dot = vtrdot(r, v);
+		
+		if (dot > 0.0)
+			alpha = ints->obj->mat.reflc * pow(dot, ints->obj->mat.shin);
+	}
+	cf.r = lht.colorf.r * alpha;
+	cf.g = lht.colorf.g * alpha;
+	cf.b = lht.colorf.b * alpha;
+	return (cf);
 }
 
 void	lht_inst_objs(t_ray lray, t_ints *lints, t_ints *ints, t_list *objs)
