@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 03:15:26 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/24 18:08:59 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/24 22:08:40 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,16 @@
 # define READ_SIZE	1024
 # define COLOR_MAX	255.0
 # define COLORF_MAX	1.0
-# define TRANSF_VALUE 0.25
+// # define TRANSF_VALUE 0.25
+# define TRANSF_VALUE 0.45
 # define RESIZE_VALUE 0.05
 # define ROTATE_VALUE HALF_PI / 4
 
 # define COL	0
 # define ROW	1
+# define X		0
+# define Y		1
+# define Z		2
 
 /* 
 * define for object_cordition_str parameter mode. */
@@ -88,7 +92,6 @@ typedef struct s_color
 	float	intens;
 }	t_color;
 
-/* color between 0.0-1.0 */
 typedef struct s_colorf
 {
 	float	r;
