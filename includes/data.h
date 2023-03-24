@@ -192,6 +192,8 @@ typedef struct s_ints
 	t_vtr		localn;
 	t_color		localc;
 	t_colorf	illum;
+	float		u;
+	float		v;
 }	t_ints;
 
 typedef struct s_data
