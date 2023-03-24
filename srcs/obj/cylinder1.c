@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:16:31 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/23 17:36:18 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:23:23 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,22 @@ void	cylinder_inititialize(t_data *data, char **object, int idx)
 	int		index;
 	t_obj	*cylinder;
 	char	*trimed_obj;
+	int		bonus_check[2];
 
 	index = 0;
+	bonus_check[0] = 0;
+	bonus_check[1] = 0;
 	cylinder = object_initialise(CYLIND);
 	while (object[index])
 	{
-		if (index > 5)
-			exit_error(MANY_CY);
 		trimed_obj = ft_strtrim(object[index], "\t");
-		if (!trimed_obj)
-			exit_error(FAIL_TRIM);
+		if (index > 5)
+			bonus_argument(cylinder, trimed_obj, bonus_check, MANY_CY);
 		cylinder_assignd(index, trimed_obj, cylinder);
 		free(trimed_obj);
 		index++;
 	}
-	if (index != 6)
+	if (index < 6)
 		exit_error(LESS_CY);
 	if (!tvector_inrange(cylinder->norm, -1.0, 1.0))
 		exit_error(NORM_CY);

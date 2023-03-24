@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 03:15:26 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/23 15:29:57 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/24 18:08:59 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ typedef struct s_obj
 	t_size		size;
 	t_mat		mat;
 	t_img		img;
+	char		*texture;
 }	t_obj;
 
 typedef struct s_ints

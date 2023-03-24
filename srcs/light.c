@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:27:38 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/23 17:33:53 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:29:22 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,10 @@ t_colorf	diffuse_light(t_obj lht, t_ints *ints, t_list *objs)
 
 t_colorf	specular_light(t_obj lht, t_ints *ints, t_list *objs)
 {
-	t_vtr	lvtr;
-	t_ray	lray;
-	t_ints	lints;
-	float	alpha;
+	t_vtr		lvtr;
+	t_ray		lray;
+	t_ints		lints;
+	float		alpha;
 	t_colorf	cf;
 
 	alpha = 0.0;
