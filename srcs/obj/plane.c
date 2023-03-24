@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 01:06:25 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/23 17:39:43 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:22:48 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,17 @@ void	plane_initialise(t_data *data, char **object, int idx)
 	int		index;
 	t_obj	*plane;
 	char	*trimed_obj;
+	int		bonus_check[2];
 
 	index = 0;
+	bonus_check[0] = 0;
+	bonus_check[1] = 0;
 	plane = object_initialise(PLANE);
 	while (object[index])
 	{
-		if (index > 3)
-			exit_error(MANY_PL);
 		trimed_obj = ft_strtrim(object[index], "\t");
-		if (!trimed_obj)
-			exit_error(FAIL_TRIM);
+		if (index > 3)
+			bonus_argument(plane, trimed_obj, bonus_check, MANY_PL);
 		plane_assigned(index, plane, trimed_obj);
 		free(trimed_obj);
 		index++;

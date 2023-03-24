@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 03:22:07 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/22 05:06:20 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:13:49 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	plane_initialise(t_data *data, char **object, int idx);
 void	cylinder_inititialize(t_data *data, char **object, int idx);
 int		validate_code(char **object, int index);
 int		validate_file(char *file);
+void	bonus_argument(t_obj *object, char *trimed_obj, int *check, char *err);
 
 // * render
 int		render_scene(t_data *data);

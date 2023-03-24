@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:16:31 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/23 15:16:37 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:17:18 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,22 @@ void	cone_inititialize(t_data *data, char **object, int idx)
 	int		index;
 	t_obj	*cone;
 	char	*trimed_obj;
+	int		bonus_check[2];
 
 	index = 0;
+	bonus_check[0] = 0;
+	bonus_check[1] = 0;
 	cone = object_initialise(CONE);
 	while (object[index])
 	{
-		if (index > 5)
-			exit_error(MANY_CO);
 		trimed_obj = ft_strtrim(object[index], "\t");
-		if (!trimed_obj)
-			exit_error(FAIL_TRIM);
+		if (index > 5)
+			bonus_argument(cone, trimed_obj, bonus_check, MANY_CO);
 		cone_assignd(index, trimed_obj, cone);
 		free(trimed_obj);
 		index++;
 	}
-	if (index != 6)
+	if (index < 6)
 		exit_error(LESS_CO);
 	if (!tvector_inrange(cone->norm, -1.0, 1.0))
 		exit_error(NORM_CO);
