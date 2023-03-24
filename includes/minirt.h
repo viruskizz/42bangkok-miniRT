@@ -62,6 +62,7 @@ void	lht_inst_objs(
 t_colorf	material_color(t_data *data, t_ints *ints);
 t_colorf	diffuse_color(t_data *data, t_ints *ints);
 t_colorf	specular_color(t_data *data, t_ints *ints);
+t_vtr		trans_txtr(t_vtr vtr, t_vtr trans, float rot, t_vtr scale);
 
 // * obj
 void	set_objs(t_data *data);

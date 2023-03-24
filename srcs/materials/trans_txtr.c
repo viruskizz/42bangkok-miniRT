@@ -17,7 +17,7 @@ static float	*mtx_crs(float **m33, float *m31);
 static float	*vtrtmtx(t_vtr v);
 
 // Transform matrix 3x3
-t_vtr	**trans_txtr(t_vtr vtr, t_vtr trans, float rot, t_vtr scale)
+t_vtr	trans_txtr(t_vtr vtr, t_vtr trans, float rot, t_vtr scale)
 {
 	float	**mtrans;
 	float	*mtxv;
@@ -27,7 +27,7 @@ t_vtr	**trans_txtr(t_vtr vtr, t_vtr trans, float rot, t_vtr scale)
 	mtrans = txtr_mtx(trans, rot, scale);
 	mtxv = vtrtmtx(vtr);
 	mtx = mtx_crs(mtrans, mtxv);
-	v = vtrset(mtx.x, mtx.y);
+	v = vtrset(mtx[0], mtx[1], 0.0);
 	free(mtx);
 	free(mtxv);
 	free(mtrans);

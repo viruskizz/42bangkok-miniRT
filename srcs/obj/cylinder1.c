@@ -96,12 +96,16 @@ void	cylinder_ints(t_obj *obj, t_ray ray, t_ints *ints)
 	else if (ints_idx < 2)
 	{
 		obj->norm = vtrset(ints->p.x, 0.0, ints->p.z);
+		ints->u = atan2f(ints->p.z, ints->p.x) / PI;
+		ints->v = ints->p.y;
 		cylinder_ints_set(obj, ints);
 	}
 	else if (!close0(vray.y, 0.0)
 		&& sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)) < 1.0)
 	{
 		obj->norm = vtrset(0, ints->p.y, 0);
+		ints->u = ints->p.x;
+		ints->v = ints->p.y;
 		cylinder_ints_set(obj, ints);
 	}
 }
