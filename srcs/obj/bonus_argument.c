@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 16:14:02 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/24 17:23:54 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/24 18:18:18 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,16 @@ static int	reflect_shine_argument(t_obj *object, char *trimed_obj)
 			exit_error("ERROR::too many input for reflectin/shine value.");
 		trimed_value = ft_strtrim(split_value[count], "\t");
 		if (count++ == 0)
-			object->reflect = ato_float(trimed_value);
+			object->mat.reflc = ato_float(trimed_value);
 		else
-			object->shine = ato_float(trimed_value);
+			object->mat.shin = ato_float(trimed_value);
 		free(trimed_value);
 	}
 	if (count < 2)
 		exit_error("ERROR::too less input for reflection/shine value.");
-	if (object->reflect < 0.0f || object->reflect > 1.0f)
+	if (object->mat.reflc < 0.0f || object->mat.reflc > 1.0f)
 		exit_error("ERROR::the reflecttion value must be between 0.0-0.1.");
-	if (object->shine < 0.0f)
+	if (object->mat.shin < 0.0f)
 		exit_error("ERROR::invalid shine value, value must be positive.");
 	free_twopointer_char(split_value);
 	return (1);

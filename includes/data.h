@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 03:15:26 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/24 15:35:49 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/24 18:08:59 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,8 +180,6 @@ typedef struct s_obj
 	t_mat		mat;
 	t_img		img;
 	char		*texture;
-	float		reflect;
-	float		shine;
 }	t_obj;
 
 typedef struct s_ints
