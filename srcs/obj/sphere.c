@@ -76,11 +76,9 @@ void	sphere_assigned(int index, char *trimed_obj, t_obj *sphere)
 		sphere->itrans = mtx_inverse(sphere->mtrans, 4);
 	}	
 }
+static int	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints);
+static void	sphere_ints_set(t_obj *obj, t_ints *ints);
 
-/*
-* [function checking intersection point betaween scene and sphere]
-* => success: if the point is intersection and store into ints(t_ints).
-*/
 void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints)
 {
 	t_vtr	vray;
@@ -89,49 +87,55 @@ void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints)
 
 	bvray = trans_ray(ray, obj->itrans);
 	vray = vtrnorm(bvray.l);
-	point.a = 1.0;
-	point.b = 2.0 * vtrdot(bvray.a, vray);
-	point.c = vtrdot(bvray.a, bvray.a) - 1.0;
-	ints->t = point.b * point.b - 4.0 * point.c;
+	sphere_ints_formula(bvray, vray, ints);
+	if (ints->hit)
+		sphere_ints_set(obj, ints);
+}
+
+static int	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
+{
+	t_fml	fml;
+
+	fml.a = 1.0;
+	fml.b = 2.0 * vtrdot(bvray.a, vray);
+	fml.c = vtrdot(bvray.a, bvray.a) - 1.0;
+	ints->t = fml.b * fml.b - 4.0 * fml.c;
 	ints->hit = 0;
 	if (ints->t > 0.0)
 	{
-		if (!intersec_tranf(obj, ints, point, bvray))
-			return ;
-		ints->hit = 1;
+		float	sqt;
+		float	t1;
+		float	t2;
+		t_vtr	vray;
+
+		vray = vtrnorm(bvray.l);
+		sqt = sqrtf(ints->t);
+		t1 = (-fml.b + sqt) / 2.0;
+		t2 = (-fml.b - sqt) / 2.0;
+		if (t1 < 0.0 || t2 < 0.0)
+			return (0);
+		else
+		{
+			if (t1 < t2)
+				ints->p = vtradd(bvray.a, vtrscale(vray, t1));
+			else
+				ints->p = vtradd(bvray.a, vtrscale(vray, t2));
+			ints->hit = 1;
+		}
 	}
 }
 
-/*
-* [helper fucntion of sphere_inter]
-* [tranform the intersection point into real world coordinate.]
-* => return (1): unsuccesful tranform the intersection point.
-* => return (0): succesful tranform the intersection point.
-*/
-static int	intersec_tranf(t_obj *obj, t_ints *ints, t_pnt point, t_ray bvray)
+static void	sphere_ints_set(t_obj *obj, t_ints *ints)
 {
-	float	sqt;
-	float	t1;
-	float	t2;
-	t_vtr	vray;
-
-	vray = vtrnorm(bvray.l);
-	sqt = sqrtf(ints->t);
-	t1 = (-point.b + sqt) / 2.0;
-	t2 = (-point.b - sqt) / 2.0;
-	if (t1 < 0.0 || t2 < 0.0)
-		return (0);
-	else
-	{
-		if (t1 < t2)
-			ints->p = vtradd(bvray.a, vtrscale(vray, t1));
-		else
-			ints->p = vtradd(bvray.a, vtrscale(vray, t2));
-		ints->p = trans_vtr(ints->p, obj->mtrans);
-		obj->pos = trans_vtr(vtrset(0, 0, 0), obj->mtrans);
-		ints->localn = vtrnorm(vtrsub(ints->p, obj->pos));
-		ints->localc = obj->color;
-		ints->illum.alpha = 1.0;
-	}
-	return (1);
+	ints->p = trans_vtr(ints->p, obj->mtrans);
+	obj->pos = trans_vtr(vtrset(0, 0, 0), obj->mtrans);
+	ints->localn = vtrnorm(vtrsub(ints->p, obj->pos));
+	ints->localc = obj->color;
+	ints->illum.alpha = 1.0;
+	ints->u = atanf(sqrtf(powf(ints->p.x, 2) + powf(ints->p.z, 2)) / ints->p.y);
+	ints->v = atanf(ints->p.z / ints->p.x);
+	if (ints->p.x < 0)
+		ints->v += PI;
+	ints->u = ints->u / PI;
+	ints->v = ints->v / PI;
 }

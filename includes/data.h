@@ -163,6 +163,7 @@ typedef struct s_material
 {
 	float	shin;
 	float	reflc;
+	int		istxt;
 } t_mat;
 
 
