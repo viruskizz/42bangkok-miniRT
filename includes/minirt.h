@@ -62,6 +62,10 @@ void		lht_inst_objs(
 t_colorf	material_color(t_data *data, t_ints *ints);
 t_colorf	diffuse_color(t_data *data, t_ints *ints);
 t_colorf	specular_color(t_data *data, t_ints *ints);
+t_vtr		txtr_vtr(t_vtr vtr, float **mtrans);
+float		**txtr_mtx_trans(t_vtr trans, float rot, t_vtr scale);
+t_colorf	txtr_checker_colorf(t_vtr uvz, float **mtrans);
+t_img		txtr_checker_test(t_data *data);
 
 t_vtr		txtr_vtr(t_vtr vtr, float **mtrans);
 float		**txtr_mtx_trans(t_vtr trans, float rot, t_vtr scale);

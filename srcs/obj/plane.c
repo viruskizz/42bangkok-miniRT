@@ -80,7 +80,6 @@ static void	plane_assigned(int index, t_obj *plane, char *trimed_obj)
 	plane->txtr.has = 1;
 	plane->txtr.mtrans = txtr_mtx_trans(
 					vtrset(0, 0, 0),
-					// PI / 4,
 					0,
 					vtrset(20, 20, 0)
 				);
@@ -141,6 +140,7 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 				plane_ints_set(bvray, vray, obj, ints);
 				ints->uvz.x = u;
 				ints->uvz.y = v;
+				ints->uvz.z = 0;
 			}
 		}
 	}

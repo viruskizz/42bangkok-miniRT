@@ -74,12 +74,12 @@ void	sphere_assigned(int index, char *trimed_obj, t_obj *sphere)
 				vtrset(0.0, 0.0, 0.0),
 				vtrset(diameter, diameter, diameter));
 		sphere->itrans = mtx_inverse(sphere->mtrans, 4);
-		// sphere->txtr.has = 1;
-		// sphere->txtr.mtrans = txtr_mtx_trans(
-		// 			vtrset(0, 0, 0),
-		// 			0,
-		// 			vtrset(4, 4, 0)
-		// 		);
+		sphere->txtr.has = 1;
+		sphere->txtr.mtrans = txtr_mtx_trans(
+		 			  vtrset(0, 0, 0),
+		 			  0,
+					  vtrset(4, 4, 0)
+		   		);
 	}
 }
 static void	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints);
