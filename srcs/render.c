@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:57:35 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/26 00:28:31 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 01:53:05 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static t_colorf	scene_pixel_img(t_data *data, float cox, float coy);
 static void		camray_ints(t_data *data, t_ray camray, t_ints *ints);
 static void		set_obj_ints(t_ints *ints, t_ints oints);
 static void		*function_render(void *input);
-void			init_window_value(int *start_x, int *y, int *height, int *width);
+void			init_window_value(
+					int *start_x, int *y, int *height, int *width);
 
 int	render_scene(t_data *data)
 {
@@ -56,7 +57,7 @@ static void	*function_render(void *input)
 					(c[COL] / ((t_data *)input)->scene.pos.x) - 1.0,
 					(c[ROW] / ((t_data *)input)->scene.pos.y) - 1.0);
 			pixel_put_img(&((t_data *)input)->scene.img, c[COL],
-					c[ROW], colorf_to_int(colorf));
+				c[ROW], colorf_to_int(colorf));
 			c[COL]++;
 		}
 		c[ROW]++;

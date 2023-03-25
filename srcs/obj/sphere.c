@@ -6,14 +6,13 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:43:42 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/24 17:17:46 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 04:47:49 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 void		sphere_assigned(int index, char *trimed_obj, t_obj *sphere);
-static int	intersec_tranf(t_obj *obj, t_ints *ints, t_pnt point, t_ray bvray);
 
 /*
 * [function initialise and checking sphere value]
@@ -74,60 +73,98 @@ void	sphere_assigned(int index, char *trimed_obj, t_obj *sphere)
 				vtrset(0.0, 0.0, 0.0),
 				vtrset(diameter, diameter, diameter));
 		sphere->itrans = mtx_inverse(sphere->mtrans, 4);
-		sphere->txtr.has = 1;
-		sphere->txtr.mtrans = txtr_mtx_trans(
-		 			  vtrset(0, 0, 0),
-		 			  0,
-					  vtrset(4, 4, 0)
-		   		);
+		sphere->txtr.has = 0;
 	}
 }
-static void	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints);
+
+static void	sphere_ints_formula(t_ray bvray, t_ints *ints, t_fml fml);
 static void	sphere_ints_set(t_obj *obj, t_ints *ints);
+
+// void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints)
+// {
+// 	t_vtr	vray;
+// 	t_ray	bvray;
+// 	t_pnt	point;
+
+// 	bvray = trans_ray(ray, obj->itrans);
+// 	vray = vtrnorm(bvray.l);
+// 	sphere_ints_formula(bvray, vray, ints);
+// 	if (ints->hit)
+// 		sphere_ints_set(obj, ints);
+// }
+
+// static void	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
+// {
+// 	t_fml	fml;
+
+// 	fml.a = 1.0;
+// 	fml.b = 2.0 * vtrdot(bvray.a, vray);
+// 	fml.c = vtrdot(bvray.a, bvray.a) - 1.0;
+// 	ints->t = fml.b * fml.b - 4.0 * fml.c;
+// 	ints->hit = 0;
+// 	if (ints->t > 0.0)
+// 	{
+// 		float	sqt;
+// 		float	t1;
+// 		float	t2;
+// 		t_vtr	vray;
+
+// 		vray = vtrnorm(bvray.l);
+// 		sqt = sqrtf(ints->t);
+// 		t1 = (-fml.b + sqt) / 2.0;
+// 		t2 = (-fml.b - sqt) / 2.0;
+// 		if (t1 < 0.0 || t2 < 0.0)
+// 			return ;
+// 		else
+// 		{
+// 			if (t1 < t2)
+// 				ints->p = vtradd(bvray.a, vtrscale(vray, t1));
+// 			else
+// 				ints->p = vtradd(bvray.a, vtrscale(vray, t2));
+// 			ints->hit = 1;
+// 		}
+// 	}
+// }
 
 void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints)
 {
 	t_vtr	vray;
 	t_ray	bvray;
-	t_pnt	point;
+	t_fml	fml;
 
 	bvray = trans_ray(ray, obj->itrans);
 	vray = vtrnorm(bvray.l);
-	sphere_ints_formula(bvray, vray, ints);
-	if (ints->hit)
-		sphere_ints_set(obj, ints);
-}
-
-static void	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
-{
-	t_fml	fml;
-
 	fml.a = 1.0;
 	fml.b = 2.0 * vtrdot(bvray.a, vray);
 	fml.c = vtrdot(bvray.a, bvray.a) - 1.0;
 	ints->t = fml.b * fml.b - 4.0 * fml.c;
 	ints->hit = 0;
 	if (ints->t > 0.0)
-	{
-		float	sqt;
-		float	t1;
-		float	t2;
-		t_vtr	vray;
+		sphere_ints_formula(bvray, ints, fml);
+	if (ints->hit)
+		sphere_ints_set(obj, ints);
+}
 
-		vray = vtrnorm(bvray.l);
-		sqt = sqrtf(ints->t);
-		t1 = (-fml.b + sqt) / 2.0;
-		t2 = (-fml.b - sqt) / 2.0;
-		if (t1 < 0.0 || t2 < 0.0)
-			return ;
+static void	sphere_ints_formula(t_ray bvray, t_ints *ints, t_fml fml)
+{
+	float	sqt;
+	float	t1;
+	float	t2;
+	t_vtr	vray;
+
+	vray = vtrnorm(bvray.l);
+	sqt = sqrtf(ints->t);
+	t1 = (-fml.b + sqt) / 2.0;
+	t2 = (-fml.b - sqt) / 2.0;
+	if (t1 < 0.0 || t2 < 0.0)
+		return ;
+	else
+	{
+		if (t1 < t2)
+			ints->p = vtradd(bvray.a, vtrscale(vray, t1));
 		else
-		{
-			if (t1 < t2)
-				ints->p = vtradd(bvray.a, vtrscale(vray, t1));
-			else
-				ints->p = vtradd(bvray.a, vtrscale(vray, t2));
-			ints->hit = 1;
-		}
+			ints->p = vtradd(bvray.a, vtrscale(vray, t2));
+		ints->hit = 1;
 	}
 }
 
@@ -138,7 +175,8 @@ static void	sphere_ints_set(t_obj *obj, t_ints *ints)
 	ints->localn = vtrnorm(vtrsub(ints->p, obj->pos));
 	ints->localc = obj->color;
 	ints->illum.alpha = 1.0;
-	ints->uvz.x = atanf(sqrtf(powf(ints->p.x, 2) + powf(ints->p.z, 2)) / ints->p.y);
+	ints->uvz.x = atanf(
+			sqrtf(powf(ints->p.x, 2) + powf(ints->p.z, 2)) / ints->p.y);
 	ints->uvz.y = atanf(ints->p.z / ints->p.x);
 	if (ints->p.x < 0)
 		ints->uvz.y += PI;

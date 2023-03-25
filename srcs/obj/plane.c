@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 01:06:25 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/24 17:22:48 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 04:29:30 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,7 @@ static void	plane_assigned(int index, t_obj *plane, char *trimed_obj)
 		plane->itrans = mtx_inverse(plane->mtrans, 4);
 		plane->colorf = color_to_colorf(plane->color);
 	}
-	plane->txtr.has = 1;
-	plane->txtr.mtrans = txtr_mtx_trans(
-					vtrset(0, 0, 0),
-					0,
-					vtrset(20, 20, 0)
-				);
+	plane->txtr.has = 0;
 }
 
 t_obj	*set_plane_img(t_data *data, t_obj *obj)
@@ -135,8 +130,6 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 			v = -bvray.a.z - (vray.z * ints->t);
 			if ((fabsf(u) < 1.0) && (fabsf(v) < 1.0))
 			{
-				ints->hit = 1;
-				ints->p = vtradd(bvray.a, vtrscale(vray, ints->t));
 				plane_ints_set(bvray, vray, obj, ints);
 				ints->uvz.x = u;
 				ints->uvz.y = v;

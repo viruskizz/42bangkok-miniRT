@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 00:14:22 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/26 00:28:39 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 01:53:35 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_window_value(int *start_x, int *y, int *height, int *width)
 
 static int	init_window_value_cordition(int count_x, int *start_x, int *width)
 {
-	int result;
+	int	result;
 
 	result = 0;
 	if (count_x % 4 == 0)

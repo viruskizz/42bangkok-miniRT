@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   trans_txtr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araiva <tsomsa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:01:25 by araiva            #+#    #+#             */
-/*   Updated: 2023/03/24 23:01:26 by araiva           ###   ########.fr       */
+/*   Updated: 2023/03/26 02:11:36 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 static float	**txtr_mtx_trans_rot(t_vtr trans, float rot);
@@ -27,7 +28,7 @@ t_vtr	txtr_vtr(t_vtr vtr, float **mtrans)
 	v = vtrset(mtx[0], mtx[1], 0.0);
 	free(mtx);
 	free(mtxv);
-	return(v);
+	return (v);
 }
 
 float	**txtr_mtx_trans(t_vtr trans, float rot, t_vtr scale)
@@ -43,7 +44,7 @@ float	**txtr_mtx_trans(t_vtr trans, float rot, t_vtr scale)
 	mtx = mtx_multi(mtx_trans_rot, mtx_scale, 3);
 	free(mtx_trans_rot);
 	free(mtx_scale);
-	return(mtx);
+	return (mtx);
 }
 
 static float	**txtr_mtx_trans_rot(t_vtr trans, float rot)
@@ -54,10 +55,8 @@ static float	**txtr_mtx_trans_rot(t_vtr trans, float rot)
 
 	mtx_trans = mtx_identity(3);
 	mtx_rot = mtx_identity(3);
-
 	mtx_trans[0][2] = trans.x;
 	mtx_trans[1][2] = trans.y;
-
 	mtx_rot[0][0] = cosf(rot);
 	mtx_rot[0][1] = -sinf(rot);
 	mtx_rot[1][0] = sin(rot);

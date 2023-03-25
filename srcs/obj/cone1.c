@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:16:31 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/26 00:20:56 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 04:26:29 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,15 @@ void	cone_ints(t_obj *obj, t_ray ray, t_ints *ints)
 	bvray = trans_ray(ray, obj->itrans);
 	vray = vtrnorm(bvray.l);
 	ints_idx = cone_ints_formula(bvray, vray, ints);
-	if (ints_idx < 0)
-		return ;
-	else if (ints_idx < 2)
+	if (ints_idx >= 0 && ints_idx < 2)
 	{
-		norm = vtrset(
-				ints->p.x,
-				-sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)),
-				ints->p.z);
+		norm = vtrset(ints->p.x,
+				-sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)), ints->p.z);
 		ints->uvz.x = atan2f(ints->p.z, ints->p.x) / PI;
 		ints->uvz.y = (ints->p.y * 2.0) + 1.0;
 		cone_ints_set(obj, ints, norm);
 	}
-	else if (!close0(vray.y, 0.0)
+	else if (ints_idx >= 0 && !close0(vray.y, 0.0)
 		&& sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)) < 1.0)
 	{
 		norm = vtrset(0, ints->p.y, 0);

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:16:31 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/26 00:22:11 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 01:39:58 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,6 @@ static void	cylinder_assignd(int index, char *trimed_obj, t_obj *cylinder)
 				cylinder->n_radian,
 				vtrset(cylinder->size.w, cylinder->size.h, cylinder->size.d));
 		cylinder->itrans = mtx_inverse(cylinder->mtrans, 4);
-		// cylinder->txtr.has = 1;
-		// cylinder->txtr.mtrans = txtr_mtx_trans(
-		// 			vtrset(0, 0, 0),
-		// 			0,
-		// 			vtrset(4, 4, 0)
-		// 		);
 	}
 	else if (index == 5)
 		cylinder->color = ato_tcolor(trimed_obj);
