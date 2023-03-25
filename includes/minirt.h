@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 03:22:07 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/24 17:13:49 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 00:16:57 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <pthread.h>
 // # include <mlx.h>
 # include "mlx.h"
 # include <float.h>

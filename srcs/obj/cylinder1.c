@@ -6,14 +6,14 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:16:31 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/24 17:23:23 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 00:22:11 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 static void	cylinder_assignd(int index, char *trimed_obj, t_obj *cylinder);
-static void	cylinder_ints_set(t_obj *obj, t_ints *ints);
+static void	cylinder_ints_set(t_obj *obj, t_ints *ints, t_vtr norm);
 
 /*
 * [function initialise and checking cylinder value]
@@ -93,6 +93,7 @@ void	cylinder_ints(t_obj *obj, t_ray ray, t_ints *ints)
 	t_vtr	vray;
 	t_ray	bvray;
 	int		ints_idx;
+	t_vtr	norm;
 
 	bvray = trans_ray(ray, obj->itrans);
 	vray = vtrnorm(bvray.l);
@@ -101,27 +102,27 @@ void	cylinder_ints(t_obj *obj, t_ray ray, t_ints *ints)
 		return ;
 	else if (ints_idx < 2)
 	{
-		obj->norm = vtrset(ints->p.x, 0.0, ints->p.z);
+		norm = vtrset(ints->p.x, 0.0, ints->p.z);
 		ints->uvz.x = atan2f(ints->p.z, ints->p.x) / PI;
 		ints->uvz.y = ints->p.y;
-		cylinder_ints_set(obj, ints);
+		cylinder_ints_set(obj, ints, norm);
 	}
 	else if (!close0(vray.y, 0.0)
 		&& sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)) < 1.0)
 	{
-		obj->norm = vtrset(0, ints->p.y, 0);
+		norm = vtrset(0, ints->p.y, 0);
 		ints->uvz.x = ints->p.x;
 		ints->uvz.y = ints->p.y;
-		cylinder_ints_set(obj, ints);
+		cylinder_ints_set(obj, ints, norm);
 	}
 }
 
-static void	cylinder_ints_set(t_obj *obj, t_ints *ints)
+static void	cylinder_ints_set(t_obj *obj, t_ints *ints, t_vtr norm)
 {
 	obj->pos = trans_vtr(vtrset(0, 0, 0), obj->mtrans);
 	ints->hit = 1;
 	ints->p = trans_vtr(ints->p, obj->mtrans);
-	ints->localn = vtrnorm(vtrsub(trans_vtr(obj->norm, obj->mtrans), obj->pos));
+	ints->localn = vtrnorm(vtrsub(trans_vtr(norm, obj->mtrans), obj->pos));
 	ints->localc = obj->color;
 	ints->illum.alpha = 1.0;
 }

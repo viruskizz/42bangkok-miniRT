@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 03:15:26 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/24 22:08:40 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 00:18:26 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,22 +208,23 @@ typedef struct s_ints
 
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	int		w;
-	int		h;
-	int		update;
-	int		ctrl_key;
-	int		lshift_key;
-	int		rshift_key;
-	int		selectp;
-	int		check[2];
-	int		selectv[4];
-	t_obj	scene;
-	t_amb	amb;
-	t_cam	cam;
-	t_list	*lht;
-	t_list	*objs;
+	void			*mlx;
+	void			*win;
+	int				w;
+	int				h;
+	int				update;
+	int				ctrl_key;
+	int				lshift_key;
+	int				rshift_key;
+	int				selectp;
+	int				check[2];
+	int				selectv[4];
+	t_obj			scene;
+	t_amb			amb;
+	t_cam			cam;
+	t_list			*lht;
+	t_list			*objs;
+	pthread_mutex_t mutex;
 }	t_data;
 
 #endif
