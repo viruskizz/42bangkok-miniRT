@@ -11,30 +11,26 @@
 /* ************************************************************************** */
 #include "minirt.h"
 
-static float	**txtr_mtx(t_vtr trans, float rot, t_vtr scale);
 static float	**txtr_mtx_trans_rot(t_vtr trans, float rot);
 static float	*mtx_crs(float **m33, float *m31);
 static float	*vtrtmtx(t_vtr v);
 
 // Transform matrix 3x3
-t_vtr	trans_txtr(t_vtr vtr, t_vtr trans, float rot, t_vtr scale)
+t_vtr	txtr_vtr(t_vtr vtr, float **mtrans)
 {
-	float	**mtrans;
 	float	*mtxv;
 	float	*mtx;
 	t_vtr	v;
 
-	mtrans = txtr_mtx(trans, rot, scale);
 	mtxv = vtrtmtx(vtr);
 	mtx = mtx_crs(mtrans, mtxv);
 	v = vtrset(mtx[0], mtx[1], 0.0);
 	free(mtx);
 	free(mtxv);
-	free(mtrans);
 	return(v);
 }
 
-static float	**txtr_mtx(t_vtr trans, float rot, t_vtr scale)
+float	**txtr_mtx_trans(t_vtr trans, float rot, t_vtr scale)
 {
 	float	**mtx;
 	float	**mtx_trans_rot;
@@ -42,8 +38,8 @@ static float	**txtr_mtx(t_vtr trans, float rot, t_vtr scale)
 
 	mtx_trans_rot = txtr_mtx_trans_rot(trans, rot);
 	mtx_scale = mtx_identity(3);
-	mtx_scale[0][1] = scale.x;
-	mtx_scale[1][1] = scale.x;
+	mtx_scale[0][0] = scale.x;
+	mtx_scale[1][1] = scale.y;
 	mtx = mtx_multi(mtx_trans_rot, mtx_scale, 3);
 	free(mtx_trans_rot);
 	free(mtx_scale);
@@ -58,8 +54,10 @@ static float	**txtr_mtx_trans_rot(t_vtr trans, float rot)
 
 	mtx_trans = mtx_identity(3);
 	mtx_rot = mtx_identity(3);
+
 	mtx_trans[0][2] = trans.x;
 	mtx_trans[1][2] = trans.y;
+
 	mtx_rot[0][0] = cosf(rot);
 	mtx_rot[0][1] = -sinf(rot);
 	mtx_rot[1][0] = sin(rot);
@@ -95,6 +93,6 @@ static float	*vtrtmtx(t_vtr v)
 	m = ft_calloc(3, sizeof(float));
 	m[0] = v.x;
 	m[1] = v.y;
-	m[2] = v.z;
+	m[2] = 1.0;
 	return (m);
 }

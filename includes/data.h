@@ -159,12 +159,18 @@ typedef struct s_lht
 	t_colorf	colorf;
 }	t_lht;
 
+typedef struct s_texture
+{
+	int		has;
+	float	**mtrans;
+	t_img	img;
+}	t_txtr;
+
 typedef struct s_material
 {
 	float	shin;
 	float	reflc;
-	int		istxt;
-} t_mat;
+}	t_mat;
 
 
 typedef struct s_obj
@@ -184,6 +190,7 @@ typedef struct s_obj
 	t_mat		mat;
 	t_img		img;
 	char		*texture;
+	t_txtr		txtr;
 }	t_obj;
 
 typedef struct s_ints
@@ -196,8 +203,7 @@ typedef struct s_ints
 	t_vtr		localn;
 	t_color		localc;
 	t_colorf	illum;
-	float		u;
-	float		v;
+	t_vtr		uvz;
 }	t_ints;
 
 typedef struct s_data

@@ -98,16 +98,16 @@ void	cone_ints(t_obj *obj, t_ray ray, t_ints *ints)
 				ints->p.x,
 				-sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)),
 				ints->p.z);
-		ints->u = atan2f(ints->p.z, ints->p.x) / PI;
-		ints->v = (ints->p.y * 2.0) + 1.0;
+		ints->uvz.x = atan2f(ints->p.z, ints->p.x) / PI;
+		ints->uvz.y = (ints->p.y * 2.0) + 1.0;
 		cone_ints_set(obj, ints);
 	}
 	else if (!close0(vray.y, 0.0)
 		&& sqrtf(powf(ints->p.x, 2.0) + powf(ints->p.z, 2.0)) < 1.0)
 	{
 		obj->norm = vtrset(0, ints->p.y, 0);
-		ints->u = ints->p.x;
-		ints->v = ints->p.y;
+		ints->uvz.x = ints->p.x;
+		ints->uvz.y = ints->p.y;
 		cone_ints_set(obj, ints);
 	}
 }
