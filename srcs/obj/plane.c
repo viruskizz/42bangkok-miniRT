@@ -132,6 +132,8 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 				ints->hit = 1;
 				ints->p = vtradd(bvray.a, vtrscale(vray, ints->t));
 				plane_ints_set(bvray, vray, obj, ints);
+				ints->u = u;
+				ints->v = u;
 			}
 		}
 	}
