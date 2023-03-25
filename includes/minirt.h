@@ -52,17 +52,21 @@ void	cam_geometry(t_cam *cam);
 t_ray	cam_ray(t_cam cam, float proj_x, float proj_y);
 
 // * light
-void	lht_initialise(t_data *data, char **object, int idx);
+void		lht_initialise(t_data *data, char **object, int idx);
 t_colorf	diffuse_light(t_obj lht, t_ints *ints, t_list *objs);
 t_colorf	specular_light(t_obj lht, t_ints *ints, t_list *objs);
-void	lht_inst_objs(
-			t_ray lray, t_ints *linst, t_ints *ints, t_list *objs);
+void		lht_inst_objs(
+				t_ray lray, t_ints *linst, t_ints *ints, t_list *objs);
 
 // materials
 t_colorf	material_color(t_data *data, t_ints *ints);
 t_colorf	diffuse_color(t_data *data, t_ints *ints);
 t_colorf	specular_color(t_data *data, t_ints *ints);
-t_vtr		trans_txtr(t_vtr vtr, t_vtr trans, float rot, t_vtr scale);
+
+t_vtr		txtr_vtr(t_vtr vtr, float **mtrans);
+float		**txtr_mtx_trans(t_vtr trans, float rot, t_vtr scale);
+
+t_img	mat_checker_txtset();
 
 // * obj
 void	set_objs(t_data *data);
