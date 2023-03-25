@@ -81,7 +81,7 @@ static void	plane_assigned(int index, t_obj *plane, char *trimed_obj)
 	plane->txtr.mtrans = txtr_mtx_trans(
 					vtrset(0, 0, 0),
 					0,
-					vtrset(10, 10, 0)
+					vtrset(20, 20, 0)
 				);
 }
 
@@ -132,7 +132,7 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 		if (ints->t > 0.0)
 		{
 			u = bvray.a.x + (vray.x * ints->t);
-			v = bvray.a.z + (vray.z * ints->t);
+			v = -bvray.a.z - (vray.z * ints->t);
 			if ((fabsf(u) < 1.0) && (fabsf(v) < 1.0))
 			{
 				ints->hit = 1;
