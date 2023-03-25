@@ -39,7 +39,10 @@ t_colorf	diffuse_color(t_data *data, t_ints *ints)
 		difclr = colorf_add(difclr, cf);
 		light = light->next;
 	}
-	colorfl = color_to_colorf(ints->localc);
+	if (ints->obj->txtr.has)
+		colorfl = txtr_checker_colorf(ints->uvz, ints->obj->txtr.mtrans);
+	else
+		colorfl = color_to_colorf(ints->localc);
 	difclr.r *= colorfl.r;
 	difclr.g *= colorfl.g;
 	difclr.b *= colorfl.b;

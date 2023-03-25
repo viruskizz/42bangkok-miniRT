@@ -26,11 +26,11 @@ int	main(int argc, char **argv)
 
 	data = parsing_input(argc, argv);
 	initial(&data);
-	// // render_scene(&data);
-	// window_interface(&data, NONE);
+	render_scene(&data);
+	window_interface(&data, NONE);
 	// Test texture
-	data.scene.img =	mat_checker_txtset(&data);
-	mlx_put_image_to_window(data.mlx, data.win, data.scene.img.ptr, 0, 0);
+	// data.scene.img = txtr_checker_test(&data);
+	// mlx_put_image_to_window(data.mlx, data.win, data.scene.img.ptr, 0, 0);
 
 	mlx_hook(data.win, X_EVENT_KEY_EXIT, 1L << 0, &rt_close, &data);
 	mlx_hook(data.win, 2, 1L << 0, &keyhandler_press, &data);

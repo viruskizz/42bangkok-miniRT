@@ -37,18 +37,10 @@ float	**txtr_mtx_trans(t_vtr trans, float rot, t_vtr scale)
 	float	**mtx_scale;
 
 	mtx_trans_rot = txtr_mtx_trans_rot(trans, rot);
-
-	// printf("mtx_trans_rot: \n");
-	// mtx_print(mtx_trans_rot, 3);
-
 	mtx_scale = mtx_identity(3);
 	mtx_scale[0][0] = scale.x;
 	mtx_scale[1][1] = scale.y;
 	mtx = mtx_multi(mtx_trans_rot, mtx_scale, 3);
-
-	// printf("mtx: \n");
-	// mtx_print(mtx, 3);
-
 	free(mtx_trans_rot);
 	free(mtx_scale);
 	return(mtx);
@@ -101,6 +93,6 @@ static float	*vtrtmtx(t_vtr v)
 	m = ft_calloc(3, sizeof(float));
 	m[0] = v.x;
 	m[1] = v.y;
-	m[2] = v.z;
+	m[2] = 1.0;
 	return (m);
 }

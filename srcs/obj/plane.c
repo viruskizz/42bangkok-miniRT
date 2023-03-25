@@ -77,6 +77,13 @@ static void	plane_assigned(int index, t_obj *plane, char *trimed_obj)
 		plane->itrans = mtx_inverse(plane->mtrans, 4);
 		plane->colorf = color_to_colorf(plane->color);
 	}
+	plane->txtr.has = 1;
+	plane->txtr.mtrans = txtr_mtx_trans(
+					vtrset(0, 0, 0),
+					// PI / 4,
+					0,
+					vtrset(20, 20, 0)
+				);
 }
 
 t_obj	*set_plane_img(t_data *data, t_obj *obj)
@@ -126,14 +133,14 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 		if (ints->t > 0.0)
 		{
 			u = bvray.a.x + (vray.x * ints->t);
-			v = bvray.a.z + (vray.z * ints->t);
+			v = -bvray.a.z - (vray.z * ints->t);
 			if ((fabsf(u) < 1.0) && (fabsf(v) < 1.0))
 			{
 				ints->hit = 1;
 				ints->p = vtradd(bvray.a, vtrscale(vray, ints->t));
 				plane_ints_set(bvray, vray, obj, ints);
-				ints->u = u;
-				ints->v = u;
+				ints->uvz.x = u;
+				ints->uvz.y = v;
 			}
 		}
 	}

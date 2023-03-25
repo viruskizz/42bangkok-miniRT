@@ -74,9 +74,15 @@ void	sphere_assigned(int index, char *trimed_obj, t_obj *sphere)
 				vtrset(0.0, 0.0, 0.0),
 				vtrset(diameter, diameter, diameter));
 		sphere->itrans = mtx_inverse(sphere->mtrans, 4);
-	}	
+		// sphere->txtr.has = 1;
+		// sphere->txtr.mtrans = txtr_mtx_trans(
+		// 			vtrset(0, 0, 0),
+		// 			0,
+		// 			vtrset(4, 4, 0)
+		// 		);
+	}
 }
-static int	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints);
+static void	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints);
 static void	sphere_ints_set(t_obj *obj, t_ints *ints);
 
 void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints)
@@ -92,7 +98,7 @@ void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints)
 		sphere_ints_set(obj, ints);
 }
 
-static int	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
+static void	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
 {
 	t_fml	fml;
 
@@ -113,7 +119,7 @@ static int	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
 		t1 = (-fml.b + sqt) / 2.0;
 		t2 = (-fml.b - sqt) / 2.0;
 		if (t1 < 0.0 || t2 < 0.0)
-			return (0);
+			return ;
 		else
 		{
 			if (t1 < t2)
@@ -132,10 +138,10 @@ static void	sphere_ints_set(t_obj *obj, t_ints *ints)
 	ints->localn = vtrnorm(vtrsub(ints->p, obj->pos));
 	ints->localc = obj->color;
 	ints->illum.alpha = 1.0;
-	ints->u = atanf(sqrtf(powf(ints->p.x, 2) + powf(ints->p.z, 2)) / ints->p.y);
-	ints->v = atanf(ints->p.z / ints->p.x);
+	ints->uvz.x = atanf(sqrtf(powf(ints->p.x, 2) + powf(ints->p.z, 2)) / ints->p.y);
+	ints->uvz.y = atanf(ints->p.z / ints->p.x);
 	if (ints->p.x < 0)
-		ints->v += PI;
-	ints->u = ints->u / PI;
-	ints->v = ints->v / PI;
+		ints->uvz.y += PI;
+	ints->uvz.x = ints->uvz.x / PI;
+	ints->uvz.y = ints->uvz.y / PI;
 }
