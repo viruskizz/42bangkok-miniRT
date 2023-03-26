@@ -6,11 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 03:15:26 by sharnvon          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2023/03/26 05:46:29 by sharnvon         ###   ########.fr       */
-=======
-/*   Updated: 2023/03/23 15:29:57 by sharnvon         ###   ########.fr       */
->>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +47,15 @@
 # define READ_SIZE	1024
 # define COLOR_MAX	255.0
 # define COLORF_MAX	1.0
-<<<<<<< HEAD
 # define TRANSF_VALUE 0.1
-=======
-# define TRANSF_VALUE 0.25
->>>>>>> main
 # define RESIZE_VALUE 0.05
 # define ROTATE_VALUE HALF_PI / 4
 
 # define COL	0
 # define ROW	1
-<<<<<<< HEAD
 # define X		0
 # define Y		1
 # define Z		2
-=======
->>>>>>> main
 
 /* 
 * define for object_cordition_str parameter mode. */
@@ -102,10 +91,6 @@ typedef struct s_color
 	float	intens;
 }	t_color;
 
-<<<<<<< HEAD
-=======
-/* color between 0.0-1.0 */
->>>>>>> main
 typedef struct s_colorf
 {
 	float	r;
@@ -175,7 +160,6 @@ typedef struct s_lht
 
 typedef struct s_texture
 {
-<<<<<<< HEAD
 	int		has;
 	float	**mtrans;
 	t_img	img;
@@ -189,8 +173,6 @@ typedef struct s_material
 
 typedef struct s_obj
 {
-=======
->>>>>>> main
 	int			idx;
 	int			type;
 	char		*name;
@@ -203,22 +185,15 @@ typedef struct s_obj
 	t_color		color;
 	t_colorf	colorf;
 	t_size		size;
-<<<<<<< HEAD
 	t_mat		mat;
 	t_img		img;
 	char		*texture;
 	t_txtr		txtr;
-=======
-	t_img		img;
->>>>>>> main
 }	t_obj;
 
 typedef struct s_ints
 {
-<<<<<<< HEAD
 	t_ray		camray;
-=======
->>>>>>> main
 	int			hit;
 	float		t;
 	t_obj		*obj;
@@ -226,15 +201,11 @@ typedef struct s_ints
 	t_vtr		localn;
 	t_color		localc;
 	t_colorf	illum;
-<<<<<<< HEAD
 	t_vtr		uvz;
-=======
->>>>>>> main
 }	t_ints;
 
 typedef struct s_data
 {
-<<<<<<< HEAD
 	void			*mlx;
 	void			*win;
 	int				w;
@@ -252,24 +223,6 @@ typedef struct s_data
 	t_list			*lht;
 	t_list			*objs;
 	pthread_mutex_t	mutex;
-=======
-	void	*mlx;
-	void	*win;
-	int		w;
-	int		h;
-	int		update;
-	int		ctrl_key;
-	int		lshift_key;
-	int		rshift_key;
-	int		selectp;
-	int		check[2];
-	int		selectv[4];
-	t_obj	scene;
-	t_amb	amb;
-	t_cam	cam;
-	t_list	*lht;
-	t_list	*objs;
->>>>>>> main
 }	t_data;
 
 #endif

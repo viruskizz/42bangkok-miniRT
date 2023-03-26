@@ -6,11 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:01:48 by sharnvon          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2023/03/24 17:25:00 by sharnvon         ###   ########.fr       */
-=======
-/*   Updated: 2023/03/23 18:00:33 by sharnvon         ###   ########.fr       */
->>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +88,6 @@ static int	moving_key_check(t_data *data, int keycode, t_obj *object)
 	else if (!data->ctrl_key && data->lshift_key
 		&& keycode == KEY_DOWN && !update++)
 		object->pos.z += TRANSF_VALUE;
-<<<<<<< HEAD
 	else if (!data->lshift_key &&!data->ctrl_key
 		&& keycode == KEY_RIGHT && !update++)
 		object->pos.x += TRANSF_VALUE;
@@ -104,15 +99,6 @@ static int	moving_key_check(t_data *data, int keycode, t_obj *object)
 		object->pos.y -= TRANSF_VALUE;
 	else if (!data->lshift_key &&!data->ctrl_key
 		&& keycode == KEY_DOWN && !update++)
-=======
-	else if (!data->lshift_key &&!data->ctrl_key && keycode == KEY_RIGHT && !update++)
-		object->pos.x += TRANSF_VALUE;
-	else if (!data->lshift_key &&!data->ctrl_key && keycode == KEY_LEFT && !update++)
-		object->pos.x -= TRANSF_VALUE;
-	else if (!data->lshift_key &&!data->ctrl_key && keycode == KEY_UP && !update++)
-		object->pos.y -= TRANSF_VALUE;
-	else if (!data->lshift_key &&!data->ctrl_key && keycode == KEY_DOWN && !update++)
->>>>>>> main
 		object->pos.y += TRANSF_VALUE;
 	data->update = update;
 	return (update);

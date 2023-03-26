@@ -6,11 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 21:54:53 by sharnvon          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2023/03/25 13:30:55 by sharnvon         ###   ########.fr       */
-=======
-/*   Updated: 2023/03/23 17:05:52 by sharnvon         ###   ########.fr       */
->>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +94,10 @@ int	keyhandler_release(int keycode, t_data *data)
 /*
 * [handler mouse function]
 */
-<<<<<<< HEAD
 int	mouse_hook(int keycode, int x, int y, t_data *data)
 {
 	(void) x;
 	(void) y;
-=======
-int	mouse_hook(int keycode, t_data *data)
-{
->>>>>>> main
 	if (keycode == 4)
 		window_interface(data, DECREASE);
 	else if (keycode == 5)
