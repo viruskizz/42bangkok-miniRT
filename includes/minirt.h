@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 03:22:07 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/26 05:49:20 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 08:40:50 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include <fcntl.h>
 # include <pthread.h>
 // # include <mlx.h>
-# include "mlx.h"
+# include "../mlx/mlx.h"
+# include "../mlx_Linux/mlx.h"
 # include <float.h>
 # include <math.h>
 # include "libft.h"

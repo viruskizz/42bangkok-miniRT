@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:27:04 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/22 05:49:44 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 06:49:53 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_data	parsing_input(int argc, char **argv)
 	filedata = read_file(argv[1]);
 	data = data_initialize();
 	set_data(&data, filedata);
+	free(filedata);
 	if (data.check[0] != 1)
 		exit_error("ERROR::invalid amount of ambian light element.");
 	if (data.check[1] != 1)
@@ -111,18 +112,19 @@ static void	set_data(t_data *data, char *filedata)
 	data->lht = NULL;
 	while (line[i])
 	{
-		obj = ft_split(line[i], ' ');
-		if (!line)
-			exit_error(FAIL_SPLIT);
-		if (*obj[0] == '#' && i++)
+		obj = ft_split(line[i++], ' ');
+		if (*obj[0] == '#')
+		{
+			free_twopointer_char(obj);
 			continue ;
+		}
 		code = validate_code(obj, -1);
 		if (code < 0)
 			exit_error ("ERROR::invalid identifier...");
 		object_lexering(data, obj, code);
 		free_twopointer_char(obj);
-		i++;
 	}
+	free_twopointer_char(line);
 }
 
 /*
