@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 19:36:37 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/16 02:51:31 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 06:53:25 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,8 @@ static char	*selected_object_string(t_data *data)
 	while (count < 4)
 	{
 		pointer3 = ft_itoa(data->selectv[count++]);
-		if (!pointer3)
-			exit_error(FAIL_ALLOC);
 		pointer2 = ft_strjoin_pro(pointer1, pointer3);
+		free(pointer3);
 		pointer1 = pointer2;
 	}
 	pointer2 = ft_strjoin(pointer1, "][ ]");

@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 22:48:34 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/25 02:00:44 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 05:45:55 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ static void	increase_norm_to_one(t_data *data, int keycode)
 	}
 	else if (keycode == KEY_DOWN)
 	{
-		if (data->cam.norm.y < 0 && data->cam.norm.z < 0)
+		if (data->cam.norm.y <= 0 && data->cam.norm.z < 0)
 			data->cam.norm.z -= TRANSF_VALUE;
-		else if (data->cam.norm.y < 0 && data->cam.norm.z > 0)
+		else if (data->cam.norm.y < 0 && data->cam.norm.z >= 0)
 			data->cam.norm.y -= TRANSF_VALUE;
-		else if (data->cam.norm.y > 0 && data->cam.norm.z > 0)
+		else if (data->cam.norm.y >= 0 && data->cam.norm.z > 0)
 			data->cam.norm.z += TRANSF_VALUE;
-		else if (data->cam.norm.y > 0 && data->cam.norm.z < 0)
+		else if (data->cam.norm.y > 0 && data->cam.norm.z <= 0)
 			data->cam.norm.y += TRANSF_VALUE;
 	}
 }

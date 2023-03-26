@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 01:08:44 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/22 05:02:21 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 05:06:59 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	window_interface(t_data *data, int mode)
 	int			list_size;
 	static int	first_element = 1;
 
-	list_size = ft_lstsize(data->objs) + ft_lstsize(data->objs);
+	list_size = ft_lstsize(data->lht) + ft_lstsize(data->objs);
 	objects_amount = (HEIGHT - 28 - 37) / 83;
-	if (mode == INCREASE && list_size - (first_element + objects_amount) > 0)
+	if (mode == INCREASE && list_size - (first_element + objects_amount) >= 0)
 		first_element += objects_amount;
 	else if (mode == DECREASE && first_element >= objects_amount)
 		first_element -= objects_amount;

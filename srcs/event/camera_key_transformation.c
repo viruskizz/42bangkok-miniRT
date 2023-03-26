@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:45:52 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/25 02:03:19 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 05:41:45 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	camera_key_transformation(t_data *data, int keycode)
 			}
 		}
 	}
-	// * wait swich y axis to fix
-	// printf("x: %.2f, y: %.2f, z: %.2f\n", data->cam.norm.x, data->cam.norm.y, data->cam.norm.z);
 	data->update = 1;
 }
 

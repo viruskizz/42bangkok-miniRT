@@ -6,7 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 03:15:26 by sharnvon          #+#    #+#             */
-/*   Updated: 2023/03/24 22:08:40 by sharnvon         ###   ########.fr       */
+/*   Updated: 2023/03/26 05:46:29 by sharnvon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@
 # define READ_SIZE	1024
 # define COLOR_MAX	255.0
 # define COLORF_MAX	1.0
-// # define TRANSF_VALUE 0.25
-# define TRANSF_VALUE 0.45
+# define TRANSF_VALUE 0.1
 # define RESIZE_VALUE 0.05
 # define ROTATE_VALUE HALF_PI / 4
 
@@ -172,7 +171,6 @@ typedef struct s_material
 	float	reflc;
 }	t_mat;
 
-
 typedef struct s_obj
 {
 	int			idx;
@@ -208,22 +206,23 @@ typedef struct s_ints
 
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	int		w;
-	int		h;
-	int		update;
-	int		ctrl_key;
-	int		lshift_key;
-	int		rshift_key;
-	int		selectp;
-	int		check[2];
-	int		selectv[4];
-	t_obj	scene;
-	t_amb	amb;
-	t_cam	cam;
-	t_list	*lht;
-	t_list	*objs;
+	void			*mlx;
+	void			*win;
+	int				w;
+	int				h;
+	int				update;
+	int				ctrl_key;
+	int				lshift_key;
+	int				rshift_key;
+	int				selectp;
+	int				check[2];
+	int				selectv[4];
+	t_obj			scene;
+	t_amb			amb;
+	t_cam			cam;
+	t_list			*lht;
+	t_list			*objs;
+	pthread_mutex_t	mutex;
 }	t_data;
 
 #endif
