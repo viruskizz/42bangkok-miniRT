@@ -6,16 +6,26 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:45:52 by sharnvon          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2023/03/26 05:41:45 by sharnvon         ###   ########.fr       */
+=======
 /*   Updated: 2023/03/22 02:46:40 by sharnvon         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 static int	moving_key_check(t_data *data, int keycode);
+<<<<<<< HEAD
+int			camera_rotation_z(t_data *data, int keycode);
+int			camera_rotation_x(t_data *data, int keycode);
+int			camera_rotation_y(t_data *data, int keycode);
+=======
 static int	camera_rotation_z(t_data *data, int keycode);
 static int	camera_rotation_x(t_data *data, int keycode);
 static int	camera_rotation_y(t_data *data, int keycode);
+>>>>>>> main
 
 void	camera_key_transformation(t_data *data, int keycode)
 {
@@ -33,6 +43,8 @@ void	camera_key_transformation(t_data *data, int keycode)
 	data->update = 1;
 }
 
+<<<<<<< HEAD
+=======
 static int	camera_rotation_z(t_data *data, int keycode)
 {
 	int	update;
@@ -117,6 +129,7 @@ static int	camera_rotation_x(t_data *data, int keycode)
 	return (update);
 }
 
+>>>>>>> main
 static int	moving_key_check(t_data *data, int keycode)
 {
 	int	update;

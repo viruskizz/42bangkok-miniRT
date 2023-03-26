@@ -6,14 +6,21 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:27:38 by sharnvon          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2023/03/26 04:20:33 by sharnvon         ###   ########.fr       */
+=======
 /*   Updated: 2023/03/23 17:33:53 by sharnvon         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+<<<<<<< HEAD
+=======
 void		lht_inst_objs(
 				t_ray lray, t_ints *linst, t_ints *ints, t_list *objs);
+>>>>>>> main
 static void	light_assigned(int index, char *trimed_obj, t_obj *light);
 
 /*
@@ -50,19 +57,23 @@ void	ambient_initialise(t_data *data, char **object)
 	data->check[0]++;
 }
 
+<<<<<<< HEAD
+void	lht_initialise(t_data *data, char **object, int idx)
+=======
 /*
 * old
 * [function initialise and checking light value]
 * => [success] : intialize value into t_lht.
 * => [exit] : unsuccessful initialize value cause invalid value or character.
 void	lht_initialise(t_data *data, char **object)
+>>>>>>> main
 {
 	int		index;
 	char	*trimed_obj;
-	t_lht	*light;
+	t_obj	*light;
 
 	index = 0;
-	light = (t_lht *)ft_calloc(sizeof(t_lht), 1);
+	light = (t_obj *)ft_calloc(sizeof(t_obj), 1);
 	if (!light)
 		exit_error(FAIL_ALLOC);
 	while (object[index])
@@ -76,15 +87,38 @@ void	lht_initialise(t_data *data, char **object)
 		free(trimed_obj);
 		index++;
 	}
+<<<<<<< HEAD
+	if (index < 4)
+		exit_error(LESS_L);
+	if (light->bright < 0.0 || light->bright > 1.0)
+		exit_error(BRIGHT_L);
+	light->idx = idx;
+=======
 	if (index < 3)
 		exit_error(LESS_L);
 	if (light->bright < 0.0 || light->bright > 1.0)
 		exit_error(BRIGHT_L);
 	light->colorf = color_to_colorf(light->color);
+>>>>>>> main
 	ft_lstadd_back(&data->lht, ft_lstnew((void *)light));
 }
 */
 
+<<<<<<< HEAD
+static void	light_assigned(int index, char *trimed_obj, t_obj *light)
+{
+	if (index == 0 && ft_strncmp(trimed_obj, "L", 2))
+		exit_error(INVALID_IDENT_L);
+	else if (index == 1)
+		light->pos = ato_tvector(trimed_obj);
+	else if (index == 2)
+		light->bright = ato_float(trimed_obj);
+	else if (index == 3)
+	{
+		light->color = ato_tcolor(trimed_obj);
+		light->colorf = color_to_colorf(light->color);
+		light->type = LIGHT;
+=======
 /*
 * new
 * [function initialise and checking light value]
@@ -209,5 +243,6 @@ void	lht_inst_objs(t_ray lray, t_ints *lints, t_ints *ints, t_list *objs)
 		if (lints->hit)
 			return ;
 		obj = obj->next;
+>>>>>>> main
 	}
 }

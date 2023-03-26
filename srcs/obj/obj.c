@@ -6,7 +6,11 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:02:54 by sharnvon          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2023/03/26 01:42:36 by sharnvon         ###   ########.fr       */
+=======
 /*   Updated: 2023/03/22 05:00:55 by sharnvon         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +33,8 @@ t_obj	*object_initialise(int type)
 	object->norm = ato_tvector("0,0,0");
 	object->color = ato_tcolor("0,0,0");
 	object->size = size_initialise(0, 0, 0);
+	object->mat.reflc = 0.5;
+	object->mat.shin = 0.0;
 	return (object);
 }
 

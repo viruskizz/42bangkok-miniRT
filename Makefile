@@ -1,6 +1,10 @@
 NAME		= miniRT
 CC			= gcc -g
 CFLAGS		= -Wall -Wextra -Werror
+<<<<<<< HEAD
+PTHREAD 	= -pthread
+=======
+>>>>>>> main
 RM			= /bin/rm -f
 
 LIBFT_DIR	= ./libft
@@ -36,10 +40,10 @@ OBJS = $(SRCS:%.c=$(BUILD_DIR)/%.o)
 all: $(NAME)
 
 restart: cbuild $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(INCLUDES) $(LIBS) $(MLX_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(PTHREAD) $(OBJS) $(INCLUDES) $(LIBS) $(MLX_FLAGS) -o $(NAME)
 
 $(NAME): $(OBJS) libs
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(MLX_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(PTHREAD) $(OBJS) $(LIBS) $(MLX_FLAGS) -o $(NAME)
 
 $(OBJS): $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(@D)
