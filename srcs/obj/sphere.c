@@ -80,52 +80,6 @@ void	sphere_assigned(int index, char *trimed_obj, t_obj *sphere)
 static void	sphere_ints_formula(t_ray bvray, t_ints *ints, t_fml fml);
 static void	sphere_ints_set(t_obj *obj, t_ints *ints);
 
-// void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints)
-// {
-// 	t_vtr	vray;
-// 	t_ray	bvray;
-// 	t_pnt	point;
-
-// 	bvray = trans_ray(ray, obj->itrans);
-// 	vray = vtrnorm(bvray.l);
-// 	sphere_ints_formula(bvray, vray, ints);
-// 	if (ints->hit)
-// 		sphere_ints_set(obj, ints);
-// }
-
-// static void	sphere_ints_formula(t_ray bvray, t_vtr vray, t_ints *ints)
-// {
-// 	t_fml	fml;
-
-// 	fml.a = 1.0;
-// 	fml.b = 2.0 * vtrdot(bvray.a, vray);
-// 	fml.c = vtrdot(bvray.a, bvray.a) - 1.0;
-// 	ints->t = fml.b * fml.b - 4.0 * fml.c;
-// 	ints->hit = 0;
-// 	if (ints->t > 0.0)
-// 	{
-// 		float	sqt;
-// 		float	t1;
-// 		float	t2;
-// 		t_vtr	vray;
-
-// 		vray = vtrnorm(bvray.l);
-// 		sqt = sqrtf(ints->t);
-// 		t1 = (-fml.b + sqt) / 2.0;
-// 		t2 = (-fml.b - sqt) / 2.0;
-// 		if (t1 < 0.0 || t2 < 0.0)
-// 			return ;
-// 		else
-// 		{
-// 			if (t1 < t2)
-// 				ints->p = vtradd(bvray.a, vtrscale(vray, t1));
-// 			else
-// 				ints->p = vtradd(bvray.a, vtrscale(vray, t2));
-// 			ints->hit = 1;
-// 		}
-// 	}
-// }
-
 void	sphere_ints(t_obj *obj, t_ray ray, t_ints *ints)
 {
 	t_vtr	vray;
