@@ -39,7 +39,6 @@ t_color	colorf_to_color(t_colorf cf)
 	return (c);
 }
 
-<<<<<<< HEAD
 t_colorf	colorf_set(float r, float g, float b)
 {
 	t_colorf	cf;
@@ -50,8 +49,6 @@ t_colorf	colorf_set(float r, float g, float b)
 	return (cf);
 }
 
-=======
->>>>>>> main
 t_colorf	color_to_colorf(t_color color)
 {
 	t_colorf	cf;
@@ -61,7 +58,6 @@ t_colorf	color_to_colorf(t_color color)
 	cf.b = color.b / COLOR_MAX;
 	return (cf);
 }
-<<<<<<< HEAD
 
 t_colorf	colorf_add(t_colorf c1, t_colorf c2)
 {
@@ -72,5 +68,3 @@ t_colorf	colorf_add(t_colorf c1, t_colorf c2)
 	cf.b = c1.b + c2.b;
 	return (cf);
 }
-=======
->>>>>>> main

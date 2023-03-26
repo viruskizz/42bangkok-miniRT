@@ -6,11 +6,7 @@
 /*   By: sharnvon <sharnvon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 01:06:25 by sharnvon          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2023/03/26 04:29:30 by sharnvon         ###   ########.fr       */
-=======
-/*   Updated: 2023/03/23 17:39:43 by sharnvon         ###   ########.fr       */
->>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +25,6 @@ void	plane_initialise(t_data *data, char **object, int idx)
 	int		index;
 	t_obj	*plane;
 	char	*trimed_obj;
-<<<<<<< HEAD
 	int		bonus_check[2];
 
 	index = 0;
@@ -41,18 +36,6 @@ void	plane_initialise(t_data *data, char **object, int idx)
 		trimed_obj = ft_strtrim(object[index], "\t");
 		if (index > 3)
 			bonus_argument(plane, trimed_obj, bonus_check, MANY_PL);
-=======
-
-	index = 0;
-	plane = object_initialise(PLANE);
-	while (object[index])
-	{
-		if (index > 3)
-			exit_error(MANY_PL);
-		trimed_obj = ft_strtrim(object[index], "\t");
-		if (!trimed_obj)
-			exit_error(FAIL_TRIM);
->>>>>>> main
 		plane_assigned(index, plane, trimed_obj);
 		free(trimed_obj);
 		index++;
@@ -94,10 +77,7 @@ static void	plane_assigned(int index, t_obj *plane, char *trimed_obj)
 		plane->itrans = mtx_inverse(plane->mtrans, 4);
 		plane->colorf = color_to_colorf(plane->color);
 	}
-<<<<<<< HEAD
 	plane->txtr.has = 0;
-=======
->>>>>>> main
 }
 
 t_obj	*set_plane_img(t_data *data, t_obj *obj)
@@ -147,7 +127,6 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 		if (ints->t > 0.0)
 		{
 			u = bvray.a.x + (vray.x * ints->t);
-<<<<<<< HEAD
 			v = -bvray.a.z - (vray.z * ints->t);
 			if ((fabsf(u) < 1.0) && (fabsf(v) < 1.0))
 			{
@@ -155,14 +134,6 @@ void	plane_ints(t_obj *obj, t_ray ray, t_ints *ints)
 				ints->uvz.x = u;
 				ints->uvz.y = v;
 				ints->uvz.z = 0;
-=======
-			v = bvray.a.z + (vray.z * ints->t);
-			if ((fabsf(u) < 1.0) && (fabsf(v) < 1.0))
-			{
-				ints->hit = 1;
-				ints->p = vtradd(bvray.a, vtrscale(vray, ints->t));
-				plane_ints_set(bvray, vray, obj, ints);
->>>>>>> main
 			}
 		}
 	}

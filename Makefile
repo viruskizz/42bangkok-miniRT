@@ -1,10 +1,7 @@
 NAME		= miniRT
 CC			= gcc -g
 CFLAGS		= -Wall -Wextra -Werror
-<<<<<<< HEAD
 PTHREAD 	= -pthread
-=======
->>>>>>> main
 RM			= /bin/rm -f
 
 LIBFT_DIR	= ./libft
